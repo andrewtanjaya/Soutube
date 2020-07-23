@@ -1,0 +1,64 @@
+<div class="comment">
+    <div class="user">
+        <img src="{{user.img_url}}" alt="" class="userIcon">
+    </div>
+    
+    <div class="des">
+        <div class="uname">
+            <div style="width: 700px;height: 30px;display: flex;" class="line">
+                <div>
+                    <p class="userName"><b>{{user.user_name}} &nbsp;</b></p>
+                </div>
+                <div style="float : left;font-size : 13px;color :#8e8e8e" [innerHtml]="dateDetail">
+                    
+                </div>
+                
+                <div class="buttonMore" style="float: right;" >
+                    <img src="../../assets/edit.png" *ngIf="currUser.email == user.email" class="more" alt="" (click)="makeEdit(reply.reply_id)">
+                    <img src="../../assets/delete.png" *ngIf="currUser.email == user.email"   class="more" alt="" (click)="del(reply.reply_id)">
+                </div></div>
+            
+            <div style="width: 700px;height: 30px;text-align : left; display : flex;justify-content: flex-start;align-items: center;"><p class="desText" id="hilang{{reply.reply_id}}">{{reply.reply}}</p></div>
+            
+            <div class="ta" id="muncul{{reply.reply_id}}" >
+            <textarea name="" class="bang" id="ins{{reply.reply_id}}" cols="60" rows="3" style="resize : none; margin-bottom : 10px"></textarea>
+            <div class="buttong" >
+                <button (click)="saveChanges(reply.reply_id)" >Save</button>
+                <button (click)="cancel(reply.reply_id)" >Cancel</button>
+            </div>
+            
+        </div>
+        </div>
+        
+        <div class="feature">
+            <div class="like" (click)="addLike(reply.reply_id)" *ngIf="!likedrep" >
+                <img src="../../assets/like.png" alt="" class="likeIcon">
+                <p class="likeText">{{likedreply.length}}</p>
+            </div>
+            <div class="like" (click)="unLike(reply.reply_id)" *ngIf="likedrep" >
+                <img src="../../assets/liked.png" alt="" class="likeIcon">
+                <p class="likeText">{{likedreply.length}}</p>
+            </div>
+            <div class="like" (click)="addDislike(reply.reply_id)" *ngIf="!dislikedrep">
+                <img src="../../assets/dislike.png" alt="" class="likeIcon">
+                <p class="likeText">{{dislikedreply.length}}</p>
+            </div>
+            <div class="like" (click)="unDislike(reply.reply_id)" *ngIf="dislikedrep">
+                <img src="../../assets/disliked.png" alt="" class="likeIcon">
+                <p class="likeText">{{dislikedreply.length}}</p>
+            </div>
+            <div class="like" (click)="show(reply.reply_id)">
+                <p class="likeText"><b>REPLY</b></p>
+            </div>
+        </div>
+
+        <div id="con{{reply.reply_id}}" class="cons">
+            <textarea name="" id="replyTxt{{reply.reply_id}}" cols="68" rows="3" style="resize : none"></textarea>
+            <button (click)="rep(reply)">REPLY</button>
+            <button (click)="canceled(reply.reply_id)">CANCEL</button>
+        </div>
+        
+        
+        
+    </div>  
+</div>

@@ -1,0 +1,34 @@
+<a [routerLink]="['/videoPlayer/', video.video_id]" style="text-decoration: none;color : black">
+    <div class="card" [ngClass]="{cardS: !message}" >
+        <div class="video">
+            <img src="{{video.video_thumb}}" class="thumb" alt="">
+        </div>
+        <div style="float : left;height : 100px;width: 50px;">
+            <img src="{{user.img_url}}" class="icons" alt="">
+        </div>
+        <!-- <div class="detail">
+            <p><b>{{video.videoTitle}}</b></p>
+            <p class="details">{{video.videoDesc}}</p>
+            <p class="detailAgain">{{video.likeCount}}M views • {{video.dislikeCount}} months ago</p>
+        </div> -->
+        <div class="detailVideo">
+            <p class="tit"><b>{{video.video_title}}</b></p>
+            <a [routerLink]="['/channel/',user.user_id]" ><div class="bob">
+                <p class="details" style="color : #4d4d4d">{{user.user_name}}</p>
+            </div>
+            </a>
+            <div style="display : flex;margin-top : 32px">
+                <div>
+                    <p class="detailAgain">{{view.length}} views •&nbsp;</p>
+                </div>
+                <div class="detailAgain" style="margin-top : -21px" [innerHtml] = "dateDetail">
+
+                </div>
+            </div>
+            <div class="detul">
+                <p  style="margin-top : 0px" [innerHtml]="durr"></p>
+            </div>
+            
+        </div>
+    </div>
+</a>

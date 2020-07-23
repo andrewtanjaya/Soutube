@@ -1,0 +1,15 @@
+<div class="container" [ngClass]="{containerSmall: !message}">
+    <div class="musicBox">
+        <img src="../../assets/sport.png" alt="" class="icon">
+        <div class="divTit">
+            <p class="tit">Sports</p>
+            <p class="subsText">123M subscribers</p>
+        </div>
+        <div class="buttSubs">
+            <p class="subsTextRed">SUBSCRIBE</p>
+        </div>
+        
+    </div>
+    <h3 style="font-family: arial;margin-left : 25px"><b>Top Stories</b></h3>
+    <app-cards *ngFor="let video of videoFiltered" [video]="video"></app-cards>
+</div>

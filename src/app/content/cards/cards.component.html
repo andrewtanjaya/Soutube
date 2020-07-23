@@ -1,0 +1,66 @@
+<div class="besar">
+    <div class="moreIcon" (click)="togglePlaylist()">
+        <img src="../../../assets/more.png" class="moree" alt="">
+    </div>
+    <a [routerLink]="['/videoPlayer', video.video_id]" routerLinkActive="router-link-active"  style="text-decoration: none;color : black">
+        <div class="card" [ngClass]="{cardS: !message}">
+            <div class="video">
+                <img class="thumb" src="{{video.video_thumb}}" alt="">
+                
+            </div>
+            <div style="float : left;height : 100px;width: 40px;">
+                <img src="{{user.img_url}}" class="icon" alt="">
+            </div>
+            
+            <!-- <div class="detail">
+                <p><b>{{video.videoTitle}}</b></p>
+                <p class="details">{{video.videoDesc}}</p>
+                <p class="detailAgain">{{video.likeCount}}M views • {{video.dislikeCount}} months ago</p>
+            </div> -->
+            <div class="detail">
+                
+                <p><b>{{video.video_title}}</b></p>
+                <a [routerLink]="['/channel/',user.user_id]" style="text-decoration:  none; color : #4d4d4d;" >
+                    <div class="details">
+                        <p >{{user.user_name}}</p>
+                    </div>
+                </a>
+                
+                <div style="display: flex ;flex-direction: row;color : #4d4d4d;margin-top : -23px">
+                    <div>
+                        <pre style="font-family: arial;" >{{view.length}} views • </pre>
+                    </div>
+                    <div [innerHtml]="dateDetail">
+    
+                    </div>
+                </div>
+                
+                <div class="durate" id="dur{{video.video_id}}" [innerHtml] = "durr"></div>
+            </div>
+        </div>
+    </a>
+    
+    <div class="popMore" *ngIf="showMore">
+        <div class="addPlay" style="display : flex;flex-direction : row">
+            <div>
+                <img src="../../../assets/playlist.png" class="plIcon" alt="">
+            </div>
+            
+            <div>
+                <p>Save to playlist</p>
+            </div>
+        </div>
+        <div class="addPlay" style="display : flex;flex-direction : row">
+            <div>
+                <img src="../../../assets/queue.png" class="plIcon" alt="">
+            </div>
+            
+            <div>
+                <p>Add to queue</p>
+            </div>
+        </div>
+        
+    
+    </div>
+    <!-- //kurang view ama channel yg post -->
+</div>

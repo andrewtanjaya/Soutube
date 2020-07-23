@@ -1,0 +1,160 @@
+<div *ngIf="message" class="sideBar">
+    <a routerLink ="/home">
+        <div class="home" [ngClass]="{ activeHome: isActive(1) }" (click) ="activate(1)">
+            <img src="../../assets/house.png" alt="" class= "homeIcon">
+            <p class="homeText">Home</p>
+        </div>
+    </a>
+    
+    <a routerLink ="/trending">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(2) }" (click) ="activate(2)">
+            <img src="../../assets/fire.png" alt="" class= "trendIcon">
+            <p class="trendText">Trending</p>
+        </div>
+    </a>
+    
+    <a routerLink ="/subscription" >
+        <div class="trending" [ngClass]="{ activeTrending: isActive(3) }" (click) ="activate(3)">
+            <img src="../../assets/feed.png" alt="" class= "subsIcon">
+            <p class="trendText">Subscription</p>
+        </div>
+    </a>
+
+    <!-- <a routerLink ="/trending" *ngIf="show()">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(3) }" (click) ="activate(3)">
+            <img src="../../assets/feed.png" alt="" class= "subsIcon">
+            <p class="trendText">Subscription</p>
+        </div>
+    </a> -->
+    
+    <hr class ="divider1">
+    <p class="boyText"><b>BEST OF SOUTUBE</b></p>
+    <a routerLink="/category/music">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(4) }" (click) ="activate(4)">
+            <img src="../../assets/music.png" alt="" class= "trendIcon">
+            <p class="trendText">Music</p>
+        </div>
+    </a>
+    
+    <a routerLink="/category/sport">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(5) }" (click) ="activate(5)">
+            <img src="../../assets/sport.png" alt="" class= "trendIcon">
+            <p class="trendText">Sports</p>
+        </div>
+    </a>
+    
+    <a routerLink="/category/gaming">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(6) }" (click) ="activate(6)">
+            <img src="../../assets/games.png" alt="" class= "trendIcon">
+            <p class="trendText">Gaming</p>
+        </div>
+    </a>
+    
+    <a routerLink="/category/news">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(7) }" (click) ="activate(7)">
+            <img src="../../assets/news.png" alt="" class= "subsIcon">
+            <p class="trendText">News</p>
+        </div>
+    </a>
+    <a routerLink="/category/travelling">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(9) }" (click) ="activate(9)">
+            <img src="../../assets/travel.png" alt="" class= "subsIcon">
+            <p class="trendText">Traveling</p>
+        </div>
+    </a>
+    <a routerLink="/category/enter">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(10) }" (click) ="activate(10)">
+            <img src="../../assets/film.png" alt="" class= "subsIcon">
+            <p class="trendText">Entertainment</p>
+        </div>
+    </a>
+
+    <hr class ="divider1" >
+    <p *ngIf="!getUserFromStorage()" style="margin-left : 25px; font-size: 13px;">Sign in to like videos,</p>
+    <p *ngIf="!getUserFromStorage()" style="margin-left : 25px;margin-top : -10px; font-size: 13px;">comment, and subscribe.</p>
+    <img *ngIf="!getUserFromStorage()"  src="../../assets/signin.png" alt="" style = "margin-left : 60px;width: 90px;" (click)="signInWithGoogle()">
+    
+
+    <!-- <div class="g-signin2" *ngIf="!show()" style="margin-left: 25px;margin-top: 10px;" data-onsuccess="onSignIn"></div> -->
+    
+    
+    <div *ngIf="getUserFromStorage()" class="listPlaylist">
+        <a routerLink="/playlist">
+            <div class="trending" *ngFor="let playlist of playlists" >
+                <img src="../../assets/playlist.png" alt="" class= "trendIcon">
+                <p class="homeText">{{playlist.playlist_name}}</p>
+            </div>
+        </a>
+        
+
+        <div class="trending" >
+            <img src="../../assets/down.png" style="width: 15px;margin-left : 28px" alt="" class= "trendIcon">
+            <p class="homeText">Show All Playlist</p>
+        </div>
+    </div>
+    <hr *ngIf="getUserFromStorage()"  class ="divider3" >
+    <p *ngIf="getUserFromStorage()"  class="boyText" ><b>SUBSCRIPTIONS</b></p>
+    <div class="listPlaylist" *ngIf="getUserFromStorage()"  >
+        <app-subside *ngFor="let sub of subbed" [sub]="sub"></app-subside>
+
+        <div class="trending" [ngClass]="{ activeTrending: isActive(10) }" (click) ="activate(10)">
+            <img src="../../assets/down.png" style="width: 15px;margin-left : 28px" alt="" class= "trendIcon">
+            <p class="homeText">Show All Subscription</p>
+        </div>
+    </div>
+
+    <hr class ="divider3">
+    <p class="boyText"><b>MORE FROM SOUTUBE</b></p>
+    <a routerLink="/premium">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(8) }" (click) ="activate(8)">
+            <img src="../../assets/you.png" alt="" class= "trendIcon">
+            <p class="trendText">SouTube Premium</p>
+        </div>
+    </a>
+    
+    <hr class ="divider2">
+    <div class="footer">
+        <br>
+        <a href="https://www.youtube.com/about/" ><b style="font-size: 12px;">About </b></a>
+        <a href="https://www.youtube.com/about/press/"><b style="font-size: 12px;">Press </b></a>
+        <a href="https://www.youtube.com/about/copyright/"><b style="font-size: 12px;">Copyright</b></a>
+        <br>
+        <a href="https://www.youtube.com/t/contact_us"><b style="font-size: 12px;">Contact us </b></a>
+        <a href="https://www.youtube.com/creators/"><b style="font-size: 12px;">Creators</b></a>
+        <br>
+        <a href="https://www.youtube.com/ads/"><b style="font-size: 12px;">Advertise  </b></a>
+        <a href="https://developers.google.com/youtube"><b style="font-size: 12px;">Developers</b></a>
+        <br>
+        <br>
+        <a href="https://www.youtube.com/t/terms"><b style="font-size: 12px;">Terms </b></a>
+        <a href="https://www.google.com/intl/en/policies/privacy/"><b style="font-size: 12px;">Privacy </b></a>
+        <a href="https://www.youtube.com/about/policies/"><b style="font-size: 12px;">Policy & Safety</b></a>
+        <br>
+        <a href="https://www.youtube.com/new"><b style="font-size: 12px;">Test new Features</b></a>
+
+        <p>© 2020 Google LLC</p>
+    </div>
+    
+</div>
+
+<div *ngIf="!message" class="sideBarSmall">
+    <a routerLink="/home" style="text-decoration: none;">
+        <div class="homeSmall">
+            <img src="../../assets/house.png" alt="" class= "homeIconSmall">
+            <p class="homeTextSmall" >Home</p>
+        </div>
+    </a>
+    <a routerLink="/trending" style="text-decoration: none;">
+        <div class="trendSmall">
+            <img src="../../assets/fire.png" alt="" class= "trendIconSmall">
+            <p class="trendingTextSmall">Trending</p>
+        </div>
+    </a>
+
+    <a routerLink="/subscription" style="text-decoration: none;" >
+        <div class="subsSmall">
+            <img src="../../assets/feed.png" alt="" class= "subsIconSmall">
+            <p class="subsTextSmall">Subscription</p>
+        </div>
+    </a>
+</div>

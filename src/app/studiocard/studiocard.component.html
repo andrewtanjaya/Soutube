@@ -1,0 +1,63 @@
+<div class="card">
+    <div class="check">
+        <input type="checkbox" name="" id="">
+    </div>
+    <div class="overlay">
+
+    </div>  
+    <div>
+        <a [routerLink]="['/edit/',video.video_id]" ><img src="../../assets/edit.png" class="edit" alt=""></a>
+        <a [routerLink]="['/videoPlayer/',video.video_id]" ><img src="../../assets/you.png" class="you" alt=""></a>
+        <img src="../../assets/delete.png" class="del" alt="" (click)="delVideo(video.video_id)">
+    </div>
+    
+    <div class="video">
+        <div class="thumb">
+            <img src="{{video.video_thumb}}" class="imgThumb" alt="">
+        </div >
+        <div class="detail">
+            <div>
+                <p class="title"><b>{{video.video_title}}</b></p>
+            </div>
+            <div class="des">
+                <p>{{video.video_desc}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="visibility" *ngIf="video.visibility == 'Public'">
+            <img src="../../assets/public.png" class="iconVis" alt="">
+            <p>Public</p>
+    </div>
+    <div class="visibility" *ngIf="video.visibility == 'Private'">
+        <img src="../../assets/private.png" class="iconVis" alt="">
+        <p>Private</p>
+    </div>
+    <div class="restriction">
+        <p>{{video.age_restriction}}</p>
+    </div>
+    <div class="premium">
+        <p>{{video.premium}}</p>
+    </div>
+    <div class="date">
+        <p>{{video.day}}-{{video.month}}-{{video.year}} </p>
+    </div>
+    <div class="restriction">
+        <p>{{view.length}}</p>
+    </div>
+    <div class="date">
+        <p>{{comments.length}}</p>
+    </div>
+    <div class="like">
+        <p>{{percent}}%</p>
+        <div  class="progressLike" id="progressLike{{video.video_id}}">
+
+        </div>
+        <div class="progressDislike">
+
+        </div>
+    </div>
+    
+</div>
+<hr>
+
+

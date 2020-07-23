@@ -1,0 +1,452 @@
+$large : 1250
+$tablet : 991
+$phone : 600
+
+.hamMenu
+    float : left
+    width : 18px
+    margin-top : 5px
+    margin-left : 6px
+    
+
+.rip
+    float : left
+    width : 30px
+    height : 30px
+    margin-right : -5px
+    margin-top  : 11px
+    margin-left : 28px
+    border-radius : 50%
+    background-position: center
+    transition: background 0.8s
+
+  
+
+.rip:hover 
+  background: #cecece radial-gradient(circle, transparent 1%, white 1%) center/15000%
+
+.rip:active 
+  background-color: #cecece
+  background-size: 100%
+  transition: background 0s
+
+    
+.header
+    position : fixed
+    z-index : 999
+    top : 10px
+    background-color : white
+    height : 40px
+    width : 100vw
+    margin : -10px
+    padding-bottom : 15px
+    @media screen and (max-width : $large + px)
+        background-color : red
+    @media screen and (max-width : $tablet +px)
+        background-color : green
+    @media screen and (max-width : $phone +px)
+        background-color : blue
+
+.logo
+    float : left
+    margin-top : 15px
+    height : 25px
+    margin-left : 26px
+
+.title
+    margin-top : 15px
+    margin-left : 5px
+    float : left
+    font-family : Oswald
+    font-size : 17px
+    color : black
+
+.searchDiv
+    border : 1px solid #bdbdbd 
+    float : left
+    width : 630px
+    height : 33px
+    margin-top : 10px
+    margin-left : 15vw
+    @media screen and (max-width : $large + px)
+        margin-left : 9vw
+        width : 485px
+    @media screen and (max-width : $tablet +px)
+        margin-left : 10vw
+        width : 235px
+    @media screen and (max-width : $phone +px)
+        margin-left : 20px
+        width : 165px
+
+
+@media screen and (max-width : $tablet +px)
+    .g-signin2
+        display : none
+
+.searchBar
+    border : none
+    font-size : 14px
+    float : left
+    width : 565px
+    height : 31px
+    @media screen and (max-width : 1250px)
+        width : 420px
+    @media screen and (max-width : $tablet +px)
+        width : 170px
+    @media screen and (max-width : $phone +px)
+        width : 100px
+
+
+.searchIconDiv
+    border-left: 1px solid #bdbdbd
+    float : right
+    background-color : #f2f2f2
+    width : 60px
+    height : 33px
+
+
+.searchIcon
+    margin-left : 22px
+    margin-top : 8px
+    height : 15px
+
+.signDiv
+    float : right
+    margin-top : 8px
+    margin-right : 15px
+    min-width : 42px
+    height : 38px
+
+.userIcon
+    float : left
+    height : 23px
+    margin-top : 8px
+
+    border-radius : 12px
+
+.signInText
+    margin-left : 5px
+    margin-right : 5px
+    margin-top : 12px
+    font-family : arial
+    color : #003de3
+    font-size : 13px
+    float : left
+
+.more
+    float : right
+    height : 15px
+    margin-top : 19px
+    margin-right : 20px
+
+.grid 
+    float : right
+    height : 15px
+    margin-right : 30px
+    margin-top : 19px
+
+.add
+    float : right
+    height : 19px
+    margin-right : 20px
+    margin-top : 18px
+
+.autoComplete
+    margin-top : 33px
+    position : absolute
+    overflow-y : auto
+    width : 571px
+    height : 200px
+    background-color : white
+    @media screen and (max-width : $large + px)
+        width : 422px
+    @media screen and (max-width : $tablet +px)
+        width : 172px
+    @media screen and (max-width : $phone +px)
+        width : 102px
+
+.autoC
+    font-family : arial
+    padding : 10px
+
+.autoC:hover
+    background-color : #e8e8e8
+
+.morePop
+    border : 1px solid #e8e8e8
+    position : absolute
+    z-index : 2
+    top : 5px
+    right : 150px
+    width : 200px
+    height : 144px
+    background : white
+    @media screen and (max-width : $tablet +px)
+        right : 40px
+    @media screen and (max-width : $phone +px)
+        right : 40px
+    
+
+.key
+    height : 40px
+
+.loc
+    height : 40px
+
+.key:hover
+    background-color : #e8e8e8
+
+.loc:hover 
+    background-color : #e8e8e8
+
+.kyb
+    margin-top : 8px
+    float : left
+    margin-right : 10px
+    margin-left : 25px
+    width : 20px
+
+.keyText
+    float : left
+    font-family : arial
+    font-size : 13px
+
+.locIcon
+    float : left
+    margin-top : 11px
+    margin-right : 10px
+    margin-left : 25px
+    width : 18px
+
+.locText
+    float : left
+    font-family : arial
+    font-size : 13px
+
+.divider
+    border : 0.1px solid #dedede
+
+.restricted
+    height : 40px
+
+.restricted:hover
+    background-color : #e8e8e8
+.res
+    float : left
+    font-family : arial
+    font-size : 13px
+    margin-left : 25px
+
+.addPop
+    position : absolute
+    justify-content : center
+    top : 50px
+    right : 110px
+    float : right
+    width : 135px
+    height : 40px
+    background-color : white
+    border : 1px solid #e8e8e8
+    
+    @media screen and (max-width : $tablet +px)
+        right : 110px
+    @media screen and (max-width : $phone +px)
+        right : 110px
+
+.addPop:hover
+    background-color : #e8e8e8
+
+.upCont
+    width : 135px
+    height : 40px
+
+.upText
+    margin-left : 2px
+    font-family : arial
+    font-size : 12px
+
+.upIcon
+    width : 25px
+    float : left
+    margin-left : 10px
+    margin-top : -5px
+    margin-right : 8px
+
+
+.userPop
+    min-width : 240px
+    min-height : 200px
+    position : absolute
+    z-index : 9000
+    right : 60px
+    box-shadow : 1px 2px 3px 2px #cecece
+    background-color : white
+    top : 8px
+
+.usersDetail
+    min-width : 180px
+    height : 60px
+
+.userIconS
+    float : left
+    height : 36px
+    margin-top : 12px
+    margin-left : 10px
+    border-radius : 18px
+
+.signInTextS
+    margin-left : 5px
+    margin-right : 5px
+    margin-top : 13px
+    font-family : arial
+    font-size : 13px
+
+.emailTextS
+    margin-left : 5px
+    margin-right : 5px
+    margin-top : -13px
+    font-family : arial
+    font-size : 13px   
+
+.a
+    float : left
+    min-width : 100px
+    height : 60px
+
+.switchTxt
+    font-size : 12px
+
+.switch
+    margin-top : -10px
+    height : 42px
+    min-width : 180px
+    padding-top : 1px
+    font-family : arial
+    font-size : 14px
+    margin-bottom : 10px
+
+.switch:hover
+    background-color : #cdcdcd
+    
+.iconss
+    float : left
+    margin-top : 11px
+    margin-right : 15px
+    margin-left : 15px
+    width : 17px
+
+.ac
+    width : 570px
+    max-height : 200px
+    position : absolute
+    background-color : white
+    left : 26   vw
+    top : 44px
+    overflow-y : auto
+    @media screen and (max-width : $large + px)
+        left : 22vw
+        width : 425px
+    @media screen and (max-width : $tablet +px)
+        left : 26vw
+        width : 172px
+    @media screen and (max-width : $phone +px)
+        left : 36vw
+        width : 102px
+
+.isi
+    padding : 10px
+
+.isi:hover
+    background : #c2c2c2
+
+.signButton
+    margin-right : 20px
+    margin-top : 10px
+    float : right
+    height : 35px
+
+
+.modalKey
+    
+    position : fixed
+    left : 450px
+    top : 200px
+    width : 530px
+    height : 350px
+    background-color : white
+    z-index : 2000
+
+.overlay
+    width : 100vw
+    height : 100vh
+    background-color : black
+    opacity : 0.5
+    position : fixed
+    z-index : 1999
+    margin-left : -10px
+    margin-top : -10px
+
+.keyTit
+    font-size : 16px
+
+.head
+    display : flex
+    align-item : center
+    padding-left : 30px
+    width : 500px
+    height : 50px
+    background-color : white
+
+.isinya
+    width : 530px
+    height : 250px
+    background-color : white
+    overflow-y : auto
+
+.footer
+    width : 530px
+    height : 50px
+    background-color : white
+
+
+.playT
+    margin-top : 30px
+    font-size : 13px
+    margin-left : 30px
+
+.txt
+    font-size : 12px
+    margin-left : 30px
+    font-family : arial
+
+.dismiss
+    border-radius : 3px
+    margin-right : 20px
+    margin-top : 15px
+    float : right
+    width : 60px
+    height : 20px
+    background-color : white
+    background-position: center
+    transition: background 0.8s
+
+  
+
+.dismiss:hover 
+  background: #cecece radial-gradient(circle, transparent 1%, white 1%) center/15000%
+
+.dismiss:active 
+  background-color: #cecece
+  background-size: 100%
+  transition: background 0s
+
+.dismiss p
+    margin-left : 3px
+    margin-top : 3px
+    color : #0075fa
+    font-size : 13px
+
+.garis
+    width : 450px
+    border : 0.1 px solid #cecece
+    

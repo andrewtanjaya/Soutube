@@ -1,0 +1,28 @@
+<div class="container" [ngClass]="{containerSmall: !message}">
+    <div class="musicBox">
+        <img src="../../assets/music.png" alt="" class="icon">
+        <p>Music</p>
+    </div>
+    <div class="musicBox">
+        <img src="../../assets/sport.png" alt="" class="icon">
+        <p>Sports</p>
+    </div>
+    <div class="musicBox">
+        <img src="../../assets/games.png" alt="" class="icon">
+        <p>Gaming</p>
+    </div>
+    <div class="musicBox">
+        <img src="../../assets/news.png" alt="" class="icon">
+        <p>News</p>
+    </div>
+    <div class="musicBox">
+        <img src="../../assets/travel.png" alt="" class="icon">
+        <p class="travelText">Travel</p>
+    </div>
+    <div class="musicBox">
+        <img src="../../assets/film.png" alt="" class="icon">
+        <p class= "enterText">Entertainment</p>
+    </div>
+    <hr>
+    <app-card-content *ngFor="let item of [].constructor(40) ; let i = index"></app-card-content>
+</div>

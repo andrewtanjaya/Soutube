@@ -1,0 +1,129 @@
+
+
+<div class="containerSmall" >
+    <div class="video">
+        <div class="player" id="pl" (keyup)="keyChecker($event)">
+            <mat-video id="vi"  quality="true" showFrameByFrame="true" playsinline="true" time="1" title="{{video.video_title}}" [autoplay]="true" [preload]="true" [fullscreen]="true" [download]="true" color="accent" spinner="split-ring" [keyboard]=key overlay="false" src="{{video.video_url}}" >
+            </mat-video>
+        </div>
+        <div id="dislikeLine">
+
+        </div>
+        <div id="likeLine">
+
+        </div>
+        <div class="popPlay" *ngIf="showPlay" >
+            <div>
+                <input type="checkbox" name="" id="">Indo Songs
+            </div>
+            <div style="display: flex;flex-direction: column;">
+                New Playlist
+                <div style="display: flex;flex-direction: column;   ">
+                    <p>Playlist Name</p>
+                    <input type="text" id="namep">
+                    <p>Visibility</p>
+                    <select name="visib" id="vs">
+                        <option value="Public">Public</option>
+                        <option value="Private">Private</option>
+                    </select>
+                    <p></p>
+                    <button (click)="addPlaylist()">Create</button>
+                </div>
+            </div>
+        </div>
+        <div class="feature">
+            <h2 style="margin-top : 30px">{{video.video_title}}</h2>  
+            <div class="views" style="display : flex; flex-direction : row" >
+                <pre style="font-family: arial;">{{view.length}} views • </pre>
+                <div [innerHtml]="dateDetail" ></div>
+            </div>
+            <!-- <a routerLink="/playlist"> -->
+                <div class="save" (click)="togglePlay()">
+                    <img src="../../assets/playlist.png" alt="" class="saveIcon">
+                    <p class="saveTxt">SAVE</p>
+                </div>
+            <!-- </a> -->
+           
+            
+            <div class="share">
+                <img src="../../assets/share.png" alt="" class="likeIcon">
+                <p class="likeTxt">SHARE</p>
+            </div>
+            <div class="like" (click)="dislike(video.video_id)">
+                <i class="far fa-thumbs-down" id="dislikedId" style="float : left;margin-right : 10px;font-size : 20px;"></i>
+                
+                <p class="likeTxt">{{dislikedVideo.length}}</p>
+            </div>
+            <!-- <div class="like" *ngIf="haveDisliked">
+                <img src="../../assets/disliked.png" (click)="undislike(video.video_id)" alt="" class="likeIcon">
+                <p class="likeTxt">{{dislikedVideo.length}}</p>
+            </div> -->
+            <div class="like" id="notYetLike" (click)="like(video.video_id)">
+                <i class="far fa-thumbs-up" id="likedId" style="float : left;margin-right : 10px;font-size : 20px;" ></i>
+                <!-- <img src="../../assets/like.png" alt="" > -->
+                <p class="likeTxt">{{likedVideo.length}}</p>
+            </div>
+            <!-- <div class="like" id="liked" *ngIf="haveLiked">
+                <img src="../../assets/liked.png" alt="" class="likeIcon" (click)="unlike(video.video_id)">
+                <p class="likeTxt">{{likedVideo.length}}</p>
+            </div> -->
+        </div>
+        <hr>
+        <div class="description">
+            <div class="desCont">
+                <div class="user">
+                    <img src="{{user.img_url}}" alt="" class="userIcon">
+                    <div class="detailUser">
+                        <p class="chanName"><b>{{user.user_name}}</b></p>
+                        <p class="subsCount">{{user.subscriber_count}} subscribers</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="bell">
+                        <img src="../../assets/bell.png" alt="" class="bellIcon">
+                    </div>
+                    
+                    <div class="subsBtn">
+                        <p class="subsText">SUBSCRIBE</p>
+                    </div>
+                </div>
+            </div>
+            <div class="descDiv">
+                <p class="desTxt">{{video.video_desc}}</p>
+            </div>
+            
+        </div>
+
+
+        <hr class="divider2">
+        <div class="commentSection">
+            <div class="cmHead">
+                <div class="cmCount">
+                    <p>{{comment_count}} Comments</p>
+                </div>
+                <div class="sort" (click)="sortTop()">
+                    <img src="../../assets/sort.png" alt="" class="sortIcon">
+                    <p class="sortText">Sort By Top Comment</p>
+                </div>
+                <div class="sort" (click)="sortNew()">
+                    <img src="../../assets/sort.png" alt="" class="sortIcon">
+                    <p class="sortText">Sort By Newest</p>
+                </div>
+            </div>
+            
+            <div class="newComment" *ngIf="currentUser">
+                <img src="{{currentUser.img_url}}" id="ph" alt="" class="userIcon">
+                <textarea name="" id="dcomment" cols="30" rows="10" class="inComment" placeholder="Insert Comment Here.."></textarea>
+                <button style="height: 30px;margin-top: 12px;margin-left: 10px;" (click)="addComment();">Comment</button>
+            </div>
+            <div *ngFor="let comment of comments, let i = index" >
+                <app-comments *ngIf="i < lastIndex" [comment] = "comment"></app-comments>
+            </div>
+            <div class="footer">
+
+            </div>
+        </div>
+    </div>
+    <app-side-queue></app-side-queue>
+    
+</div>

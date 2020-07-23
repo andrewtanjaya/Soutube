@@ -1,0 +1,11 @@
+<div class="container" [ngClass]="{containerSmall: !message}">
+    <h3>Recommended</h3>
+    <div *ngFor="let video of videos, let i = index">
+        <!-- <app-cards *ngFor="let item of [].constructor(40) ; let i = index"></app-cards> -->
+        <app-cards *ngIf="i < lastIndex"  [video] = "video"></app-cards>
+    </div>
+
+    <div class="footer">
+        
+    </div>
+</div>

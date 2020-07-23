@@ -1,0 +1,40 @@
+<div class="containerSmall" >
+    <div class="header">
+        <h3>Channel Videos</h3>
+        <div class="head">
+            <div class="check">
+                <input type="checkbox" name="" id="">
+            </div>
+            <div class="video">
+                <p>Video</p>
+            </div>
+            <div class="visi">
+                <p>Visibility</p>
+            </div>
+            <div class="visi">
+                <p>Restrictions</p>
+            </div>
+            <div class="visi">
+                <p>Premium</p>
+            </div>
+            <div class="visi">
+                <p>Date</p>
+            </div>
+            <div class="visi">
+                <p>Views</p>
+            </div>
+            <div class="visi">
+                <p>Comments</p>
+            </div>
+            <div class="like">
+                <p>Likes(vs. dislikes)</p>
+            </div>
+        </div>
+    </div>
+    <div class="first">
+        <div *ngFor="let video of videos">
+            <app-studiocard [video]="video"></app-studiocard>
+        </div>
+    </div>
+    
+</div>

@@ -1,0 +1,43 @@
+<div class="container" [ngClass]="{containerSmall: !message}">
+    <div class="left" [ngClass]="{leftSmall: !message}"> 
+        <div class="video">
+
+        </div>
+        <div class="details">
+            <p class="title">Lagu Indonesia</p>
+            <p class="vidDetail">3 videos • Updated Today</p>
+            <select name="" id="">
+                <option value="1">Private</option>
+                <option value="1">Public</option>
+                <option value="1">Unlisted</option>
+            </select>
+        </div>
+        <div class="description">
+            <textarea name="" id="" cols="130" rows="5" placeholder="No Description"></textarea>
+        </div>
+        <div class="user">
+            <div class="userDiv">
+                <img src="../../assets/user.png" alt="" class="userIcon">
+            </div>
+            <div class="name">
+                <p><b>Andrew Tanjaya</b></p>
+            </div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="sort">
+            <img src="../../assets/sort.png" alt="" class="sortIcon">
+            <p class="sortTxt">SORT BY</p>
+        </div>
+
+        <div class="queue" *ngFor="let item of [].constructor(15) ; let i = index">
+                <div class="imgVid">
+
+                </div>
+                <div class="vidTitle">
+                    <p class="tit">Mahen - Pura Pura Lupa (Official Music Video)</p>
+                    <p class="chan">Indo Semar Sakti</p>
+                </div>
+        </div>
+    </div>
+</div>

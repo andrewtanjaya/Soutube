@@ -1,0 +1,73 @@
+<div style="display: flex;flex-direction: column;">
+    <div class="comment">
+        <div class="user">
+            <img src="{{user.img_url}}" alt="" class="userIcon">
+        </div>
+        
+        <div class="des">
+            <div class="uname" style="display : flex ; ">
+                <div>
+                    <p class="userName"><b>{{user.user_name}} &nbsp;</b></p>
+                </div>
+                <div style="float : left;font-size : 13px;color :#8e8e8e" [innerHtml] = "dateDetail">
+                    
+                </div>
+               
+            </div>
+            <div class="buttonMore"  >
+                <img src="../../assets/edit.png" *ngIf="curUserEmail && curUserEmail == user.email"  class="more" alt="" (click)="makeEdit(comment.comment_id)">
+                <img src="../../assets/delete.png" *ngIf="curUserEmail &&  curUserEmail == user.email"  class="more" alt="" (click)="deleteComment(comment.comment_id)">
+            </div>
+           
+            <p class="desText" id="hilang{{comment.comment_id}}">{{comment.comment}}</p>
+            <div class="ta" id="muncul{{comment.comment_id}}">
+                <textarea name="" class="bang" id="text{{comment.comment_id}}" cols="60" rows="3" style="resize : none; margin-bottom : 10px"></textarea>
+                <div class="buttong">
+                    <button  (click)="saveChange(comment.comment_id)">Save</button>
+                    <button  (click)="close(comment.comment_id)">Cancel</button>
+                </div>
+                
+            </div>
+            
+            <div class="feature">
+                <div class="like" *ngIf="!liked" (click)="addLike(comment.comment_id)">
+                    <img src="../../assets/like.png" alt="" class="likeIcon" id="likehere">
+                    <p class="likeText">{{likedComment.length}}</p>
+                </div>
+                <div class="like" *ngIf="liked" (click)="unLike(comment.comment_id)">
+                    <img src="../../assets/liked.png" alt="" class="likeIcon" >
+                    <p class="likeText">{{likedComment.length}}</p>
+                </div>
+                <div class="like" *ngIf="!disliked" (click)="addDislike(comment.comment_id)">
+                    <img src="../../assets/dislike.png" alt="" class="likeIcon">
+                    <p class="likeText">{{dislikedComment.length}}</p>
+                </div>
+                <div class="like" *ngIf="disliked" (click)="unDislike(comment.comment_id)">
+                    <img src="../../assets/disliked.png" alt="" class="likeIcon">
+                    <p class="likeText">{{dislikedComment.length}}</p>
+                </div>
+                <div class="like" >
+                    <p class="likeText" (click)="makeReply(comment.comment_id)"><b>REPLY</b></p>
+                </div>
+            </div>
+        </div>  
+        
+    </div>
+</div>
+<div style="display:flex; flex-direction : column" *ngIf="curUser">
+    <div  class="beng" id="rep{{comment.comment_id}}">
+        <img src="{{curUser.photoUrl}}" alt="" class="ic">
+        <textarea name="" id="txt{{comment.comment_id}}" cols="60" rows="2" style="resize : none; margin-bottom : 10px;margin-left : 20px;width: 500px;float : left;height: 38px;"></textarea>
+        <button style="height: 20px;" (click)="addReply(comment.comment_id)">REPLY</button>
+        <button style="height: 20px;" (click)="cancel(comment.comment_id)">CANCEL</button>
+    </div>
+    <div class="showAll">
+        <p class="link" (click)="toggleReply()" *ngIf="replies.length > 0 && !stateReply"><b>Show {{replies.length}} replies</b></p>
+        <p class="link" (click)="toggleReply()" *ngIf="stateReply">Hide {{replies.length}} replies</p>
+        <div *ngIf="stateReply">
+            <app-reply *ngFor="let reply of replies" [reply]="reply"></app-reply>
+        </div>
+    </div>
+    
+</div>
+

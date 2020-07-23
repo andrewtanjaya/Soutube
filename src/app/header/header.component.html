@@ -1,0 +1,173 @@
+<div class="header">
+    <div class="rip">
+        <img src="../../assets/hamburgMenu.png" class="hamMenu" (click) ="newMessage()" alt="">
+    </div>
+    
+    <a href=""><img src="../../assets/logo.png" alt="" class="logo">
+        <p class="title">SouTube</p>
+    </a>
+    
+    
+    <div class="userPop" *ngIf="userPop" id="userPoped">
+        <div class="usersDetail" >
+            <img class="userIconS" src="{{user.photoUrl}}" alt="">
+            <div class="a">
+                <p class="signInTextS"><b>{{user.name}}</b></p>
+                <p class="emailTextS">{{user.email}}</p>
+            </div>
+            
+        </div>
+        <hr style="border : 0.2px solid #f0f0f0"><br>
+        <div class="switch" (click)="toggleUserPop()">
+            <img class="iconss" src="../../assets/feed.png" alt="">
+            <div class="b" (click)="signOut()">
+               <p class="switchTxt">Switch Account</p>
+            </div>
+            
+        </div>
+        <div class="switch" (click)="toggleUserPop()">
+            <img class="iconss" src="../../assets/you.png" alt="">
+            <a [routerLink]="['/channel',currentUser.user_id]"  style="text-decoration: none; color : black">
+                <div class="b">
+                    <p class="switchTxt">Your Channel</p>
+                 </div>
+            </a>
+            
+            
+        </div>
+        <div class="switch" (click)="toggleUserPop()">
+            <img class="iconss" src="../../assets/you.png" alt="">
+            <a [routerLink]="['/premium']" style="text-decoration: none;color : black">
+            <div class="b">
+               <p class="switchTxt">Soutube Premium</p>
+            </div>
+            </a>
+            
+        </div>
+        <div class="switch" (click)="toggleUserPop()">
+            <img class="iconss" src="../../assets/location.png" alt="">
+            <div class="b">
+               <p class="switchTxt">Location : Indonesia</p>
+            </div>
+            
+        </div>
+        <div class="switch" (click)="toggleUserPop()">
+            <img class="iconss" src="../../assets/keyboard.png" alt="">
+            <div class="b" (click)="toggleKey()">
+               <p class="switchTxt">Keyboard Shortcut</p>
+            </div>
+            
+        </div>
+        <div class="switch" (click)="toggleUserPop()">
+            <div class="b">
+               <p class="switchTxt" style="margin-left : 50px">Restricted mode : off</p>
+               
+            </div>
+            
+        </div>
+    </div>
+
+    <div *ngIf="user != null" class="signDiv"  id="signDived" (click)="toggleUserPop()">
+        <img class="userIcon" src="{{user.photoUrl}}" alt="">
+        <!-- <p class="signInText">{{user.name}}</p> -->
+    </div>
+    <img src="../../assets/signin.png" (click)="signInWithGoogle()" *ngIf="!user" class="signButton" alt="">
+
+    <img  (click)="toggleMore()" *ngIf="!user"  src="../../assets/more.png" alt="" class="more">
+    <img src="../../assets/bell.png" *ngIf="user"  alt="" (click)="toggleAdd()" class="add">
+    <img src="../../assets/add.png" *ngIf="user"  alt="" (click)="toggleAdd()" id="ad" class="add">
+    <div *ngIf="(more)" class="morePop">
+        <div class="loc">
+            <img src="../../assets/location.png" alt="" class="locIcon"> <p class="locText">Location :Indonesia</p>
+        </div>
+        <div class="key" (click)="toggleKey()">
+            <img src="../../assets/keyboard.png" alt="" class="kyb"> <p class="keyText">Keyboard Shortcuts</p>
+        </div>
+        <hr class="divider">
+        <div class="restricted">
+            <p class="res">Restricted Mode : Off</p>
+        </div>
+        
+    </div>
+    <div class="searchDiv">
+        <!-- <form [formGroup]="stateForm" autocomplete="new-password" novalidate>
+            <input class ="searchBar" (click)="toggleAC()"  formControlName="search"   type="text" placeholder=" Search">
+        </form>
+        <div>
+            <div  *ngIf="showAC" class="autoComplete">
+                <div class="autoC" (click)="selectValue(c.processor)" *ngFor="let c of computers | searchFilter : getSearchValue()">
+                    {{c.processor}}
+                </div>
+            </div>
+        </div> -->
+        <input class ="searchBar" type="text" placeholder=" Search" id="searchIn" (keyup)="refreshAC()">
+        <a href="">
+            <div class="searchIconDiv">
+                <img class="searchIcon" src="../../assets/search.png" alt="">
+            </div>
+        </a>
+        <div class="ac" *ngIf="showAc">
+            <div *ngFor="let video of videos" >
+                <div class="isi" (click)="getSearch(video.video_title)">
+                    {{video.video_title}}
+                </div>
+                
+            </div>
+            <div *ngFor="let ac of allchannel" >
+                <div class="isi" (click)="getSearch(ac.user_name)">
+                    {{ac.user_name}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <a routerLink="/create" style="text-decoration: none;color: black">
+        <div *ngIf="(showAdd)" class="addPop" >
+            <div class="upCont">
+                <img src="../../assets/upload.png" alt=""  class="upIcon">
+                <p class="upText">Upload Video</p>
+            </div>
+        </div>
+    </a>
+    
+    <!-- <app-sign-in></app-sign-in> -->
+    
+    <!-- <button (click)="signOut()" *ngIf="user">SignOut</button> -->
+</div>
+
+<div class="overlay" *ngIf="showKey">
+
+    
+</div>
+<div class="modalKey" *ngIf="showKey">
+    <div class="head">
+        <p class="keyTit">Keyboard shortcuts</p>
+    </div>
+    <div class="isinya">
+        <div class="left">
+            <p class="playT"><b>PLAYBACK</b></p>
+            <hr class="garis">
+            <pre class="txt">Toggle play/pause                                                                                        [SPACE]</pre>
+            <hr class="garis">
+            <pre class="txt">Rewind 10 seconds                                                                                            j</pre>
+            <hr class="garis">
+            <pre class="txt">Fast forward 10 seconds                                                                                    l</pre>
+            <hr class="garis">
+            <pre class="txt">Previous video                                                                                                   P</pre>
+            <hr class="garis">
+            <pre class="txt">Next video                                                                                                          N</pre>
+            <hr class="garis">
+            <pre class="txt">Toggle full screen                                                                                                f</pre>
+            <hr class="garis">
+            <pre class="txt">Mute                                                                                                                   m</pre>
+            <hr class="garis">
+        </div>
+    </div>
+    <div class="footer">
+        <div class="dismiss" (click)="toggleKey()">
+            <p>DISMISS</p>
+        </div>
+    </div>
+</div>

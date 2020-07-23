@@ -1,0 +1,45 @@
+<div class="container" [ngClass]="{containerSmall: !message}">
+    <div class="header" [ngClass]="{headerS: !message}">
+        <div class="chan" [ngClass]="{chanS: !message}">
+            <img src="{{user.img_url}}" class="icon" alt="">
+            <div class="det">
+                <p class="name"><b>{{user.user_name}}</b></p>
+                <p class="subs">{{subbed.length}} subscribers</p>
+            </div>
+            
+        </div>
+        <div class="but" [ngClass]="{butS: !message}" *ngIf="curUser == user.email" > 
+            <button style="margin-right: 10px;background-color: #2359d9;color : white;border : none">CUSTOMIZE CHANNEL</button>
+            <a routerLink="/studio/{{user.user_id}}"><button style="background-color: #2359d9;color : white;border : none">SOUTUBE STUDIO</button></a>
+        </div>
+        <div class="but" [ngClass]="{butS : !message}" *ngIf="curUser != user.email" >
+            <button *ngIf="!doneSubbed" style="margin-right: 10px;background-color: #2359d9;color : white;border : none" (click)="addSubs()">SUBSCRIBE</button>
+            <button *ngIf="doneSubbed" style="margin-right: 10px;background-color: #4d4d4d;color : white;border : none" (click)="unSubs()">SUBSCRIBE</button>
+        </div>
+        <div class="feature"  [ngClass]="{featureS: !message}">
+            <a [routerLink]="['/channel/',user.user_id]" style="text-decoration: none;color : black;"><div class="home">HOME</div></a>
+            <a [routerLink]="['/videoChannel/',user.user_id]" style="text-decoration: none;color : black;"><div class="videos">VIDEOS</div></a>
+            <a routerLink=""><div class="playlist" style="text-decoration: none;color : black;">PLAYLISTS</div></a>
+            <a routerLink=""><div class="com" style="text-decoration: none;color : black;">COMMUNITY</div></a>
+            <a routerLink=""><div class="about" style="text-decoration: none;color : black;">ABOUT</div></a>
+        </div>
+    </div>
+
+    <div class="content" [ngClass]="{contentS: !message}">
+        <h3>Recently Uploads</h3>
+        <div style="display : flex;flex-direction : row">
+            <!-- <div class="uploads" *ngIf="i < 5"> -->
+                <div>
+                    <app-card-channel *ngFor="let video of sortedVideos ; let i = index"  [video]="video" [i]="i"></app-card-channel>
+                </div>
+                
+                
+                <div class="last" [ngClass]="{lastS: sortedVideos.length < 5}">
+                    <a [routerLink]="['/videoChannel/',user.user_id]" style="text-decoration : none;color : white,">
+                        <p style="text-decoration : none; color : white,">See all videos</p>
+                    </a>
+                </div>
+                
+        </div>
+    </div>
+</div>
