@@ -33,19 +33,19 @@
         <div class="feature">
             <div class="like" (click)="addLike(reply.reply_id)" *ngIf="!likedrep" >
                 <img src="../../assets/like.png" alt="" class="likeIcon">
-                <p class="likeText">{{likedreply.length}}</p>
+                <p class="likeText">{{convertMetricNumber(likedreply.length)}}</p>
             </div>
             <div class="like" (click)="unLike(reply.reply_id)" *ngIf="likedrep" >
                 <img src="../../assets/liked.png" alt="" class="likeIcon">
-                <p class="likeText">{{likedreply.length}}</p>
+                <p class="likeText">{{convertMetricNumber(likedreply.length)}}</p>
             </div>
             <div class="like" (click)="addDislike(reply.reply_id)" *ngIf="!dislikedrep">
                 <img src="../../assets/dislike.png" alt="" class="likeIcon">
-                <p class="likeText">{{dislikedreply.length}}</p>
+                <p class="likeText">{{convertMetricNumber(dislikedreply.length)}}</p>
             </div>
             <div class="like" (click)="unDislike(reply.reply_id)" *ngIf="dislikedrep">
                 <img src="../../assets/disliked.png" alt="" class="likeIcon">
-                <p class="likeText">{{dislikedreply.length}}</p>
+                <p class="likeText">{{convertMetricNumber(dislikedreply.length)}}</p>
             </div>
             <div class="like" (click)="show(reply.reply_id)">
                 <p class="likeText"><b>REPLY</b></p>

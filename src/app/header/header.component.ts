@@ -4,6 +4,8 @@ import { SocialUser, SocialAuthService, GoogleLoginProvider } from 'angularx-soc
 import { Apollo } from 'apollo-angular';
 import gql from 'graphql-tag';
 import { variable } from '@angular/compiler/src/output/output_ast';
+import { AnyTxtRecord } from 'dns';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +19,9 @@ export class HeaderComponent implements OnInit {
   videos : any
   showKey : Boolean;
   allchannel : any;
-  constructor(private data : DataServiceService, private authService : SocialAuthService,private apollo : Apollo) { }
+  playlists : any
+  isi : any;
+  constructor(private data : DataServiceService, private authService : SocialAuthService,private apollo : Apollo, private router : Router) { }
 
   ngOnInit(): void {
     this.data.currentMessage.subscribe(message =>this.message = message)
@@ -109,9 +113,29 @@ export class HeaderComponent implements OnInit {
         }).valueChanges.subscribe(result => {
           this.videos = result.data.videos
         })
+        this.apollo.watchQuery<any>({
+          query: gql `
+          query getPlaylists {
+            playlists {
+              playlist_id
+              playlist_name
+              visibility
+              user_id
+              day
+              month
+              year
+              hour
+              minute
+              second
+            }
+          }
+          `
+          }).valueChanges.subscribe(result => {
+            this.playlists = result.data.playlists
+          })
     }
     else{
-      this.refreshAC(document.getElementById("searchIn").value)
+      this.refreshAC()
     }
 
     this.apollo.watchQuery<any>({
@@ -359,12 +383,39 @@ export class HeaderComponent implements OnInit {
         `
         }).valueChanges.subscribe(result => {
           this.allchannel = result.data.users
-          alert("asd")
+          
         })
+
+        this.apollo.watchQuery<any>({
+          query: gql `
+          query getPlaylists {
+            playlists {
+              playlist_id
+              playlist_name
+              visibility
+              user_id
+              day
+              month
+              year
+              hour
+              minute
+              second
+            }
+          }
+          `
+          }).valueChanges.subscribe(result => {
+            this.playlists = result.data.playlists
+          })
+
         
+  }
+  move(){
+    this.isi = document.getElementById("searchIn").value;
+    this.router.navigate(["/search/"+this.isi])
   }
 
   refreshAC(){
+    this.isi = document.getElementById("searchIn").value;
     this.apollo.watchQuery<any>({
       query: gql `
       query getAllVideoLike($video_title : String!) {
@@ -408,6 +459,20 @@ export class HeaderComponent implements OnInit {
         }).valueChanges.subscribe(result => {
           this.allchannel = result.data.checkChannelLike
         })
+        this.apollo.watchQuery<any>({
+          query: gql `
+          query checkPlaylistLike($playlist_name : String!){
+            checkPlaylistLike(playlist_name : $playlist_name){
+              playlist_name
+            }
+          }
+          `,
+          variables :{
+            playlist_name : "%" + document.getElementById("searchIn").value +"%"
+          }
+          }).valueChanges.subscribe(result => {
+            this.playlists = result.data.checkPlaylistLike
+          })
   }
 
   getSearch(video_title : String){

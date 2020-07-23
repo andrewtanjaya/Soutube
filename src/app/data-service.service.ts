@@ -12,8 +12,10 @@ export class DataServiceService {
   userSource; 
   private messageSource = new BehaviorSubject<Boolean>(true);
   private q = new BehaviorSubject<number>(0);
+  private playlistbs = new BehaviorSubject<number>(0);
   currentMessage = this.messageSource.asObservable()
   nextQ = this.q.asObservable()
+  playIndex = this.playlistbs.asObservable()
   private logState = new BehaviorSubject<Boolean>(false);
   loggedIn = this.logState.asObservable();
   
@@ -166,5 +168,9 @@ getCurrentuser(currentUser : SocialUser){
 
   changeQ(q : number){
     this.q.next(q);
+  }
+
+  changeIndex(playIndex : number){
+    this.playlistbs.next(playIndex)
   }
 }

@@ -16,6 +16,26 @@ export class CardChannelComponent implements OnInit {
   @Input() i : {}
   constructor(private _Activatedroute:ActivatedRoute , private apollo : Apollo) { }
 
+
+  convertMetricNumber(num: number): string {
+    for(let i: number = 0; i < this.ranges.length; i++){
+      if(num >= this.ranges[i].divider){
+        return Math.floor((num / this.ranges[i].divider)).toString() + this.ranges[i].suffix
+      }
+    }
+
+    return num.toString();
+  } 
+
+  ranges = [
+    { divider: 1e18 , suffix: 'E' },
+    { divider: 1e15 , suffix: 'P' },
+    { divider: 1e12 , suffix: 'T' },
+    { divider: 1e9 , suffix: 'B' },
+    { divider: 1e6 , suffix: 'M' },
+    { divider: 1e3 , suffix: 'k' }
+  ];
+  
   ngOnInit(): void {
 
     this._Activatedroute.paramMap.subscribe(params => { 

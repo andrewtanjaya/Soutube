@@ -69,7 +69,7 @@ export class ContentComponent implements OnInit {
       })
       .valueChanges.subscribe(result => {
         this.videos = result.data.videos;
-        
+        console.log(this.videos)
       });
   }
 

@@ -101,11 +101,10 @@
             </div>
         </div> -->
         <input class ="searchBar" type="text" placeholder=" Search" id="searchIn" (keyup)="refreshAC()">
-        <a href="">
-            <div class="searchIconDiv">
+
+            <div class="searchIconDiv" (click) ="move()">
                 <img class="searchIcon" src="../../assets/search.png" alt="">
             </div>
-        </a>
         <div class="ac" *ngIf="showAc">
             <div *ngFor="let video of videos" >
                 <div class="isi" (click)="getSearch(video.video_title)">
@@ -116,6 +115,11 @@
             <div *ngFor="let ac of allchannel" >
                 <div class="isi" (click)="getSearch(ac.user_name)">
                     {{ac.user_name}}
+                </div>
+            </div>
+            <div *ngFor="let ac of playlists" >
+                <div class="isi" (click)="getSearch(ac.playlist_name)">
+                    {{ac.playlist_name}}
                 </div>
             </div>
         </div>

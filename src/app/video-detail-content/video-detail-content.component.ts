@@ -34,6 +34,25 @@ export class VideoDetailContentComponent implements OnInit {
   showPlay = false
   playlists : any
   constructor(private data : DataServiceService, private _Activatedroute:ActivatedRoute, private apollo : Apollo,private router : Router) { }
+  
+  convertMetricNumber(num: number): string {
+    for(let i: number = 0; i < this.ranges.length; i++){
+      if(num >= this.ranges[i].divider){
+        return Math.floor((num / this.ranges[i].divider)).toString() + this.ranges[i].suffix
+      }
+    }
+
+    return num.toString();
+  } 
+
+  ranges = [
+    { divider: 1e18 , suffix: 'E' },
+    { divider: 1e15 , suffix: 'P' },
+    { divider: 1e12 , suffix: 'T' },
+    { divider: 1e9 , suffix: 'B' },
+    { divider: 1e6 , suffix: 'M' },
+    { divider: 1e3 , suffix: 'k' }
+  ];
 
   togglePlay(){
     this.showPlay = !this.showPlay
@@ -75,7 +94,7 @@ export class VideoDetailContentComponent implements OnInit {
       variables:{
         playlist_name : playname,
         user_id : this.currentUser.user_id,
-        visbility : visi,
+        visibility : visi,
         day : today.getDate(),
         month : today.getMonth() + 1,
         year : today.getFullYear(),
@@ -85,8 +104,8 @@ export class VideoDetailContentComponent implements OnInit {
 
       },refetchQueries:[{
         query: gql `
-      query getPlaylistUser($user_id : Int!){
-        getPlaylistUser(user_id : $user_id){
+      query getPlayListUser($user_id : Int!){
+        getPlayListUser(user_id : $user_id){
           playlist_name,
           user_id,
           visibility,
@@ -105,7 +124,7 @@ export class VideoDetailContentComponent implements OnInit {
 
       }]
     }).subscribe(result => {
-      
+      alert("added")
     })
 
   }
@@ -164,6 +183,8 @@ export class VideoDetailContentComponent implements OnInit {
       this.id = params.get('vidId'); 
       this.initializeView();
       this.initializeVideo();
+      
+      
     });
 
   }
@@ -568,6 +589,34 @@ export class VideoDetailContentComponent implements OnInit {
     }).valueChanges.subscribe(result => {
     
     this.currentUser = result.data.getUserId
+
+    this.apollo.watchQuery<any>({
+      query: gql `
+      query getPlayListUser ($user_id : Int!){
+        getPlayListUser(user_id : $user_id) {
+          user_id
+          playlist_id
+          playlist_name
+          visibility
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second
+        }
+      }
+      `,
+      variables:{
+        user_id: this.currentUser.user_id
+      }
+    }).valueChanges.subscribe(result => {
+      this.playlists = result.data.getPlayListUser;
+      
+      // alert(this.playlists)
+      // alert("BOO")
+      console.log(this.playlists)
+    });
     console.log(this.currentUser)
     console.log("HIHIHI")
     })
@@ -806,6 +855,35 @@ keyChecker(e : any){
   }
 }
 
+
+addToPlaylist(playlist_id){
+  if(document.getElementById("ch"+playlist_id).checked){
+    this.apollo.mutate({
+      mutation: gql `
+      mutation createList($playlist_id : Int! , $video_id : Int!){
+        createList(
+          input : {
+            playlist_id : $playlist_id,
+            video_id : $video_id,
+          }
+        ){
+          playlist_id,
+          video_id,
+          list_id
+        }
+      }
+      `,
+      variables:{
+        playlist_id : playlist_id,
+        video_id : this.id
+  
+      }
+      
+    }).subscribe(result => {
+      alert("added To Playlist")
+    })
+  }
+}
 
 
 }

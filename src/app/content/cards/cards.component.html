@@ -28,7 +28,7 @@
                 
                 <div style="display: flex ;flex-direction: row;color : #4d4d4d;margin-top : -23px">
                     <div>
-                        <pre style="font-family: arial;" >{{view.length}} views • </pre>
+                        <pre style="font-family: arial;" >{{convertMetricNumber(view.length)}} views • </pre>
                     </div>
                     <div [innerHtml]="dateDetail">
     
@@ -36,6 +36,7 @@
                 </div>
                 
                 <div class="durate" id="dur{{video.video_id}}" [innerHtml] = "durr"></div>
+                <img *ngIf="video.premium == 'Yes'" src="../../../assets/premium.png" class="pre" alt="">
             </div>
         </div>
     </a>

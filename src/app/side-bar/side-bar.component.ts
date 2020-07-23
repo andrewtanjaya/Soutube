@@ -15,9 +15,15 @@ export class SideBarComponent implements OnInit {
   message : Boolean;
   curUser : any
   subbed : any
+  index : number;
+  indox : number
   constructor(private data : DataServiceService, private apollo : Apollo, private authService : SocialAuthService) { }
 
   ngOnInit(): void {
+    this.index = 5
+    this.indox = 5
+    this.playMore = false
+    this.subsMore = false
     this.data.currentMessage.subscribe(message =>this.message = message)
     if(localStorage.getItem("users")){
       this.findUser();
@@ -168,4 +174,23 @@ subbedChannel : any
     })
   }
 
+  playMore : Boolean
+  togglePlaymore(){
+    if(!this.playMore) this.index = 1000000
+    else{
+      this.index = 5
+    }
+    this.playMore = !this.playMore
+    
+
+  }
+
+  subsMore : Boolean;
+  togleSubs(){
+    if(!this.subsMore) this.indox = 1000000
+    else{
+      this.indox = 5
+    }
+    this.subsMore = !this.subsMore
+  }
 }

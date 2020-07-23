@@ -1,8 +1,35 @@
 <div class="container" [ngClass]="{containerSmall: !message}">
-    <div class="cont">
+    <div class="cont" *ngIf="!check">
         <img src="../../assets/feed.png" alt="" class="icon">
         <h2>Don’t miss new videos</h2>
         <p> Sign in to see updates from your favorite YouTube channels</p>
     </div>
-    
+    <div style="display : flex ;flex-direction : column;" *ngIf="check">
+        <div>
+            <h3>Today</h3>
+            <hr>
+            <h3 *ngIf="today.length < 1">None</h3>
+            
+            <app-cards *ngFor="let video of today" [video]="video"></app-cards>
+            
+            
+        </div>
+        <div>
+            <h3>This Weeks</h3>
+            <hr>
+            <h3 *ngIf="week.length < 1">None</h3>
+            
+            <app-cards *ngFor="let video of week" [video]="video"></app-cards>
+            
+            
+        </div>
+        <div>
+            
+            <h3>This Month</h3>
+            <hr>
+            <h3 *ngIf="months.length < 1">None</h3>
+            
+            <app-cards *ngFor="let video of months" [video]="video"></app-cards>
+        </div>
+    </div>
 </div>

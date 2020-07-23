@@ -69,6 +69,12 @@ import { TravellingcatComponent } from './travellingcat/travellingcat.component'
 import { TravellingcatdetailComponent } from './travellingcatdetail/travellingcatdetail.component';
 import { EntertainmentcatComponent } from './entertainmentcat/entertainmentcat.component';
 import { EntertainmentcatdetailComponent } from './entertainmentcatdetail/entertainmentcatdetail.component';
+import { PlaycardComponent } from './playcard/playcard.component';
+import { SearchComponent } from './search/search.component';
+import { SearchcontentComponent } from './searchcontent/searchcontent.component';
+import { SearchPlayComponent } from './search-play/search-play.component';
+import { SearchvideoComponent } from './searchvideo/searchvideo.component';
+import { SubspageComponent } from './subspage/subspage.component';
 //untilHere
 
 @NgModule({
@@ -122,7 +128,13 @@ import { EntertainmentcatdetailComponent } from './entertainmentcatdetail/entert
     TravellingcatComponent,
     TravellingcatdetailComponent,
     EntertainmentcatComponent,
-    EntertainmentcatdetailComponent
+    EntertainmentcatdetailComponent,
+    PlaycardComponent,
+    SearchComponent,
+    SearchcontentComponent,
+    SearchPlayComponent,
+    SearchvideoComponent,
+    SubspageComponent
   ],
   imports: [
     MatVideoModule,

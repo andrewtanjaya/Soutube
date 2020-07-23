@@ -1,0 +1,22 @@
+<div class="container" [ngClass]="{containerSmall: !message}">
+    <div *ngFor="let channel of allchannel">
+        <a routerLink="/channel/{{channel.user_id}}" style="text-decoration: none;color:black">
+            <div class="card">
+                <div class="video">
+                    <img src="{{channel.img_url}}" class="thumbuser" alt="">
+                </div>
+                <div class="detail">
+                    <p class="title">{{channel.user_name}}</p>
+                    <p class="details">{{channel.subscriber_count}} subscriber</p>
+                    <!-- <p class="detailss">ITZY Wannabe</p> -->
+                </div>
+            </div>
+        </a>
+    </div>
+    <div *ngFor="let play of playlists">
+        <app-search-play [play] = "play"></app-search-play>
+    </div>
+    <div *ngFor="let video of videos">
+        <app-searchvideo [video]="video"></app-searchvideo>
+    </div>
+</div>

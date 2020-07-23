@@ -36,7 +36,13 @@ export class ChannelContentComponent implements OnInit {
               membership,
               email,
               img_url,
-              subscriber_count
+              subscriber_count,
+              day,
+              month,
+              year,
+              hour,
+              minute,
+              second
             }
           }
         `,
@@ -61,6 +67,58 @@ export class ChannelContentComponent implements OnInit {
           }
         }).valueChanges.subscribe(result => {
           this.subbed = result.data.getSubscriber
+          // console.log(this.id)
+          // console.log(this.user.membership)
+          // console.log(this.user.img_url)
+          // console.log(this.user.email)
+          // console.log(this.user.user_name)
+          // console.log(this.subbed.length)
+          // console.log(this.user.day)
+          this.apollo.mutate({
+            mutation: gql `
+
+            mutation updateUser (
+                    $user_id : Int!,
+                    $membership : Boolean!,
+                    $img_url : String!,
+                    $email : String!,
+                    $user_name : String!,
+                    $subscriber_count : Int!,
+                    $day : Int!,
+                    $month : Int!,
+                    $year : Int!,
+                    $hour : Int!,
+                    $minute : Int!,
+                    $second : Int!
+
+            ) {
+              updateUser(
+                user_id : $user_id , input : { membership : $membership , img_url : $img_url , email : $email , user_name : $user_name, subscriber_count : $subscriber_count , day : $day, month : $month , year : $year , hour : $hour , minute : $minute, second : $second }
+              ){
+                user_id,
+                
+              }
+            } 
+            `,
+            variables:{
+              user_id : this.id,
+              membership : this.user.membership,
+              img_url : this.user.img_url,
+              email : this.user.email,
+              user_name : this.user.user_name,
+              subscriber_count : this.subbed.length,
+              day : this.user.day,
+              month : this.user.month,
+              year : this.user.year,
+              hour : this.user.hour,
+              minute : this.user.minute,
+              second : this.user.second
+            }
+          }).subscribe((result) => {
+          },(error) => {
+        
+            console.log('there was an error sending the query', error);
+          });
         })
     });
     this.apollo.watchQuery<any>({

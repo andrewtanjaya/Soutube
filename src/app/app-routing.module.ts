@@ -17,7 +17,7 @@ import { GamingCatComponent } from './gaming-cat/gaming-cat.component';
 import { NewscatComponent } from './newscat/newscat.component';
 import { TravellingcatComponent } from './travellingcat/travellingcat.component';
 import { EntertainmentcatComponent } from './entertainmentcat/entertainmentcat.component';
-
+import { SearchComponent } from './search/search.component';
 
 const routes: Routes = [
   {path:"", redirectTo:"/home", pathMatch: 'full'},
@@ -34,11 +34,12 @@ const routes: Routes = [
   {path:"create",component:AddVideoComponent},
   // {path:"uploadDetail",component:UploadDetailComponent},
   {path:"videoPlayer/:vidId",component:VideoDetailComponent},
-  {path:"playlist",component:PlaylistComponent},
+  {path:"playlist/:playlist_id",component:PlaylistComponent},
   {path:"channel/:user_id",component:ChannelComponent},
   {path:"videoChannel/:user_id",component:VideoChannelComponent},
   {path:"studio/:user_id",component:StudioComponent},
   {path:"edit/:video_id",component:EditVideoComponent},
+  {path:"search/:value",component:SearchComponent},
 ];
 
 @NgModule({

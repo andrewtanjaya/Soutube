@@ -79,27 +79,48 @@
     
     
     <div *ngIf="getUserFromStorage()" class="listPlaylist">
-        <a routerLink="/playlist">
-            <div class="trending" *ngFor="let playlist of playlists" >
-                <img src="../../assets/playlist.png" alt="" class= "trendIcon">
-                <p class="homeText">{{playlist.playlist_name}}</p>
+        
+            <div >
+                <div *ngFor="let playlist of playlists , let i = index" >
+                    <div class="trending"  *ngIf=" i  < index ">
+                        <a routerLink="/playlist/{{playlist.playlist_id}}">
+                            <div>
+                                <img src="../../assets/playlist.png" alt="" class= "trendIcon">
+                                <p class="homeText">{{playlist.playlist_name}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
             </div>
-        </a>
+            
+            
         
 
-        <div class="trending" >
+        <div class="trending" (click)="togglePlaymore()" *ngIf="!playMore" >
             <img src="../../assets/down.png" style="width: 15px;margin-left : 28px" alt="" class= "trendIcon">
             <p class="homeText">Show All Playlist</p>
+        </div>
+        <div class="trending" (click)="togglePlaymore()" *ngIf="playMore">
+            <img src="../../assets/down.png" style="width: 15px;margin-left : 28px" alt="" class= "trendIcon">
+            <p class="homeText">Hide Playlist</p>
         </div>
     </div>
     <hr *ngIf="getUserFromStorage()"  class ="divider3" >
     <p *ngIf="getUserFromStorage()"  class="boyText" ><b>SUBSCRIPTIONS</b></p>
     <div class="listPlaylist" *ngIf="getUserFromStorage()"  >
-        <app-subside *ngFor="let sub of subbed" [sub]="sub"></app-subside>
+        <div *ngFor="let sub of subbed, let i = index">
+            <app-subside *ngIf="i < indox"  [sub]="sub"></app-subside>
+        </div>
+        
 
-        <div class="trending" [ngClass]="{ activeTrending: isActive(10) }" (click) ="activate(10)">
+        <div class="trending" [ngClass]="{ activeTrending: isActive(10) }" *ngIf="!subsMore" (click)="togleSubs()">
             <img src="../../assets/down.png" style="width: 15px;margin-left : 28px" alt="" class= "trendIcon">
             <p class="homeText">Show All Subscription</p>
+        </div>
+        <div class="trending" [ngClass]="{ activeTrending: isActive(10) }" *ngIf="subsMore" (click)="togleSubs()">
+            <img src="../../assets/down.png" style="width: 15px;margin-left : 28px" alt="" class= "trendIcon">
+            <p class="homeText">Hide Subscription</p>
         </div>
     </div>
 

@@ -1,0 +1,9 @@
+<div class="queue" >
+    <div class="imgVid">
+        <img src="{{video.video_thumb}}" class="thumb" alt="">
+    </div>
+    <div class="vidTitle">
+        <p class="tit">{{video.video_title}}</p>
+        <a [routerLink]="['/channel/',user.user_id]" style="text-decoration: none;" ><p class="chan">{{user.user_name}}</p></a>
+    </div>
+</div>

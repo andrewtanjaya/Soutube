@@ -12,9 +12,12 @@
         <div id="likeLine">
 
         </div>
-        <div class="popPlay" *ngIf="showPlay" >
-            <div>
-                <input type="checkbox" name="" id="">Indo Songs
+        <div class="popPlay" *ngIf="showPlay"  >
+            <div *ngFor="let playlist of playlists">
+                <div>
+                    <input type="checkbox" name="" id="ch{{playlist.playlist_id}}" (click)="addToPlaylist(playlist.playlist_id)">{{playlist.playlist_name}}
+                </div>
+                
             </div>
             <div style="display: flex;flex-direction: column;">
                 New Playlist
@@ -34,7 +37,7 @@
         <div class="feature">
             <h2 style="margin-top : 30px">{{video.video_title}}</h2>  
             <div class="views" style="display : flex; flex-direction : row" >
-                <pre style="font-family: arial;">{{view.length}} views • </pre>
+                <pre style="font-family: arial;">{{convertMetricNumber(view.length)}} views • </pre>
                 <div [innerHtml]="dateDetail" ></div>
             </div>
             <!-- <a routerLink="/playlist"> -->

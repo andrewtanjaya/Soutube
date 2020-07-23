@@ -19,7 +19,24 @@ doneSubbed : boolean
 curUserAll : any
 subbed  : any
   constructor(private data : DataServiceService, private apollo : Apollo,private _Activatedroute : ActivatedRoute) { }
+  convertMetricNumber(num: number): string {
+    for(let i: number = 0; i < this.ranges.length; i++){
+      if(num >= this.ranges[i].divider){
+        return Math.floor((num / this.ranges[i].divider)).toString() + this.ranges[i].suffix
+      }
+    }
 
+    return num.toString();
+  } 
+
+  ranges = [
+    { divider: 1e18 , suffix: 'E' },
+    { divider: 1e15 , suffix: 'P' },
+    { divider: 1e12 , suffix: 'T' },
+    { divider: 1e9 , suffix: 'B' },
+    { divider: 1e6 , suffix: 'M' },
+    { divider: 1e3 , suffix: 'k' }
+  ];
   ngOnInit(): void {
     this.data.currentMessage.subscribe(message =>this.message = message)
     this.curUser = JSON.parse(localStorage.getItem("users"))[0].email

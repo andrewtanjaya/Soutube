@@ -16,6 +16,26 @@ export class CardsComponent implements OnInit {
   constructor(private data : DataServiceService ,private apollo : Apollo) { }
   user : SocialUser;
   view : any;
+
+  ranges = [
+    { divider: 1e18 , suffix: 'E' },
+    { divider: 1e15 , suffix: 'P' },
+    { divider: 1e12 , suffix: 'T' },
+    { divider: 1e9 , suffix: 'B' },
+    { divider: 1e6 , suffix: 'M' },
+    { divider: 1e3 , suffix: 'k' }
+  ];
+
+  convertMetricNumber(num: number): string {
+    for(let i: number = 0; i < this.ranges.length; i++){
+      if(num >= this.ranges[i].divider){
+        return Math.floor((num / this.ranges[i].divider)).toString() + this.ranges[i].suffix
+      }
+    }
+
+    return num.toString();
+  } 
+
   ngOnInit(): void {
     
     
@@ -44,7 +64,7 @@ export class CardsComponent implements OnInit {
       this.dateDetail = "<p>" + (today.getFullYear() - this.video.year) +" year ago</p>"
     }
     else if(today.getMonth()+1 > this.video.month){
-      this.dateDetail = "<p>" + (today.getMonth()+ - this.video.month) +" month ago</p>"
+      this.dateDetail = "<p>" + (today.getMonth()+1 - this.video.month) +" month ago</p>"
     }
     else if(today.getDate() > this.video.day){
       this.dateDetail = "<p>" + (today.getDate() - this.video.day) +" day ago</p>"
@@ -105,5 +125,7 @@ export class CardsComponent implements OnInit {
   togglePlaylist(){
     this.showMore = !this.showMore
   }
+
+  
 
 }
