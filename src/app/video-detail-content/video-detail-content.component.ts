@@ -39,7 +39,75 @@ export class VideoDetailContentComponent implements OnInit {
   }
 
   addPlaylist(){
-    
+    let playname = document.getElementById("namep").value
+    let visi = document.getElementById("vs").value
+    let today = new Date()
+    this.apollo.mutate({
+      mutation: gql `
+      mutation createPlaylist($playlist_name : String! , $user_id : Int!, $visibility : String!, $day : Int! , $month : Int!, $year : Int! , $hour : Int!, $minute : Int!, $second : Int!){
+        createPlaylist(
+          input : {
+            playlist_name : $playlist_name,
+            user_id : $user_id,
+            visibility : $visibility,
+            day : $day,
+            month : $month,
+            year : $year,
+            hour : $hour,
+            minute : $minute,
+            second : $second
+          }
+        ){
+          playlist_id,
+          playlist_name,
+          user_id,
+          visibility,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second
+        }
+      }
+      `,
+      variables:{
+        playlist_name : playname,
+        user_id : this.currentUser.user_id,
+        visbility : visi,
+        day : today.getDate(),
+        month : today.getMonth() + 1,
+        year : today.getFullYear(),
+        hour : today.getHours(),
+        minute : today.getMinutes(),
+        second : today.getSeconds()
+
+      },refetchQueries:[{
+        query: gql `
+      query getPlaylistUser($user_id : Int!){
+        getPlaylistUser(user_id : $user_id){
+          playlist_name,
+          user_id,
+          visibility,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second
+        }
+      }
+      `,
+      variables:{
+        video_id : this.id
+      }
+
+      }]
+    }).subscribe(result => {
+      this.viewed = true
+      // window.location.reload()
+    })
+
   }
   ngOnInit(): void {
     this.viewed = false
