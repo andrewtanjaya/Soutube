@@ -32,6 +32,7 @@ export class VideoDetailContentComponent implements OnInit {
   observer : any
   lastIndex  = 4
   showPlay = false
+  playlists : any
   constructor(private data : DataServiceService, private _Activatedroute:ActivatedRoute, private apollo : Apollo,private router : Router) { }
 
   togglePlay(){
@@ -99,13 +100,12 @@ export class VideoDetailContentComponent implements OnInit {
       }
       `,
       variables:{
-        video_id : this.id
+        user_id : this.currentUser.user_id
       }
 
       }]
     }).subscribe(result => {
-      this.viewed = true
-      // window.location.reload()
+      
     })
 
   }
