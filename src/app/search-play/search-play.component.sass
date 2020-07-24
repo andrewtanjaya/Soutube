@@ -6,7 +6,7 @@
 
     @media screen and (max-width : 1250px)
         margin-left : 55px
-        width : 630px
+        width : 830px
     @media screen and (max-width : 991px)
         margin-left : 25px
         width : 450px
@@ -30,12 +30,18 @@
     max-width : 250px
     height : 150px
     margin : 0 auto
+    @media screen and (max-width : 600px)
+        max-width : 200px
+        height : 130px
 
 .thumbuser
     display : flex
     height : 150px
     margin : 0 auto
     border-radius : 75px
+    @media screen and (max-width : 600px)
+        max-width : 200px
+        height : 130px
 
 .detail
     padding-top : 1px
@@ -45,6 +51,9 @@
 
 .title
     font-family : arial
+    overflow : hidden
+    white-space : nowrap
+    text-overflow : ellipsis
 
 .details
     font-family : arial
@@ -54,9 +63,18 @@
 
 .detailss
     position : absolute
-
     margin-top : -85px
     margin-left : 345px
     font-family : arial
     color : #4d4d4d
     font-size : 13px
+    @media screen and (max-width : 1250px)
+        margin-left : 322px
+        margin-top : -80px 
+    @media screen and (max-width : 991px)
+        margin-left : 292px
+        margin-top : -80px  
+
+    @media screen and (max-width : 600px)
+        margin-left : 230px
+        margin-top : -75px

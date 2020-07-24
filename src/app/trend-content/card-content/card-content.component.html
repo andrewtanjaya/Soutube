@@ -14,4 +14,27 @@
         </div>
     </div>
 </a>
-<a class="name" href="/channel/{{user.user_id}}" style="position: absolute;width: 100px;height: 20px;font-size: 13px;margin-top : -112px;margin-left : 345px;text-decoration: none;color : #4d4d4d">{{user.user_name}} </a>
+<img *ngIf="getUsers()" src="../../../assets/more.png" class="moreIcon" alt="" (click)="toggleMore()">
+<div class="popMore" *ngIf="showMore">
+    <div class="addPlay" style="display : flex;flex-direction : row">
+        <div>
+            <img src="../../../assets/playlist.png" class="plIcon" alt="">
+        </div>
+        
+        <div>
+            <p>Save to playlist</p>
+        </div>
+    </div>
+    <div class="addPlay" style="display : flex;flex-direction : row">
+        <div>
+            <img src="../../../assets/queue.png" class="plIcon" alt="">
+        </div>
+        
+        <div>
+            <p>Add to queue</p>
+        </div>
+    </div>
+    
+
+</div>
+<a class="name" href="/channel/{{user.user_id}}" >{{user.user_name}} </a>

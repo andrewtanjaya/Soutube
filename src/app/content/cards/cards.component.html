@@ -1,6 +1,6 @@
 <div class="besar">
     <div class="moreIcon" id="bang{{video.video_id}}" (click)="togglePlaylist()">
-        <img src="../../../assets/more.png" class="moree" alt="">
+        <img *ngIf="getUser()" src="../../../assets/more.png" class="moree" alt="">
     </div>
     <a [routerLink]="['/videoPlayer', video.video_id]" routerLinkActive="router-link-active"  style="text-decoration: none;color : black">
         <div class="card" [ngClass]="{cardS: !message}">

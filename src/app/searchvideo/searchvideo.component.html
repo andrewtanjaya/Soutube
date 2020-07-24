@@ -11,7 +11,7 @@
         
     </div>
 </a>
-<img src="../../assets/more.png" class="moreIcon" (click)="toggleMore()" alt="">
+<img *ngIf="getUser()" src="../../assets/more.png" class="moreIcon" (click)="toggleMore()" alt="">
 <div class="popMore" *ngIf="showMore">
     <div class="addPlay" style="display : flex;flex-direction : row">
         <div>

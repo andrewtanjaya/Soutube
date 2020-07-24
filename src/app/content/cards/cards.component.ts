@@ -139,9 +139,12 @@ export class CardsComponent implements OnInit {
   }
 
   togglePlaylist(){
+    if(localStorage.getItem("users"))
     this.showMore = !this.showMore
   }
 
   
-
+getUser(){
+  return localStorage.getItem('users')
+}
 }

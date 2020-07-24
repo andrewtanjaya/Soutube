@@ -52,7 +52,7 @@
                 </div>
                 
                 
-                <div class="last" >
+                <div class="last" [ngClass]="{lastS: randomize.length < 5}" >
                     <a [routerLink]="['/videoChannel/',user.user_id]" style="text-decoration : none;color : white,">
                         <p style="text-decoration : none; color : white,">See all videos</p>
                     </a>

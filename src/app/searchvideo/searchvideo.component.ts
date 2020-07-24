@@ -56,4 +56,8 @@ view : any;
     this.showMore = !this.showMore
   }
 
+  getUser(){
+    return localStorage.getItem('users')
+  }
+
 }

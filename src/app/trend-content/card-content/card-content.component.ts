@@ -12,6 +12,7 @@ export class CardContentComponent implements OnInit {
 @Input() i :{}
 view : any;
 user : any;
+showMore : Boolean
   constructor(private apollo : Apollo) { }
   ranges = [
     { divider: 1e18 , suffix: 'E' },
@@ -33,6 +34,7 @@ user : any;
   } 
 
   ngOnInit(): void {
+    this.showMore = false
     this.getView(this.video.video_id)
     this.getUser(this.video.user_id)
 
@@ -120,5 +122,13 @@ user : any;
     }).valueChanges.subscribe(result => {
       this.view = result.data.getView
     });
+  }
+
+  toggleMore(){
+    this.showMore = !this.showMore
+  }
+
+  getUsers(){
+    return localStorage.getItem("users")
   }
 }

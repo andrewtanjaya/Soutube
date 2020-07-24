@@ -44,16 +44,24 @@ h2
     width : 60vw
     height : 120px
     padding-left : 70px
+    @media screen and (max-width : 1250px)
+        width : 50vw
 
 .header
     background-color : #cecece
     width : 82vw
     height : 150px
+    @media screen and (max-width : 991px)
+        width : 60vw
+    @media screen and (max-width : 600px)
+        margin-left : 15px
+        height : 130px
 
 .headerS
     background-color : #cecece
     width : 94vw
     height : 150px
+    
 
 .name
     margin-top : 25px
@@ -183,9 +191,11 @@ button
     margin : 0 auto
     display : flex
     justify-content : center
-
     height : 120px
     max-width : 200px
+    @media screen and (max-width : 600px)
+        max-width : 435px
+        height : 230px
 
 
 .detailVideo

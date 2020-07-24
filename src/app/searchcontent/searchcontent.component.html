@@ -1,4 +1,5 @@
 <div class="container" [ngClass]="{containerSmall: !message}">
+    <img src="../../assets/sort.png" class="sortIcon" alt="">
     <div *ngFor="let channel of allchannel">
         <a routerLink="/channel/{{channel.user_id}}" style="text-decoration: none;color:black">
             <div class="card">
