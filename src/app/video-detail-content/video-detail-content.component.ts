@@ -56,6 +56,54 @@ export class VideoDetailContentComponent implements OnInit {
 
   togglePlay(){
     this.showPlay = !this.showPlay
+
+  }
+
+  short(event){
+    let Myvideo = (document.getElementsByTagName('mat-video')[0] as HTMLVideoElement).querySelector('video');
+    var x = event.keyCode
+    // alert(this.key)
+    if(x === 75 ){
+      if(Myvideo.paused){
+        Myvideo.play();
+      }
+      else{
+        Myvideo.pause();
+      }
+    }
+    if(x === 74){
+      Myvideo.currentTime -=10 
+    }
+    if(x === 76){
+      Myvideo.currentTime += 10
+    }
+    if(x === 38){
+      if(Myvideo.volume < 1){
+        Myvideo.volume += 0.1
+      var a = (((Myvideo.closest("mat-video").querySelector("mat-volume-control")
+                  .querySelector("mat-slider").querySelector(".mat-slider-thumb-container"))) as HTMLElement);
+      var min = (1-Myvideo.volume)*100;
+      var c = "translate(-" + min +"%)";
+      a.style.transform = c;
+
+      console.log(a);
+      a.querySelector(".mat-slider-thumb-label-text").innerHTML = Myvideo.volume.toString();
+      }
+    }
+    if(x === 40){
+      if(Myvideo.volume > 0){
+        Myvideo.volume -= 0.1
+        var a = (((Myvideo.closest("mat-video").querySelector("mat-volume-control")
+                  .querySelector("mat-slider").querySelector(".mat-slider-thumb-container"))) as HTMLElement);
+      var min = (1-Myvideo.volume)*100;
+      var c = "translate(-" + min +"%)";
+      a.style.transform = c;
+
+      console.log(a);
+      a.querySelector(".mat-slider-thumb-label-text").innerHTML = Myvideo.volume.toString();
+      }
+      
+    }
   }
 
   addPlaylist(){
@@ -128,7 +176,9 @@ export class VideoDetailContentComponent implements OnInit {
     })
 
   }
+  
   ngOnInit(): void {
+    this.key = true
     this.viewed = false
     let mat = document.getElementById("vi");
     mat.querySelector("video").addEventListener("ended",
@@ -163,12 +213,16 @@ export class VideoDetailContentComponent implements OnInit {
       do {
           if (targetElement == flyoutElement) {
               this.key = true
+              document.addEventListener("keyup", this.short , false);
               return;
           }
           targetElement = targetElement.parentNode;
       } while (targetElement);
       this.key = false
+      document.removeEventListener("keyup",this.short)
   });
+
+  
 
 
     this.haveLiked  = false
