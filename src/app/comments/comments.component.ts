@@ -26,7 +26,7 @@ export class CommentsComponent implements OnInit {
   liked : boolean
   id :any;
   constructor(private apollo : Apollo,private _Activatedroute : ActivatedRoute) { }
-  
+
   convertMetricNumber(num: number): string {
     for(let i: number = 0; i < this.ranges.length; i++){
       if(num >= this.ranges[i].divider){
@@ -84,10 +84,11 @@ export class CommentsComponent implements OnInit {
 
   saveChange(comment_id : number){
     let newComment = (document.getElementById("text"+comment_id) as HTMLInputElement).value
+    let today = new Date()
     this.apollo.mutate({
       mutation: gql `
-      mutation updateComment($comment_id : Int!, $comment : String!){
-        updateComment(comment_id: $comment_id , comment : $comment
+      mutation updateComment($comment_id : Int!, $comment : String!, $day : Int!, $month : Int!, $year : Int!, $hour : Int! , $minute : Int! , $second : Int!){
+        updateComment(comment_id: $comment_id , comment : $comment , day : $day, month : $month , year : $year , hour : $hour , minute : $minute , second : $second
         ){
           comment_id,
           user_id,
@@ -95,12 +96,24 @@ export class CommentsComponent implements OnInit {
           comment,
           like_count,
           dislike_count,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second
         }
       }
       `,
       variables:{
         comment_id : comment_id,
-        comment : newComment
+        comment : newComment,
+        day : today.getDate(),
+        month : today.getMonth()+1,
+        year : today.getFullYear(),
+        hour : today.getHours(),
+        minute : today.getMinutes(),
+        second : today.getSeconds(),
       },
       refetchQueries:[{
         query: gql `
@@ -112,6 +125,12 @@ export class CommentsComponent implements OnInit {
             comment,
             like_count,
             dislike_count,
+            day,
+            month,
+            year,
+            hour,
+            minute,
+            second
           }
         }
       `,
@@ -124,7 +143,7 @@ export class CommentsComponent implements OnInit {
       alert("Comment Updated");
       document.getElementById("muncul"+comment_id).style.display = "none"
       document.getElementById("hilang"+comment_id).style.display = "block"
-      // window.location.reload();
+      window.location.reload();
     })
   }
 

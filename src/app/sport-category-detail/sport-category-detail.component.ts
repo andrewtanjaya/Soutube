@@ -60,4 +60,8 @@ export class SportCategoryDetailComponent implements OnInit {
 
   }
 
+  getUser(){
+    return localStorage.getItem("users")
+  }
+
 }

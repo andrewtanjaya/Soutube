@@ -399,9 +399,34 @@ export class VideoDetailContentComponent implements OnInit {
   }
 
   sortNew(){
+    this.apollo.watchQuery<any>({
+      query: gql `
+      query getComment($video_id : Int!){
+        getComment(video_id : $video_id){
+          comment_id,
+          user_id,
+          video_id,
+          comment,
+          like_count,
+          dislike_count,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second, 
+        }
+      }
+      `,
+      variables:{
+        video_id : this.id
+      }
+    }).valueChanges.subscribe(result => {
+      this.comments = result.data.getComment
     this.comments.sort((a,b)=> 
       ((((a.day*86400)+(a.month*86400*30)+(a.year*86400*30*12)+(a.hour*3600)+(a.minute*60)+(a.second)) < ((b.day*86400)+(b.month*86400*30)+(b.year*86400*30*12)+(b.hour*3600)+(b.minute*60)+(b.second))) ? 1 : -1)
     )
+  })
   }
 
   sortTop(){
@@ -430,7 +455,7 @@ export class VideoDetailContentComponent implements OnInit {
     }).valueChanges.subscribe(result => {
       this.comments = result.data.getComment
       this.comments.sort((a,b) =>
-      ((this.getLikeComment(a.comment_id) && (this.getLikeComment(a.comment_id).length) > (this.getLikeComment(b.comment_id).length))) ? 1 : -1
+      ((this.getLikeComment(a.comment_id) &&  this.getLikeComment(a.comment_id) && (this.getLikeComment(a.comment_id).length) > (this.getLikeComment(b.comment_id).length))) ? 1 : -1
     )
     })
    
@@ -454,7 +479,6 @@ export class VideoDetailContentComponent implements OnInit {
       }
     }).valueChanges.subscribe(result => {
       likedComment = result.data.getLikedComment
-      console.log(likedComment)
       return likedComment
     })
   }

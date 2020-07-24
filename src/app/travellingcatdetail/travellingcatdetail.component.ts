@@ -60,4 +60,8 @@ export class TravellingcatdetailComponent implements OnInit {
 
   }
 
+  getUser(){
+    return localStorage.getItem("users")
+  }
+
 }

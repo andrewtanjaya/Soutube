@@ -59,4 +59,8 @@ export class NewcatdetailComponent implements OnInit {
     });
   }
 
+
+  getUser(){
+    return localStorage.getItem("users")
+  }
 }

@@ -36,7 +36,7 @@ export class ReplyComponent implements OnInit {
     { divider: 1e6 , suffix: 'M' },
     { divider: 1e3 , suffix: 'k' }
   ];
-  
+
   ngOnInit(): void {
     let today = new Date()
     if(today.getFullYear() > this.reply.year){
@@ -188,21 +188,12 @@ export class ReplyComponent implements OnInit {
   del(reply_id : number){
     this.apollo.mutate({
       mutation: gql `
-      mutation updateReply($id : Int!, $comment_id : Int!, $user_id : Int! , $reply : String!){
-        updateReply( id : $id ,input:{comment_id : $comment_id , user_id : $user_id, reply : $reply}
-        ){
-          comment_id,
-          user_id,
-          reply_id,
-          reply
-        }
+      mutation deleteReply($reply_id : Int!){
+        deleteReply( id : $reply_id)
       }
       `,
       variables:{
-        id : reply_id,
-        comment_id : 123, //asal aj gpp soalny yg diupdate cuma isi doang
-        user_id : 123,
-        reply : document.getElementById("ins"+this.reply.reply_id).value
+        reply_id : reply_id,
       },
       refetchQueries:[{
         query: gql `
@@ -212,6 +203,12 @@ export class ReplyComponent implements OnInit {
           comment_id,
           reply,
           user_id,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second
         }
       }
       `,
@@ -221,23 +218,28 @@ export class ReplyComponent implements OnInit {
       }]
     }).subscribe(result => {
 
-      alert("Reply Updated");
-      document.getElementById("muncul"+this.reply.reply_id).style.display = "none"
-    document.getElementById("hilang"+this.reply.reply_id).style.display = "block"
-      // window.location.reload();
+      alert("Reply Deleted");
+      window.location.reload();
     })
   }
 
   saveChanges(reply_id : number){
+    let today = new Date()
     this.apollo.mutate({
       mutation: gql `
-      mutation updateReply($id : Int!, $comment_id : Int!, $user_id : Int! , $reply : String!){
-        updateReply( id : $id ,input:{comment_id : $comment_id , user_id : $user_id, reply : $reply}
+      mutation updateReply($id : Int!, $comment_id : Int!, $user_id : Int! , $reply : String! , $day : Int! , $month : Int! , $year : Int!, $hour : Int! , $minute : Int! , $second : Int!){
+        updateReply( id : $id ,input:{comment_id : $comment_id , user_id : $user_id, reply : $reply , day : $day , month : $month , year : $year, hour : $hour , minute : $minute , second : $second}
         ){
           comment_id,
           user_id,
           reply_id,
-          reply
+          reply,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second
         }
       }
       `,
@@ -245,7 +247,13 @@ export class ReplyComponent implements OnInit {
         id : reply_id,
         comment_id : 123, //asal aj gpp soalny yg diupdate cuma isi doang
         user_id : 123,
-        reply : document.getElementById("ins"+this.reply.reply_id).value
+        reply : document.getElementById("ins"+this.reply.reply_id).value,
+        day : today.getDate(),
+        month : today.getMonth()+1,
+        year : today.getFullYear(),
+        hour : today.getHours(),
+        minute : today.getMinutes(),
+        second : today.getSeconds(),
       },
       refetchQueries:[{
         query: gql `
@@ -255,6 +263,12 @@ export class ReplyComponent implements OnInit {
           comment_id,
           reply,
           user_id,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second
         }
       }
       `,
@@ -285,24 +299,37 @@ export class ReplyComponent implements OnInit {
   }
 
   rep(reply : any){
+    let today =  new Date()
     this.apollo.mutate({
       mutation: gql `
-      mutation createReply($comment_id : Int!, $user_id : Int!, $reply : String!){
+      mutation createReply($comment_id : Int!, $user_id : Int!, $reply : String! , $day : Int! , $month : Int! , $year : Int! ,$hour : Int!, $minute : Int! , $second : Int!){
         createReply(input :{
-          comment_id : $comment_id , user_id : $user_id , reply : $reply
+          comment_id : $comment_id , user_id : $user_id , reply : $reply , day : $day , month : $month , year : $year , hour : $hour , minute : $minute , second : $second
         }
         ){
           reply_id,
           comment_id,
           user_id,
           reply,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second,
         }
       }
       `,
       variables:{
         comment_id : reply.comment_id,
         user_id : this.currUser.user_id,
-        reply : document.getElementById("replyTxt"+reply.reply_id).value
+        reply : document.getElementById("replyTxt"+reply.reply_id).value,
+        day : today.getDate(),
+        month : today.getMonth()+1,
+        year : today.getFullYear(),
+        hour : today.getHours(),
+        minute : today.getMinutes(),
+        second : today.getSeconds(),
       },
       refetchQueries:[{
         query: gql `
@@ -312,6 +339,12 @@ export class ReplyComponent implements OnInit {
           comment_id,
           reply,
           user_id,
+          day,
+          hour,
+          month,
+          year,
+          minute,
+          second
         }
       }
       `,

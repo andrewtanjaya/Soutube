@@ -86,4 +86,8 @@ getviewcount(video_id : number) : any{
     return view
   })
 }
+
+getUser(){
+  return localStorage.getItem("users")
+}
 }
