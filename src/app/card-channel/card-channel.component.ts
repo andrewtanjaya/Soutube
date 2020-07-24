@@ -35,7 +35,7 @@ export class CardChannelComponent implements OnInit {
     { divider: 1e6 , suffix: 'M' },
     { divider: 1e3 , suffix: 'k' }
   ];
-  
+
   ngOnInit(): void {
 
     this._Activatedroute.paramMap.subscribe(params => { 
@@ -103,7 +103,7 @@ export class CardChannelComponent implements OnInit {
       this.dateDetail = "<p>" + (today.getFullYear() - this.video.year) +" year ago</p>"
     }
     else if(today.getMonth()+1 > this.video.month){
-      this.dateDetail = "<p>" + (today.getMonth()+ - this.video.month) +" month ago</p>"
+      this.dateDetail = "<p>" + (today.getMonth()+1 - this.video.month) +" month ago</p>"
     }
     else if(today.getDate() > this.video.day){
       this.dateDetail = "<p>" + (today.getDate() - this.video.day) +" day ago</p>"

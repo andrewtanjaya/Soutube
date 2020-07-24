@@ -37,7 +37,23 @@ export class CardsComponent implements OnInit {
   } 
 
   ngOnInit(): void {
-    
+    document.addEventListener("click", (evt) => {
+      const flyoutElement = document.getElementById("bang"+this.video.video_id);
+      let targetElement = evt.target; // clicked element
+  
+      do {
+          if (targetElement == flyoutElement) {
+              // Do nothing, just return.
+              this.showMore = true
+              return;
+          }
+          // Go up the DOM.
+          targetElement = targetElement.parentNode;
+      } while (targetElement);
+  
+      // Do something useful here.
+      this.showMore = false
+  });
     
     if(this.video.video_duration/60 < 10){
       if(this.video.video_duration%60 < 10){

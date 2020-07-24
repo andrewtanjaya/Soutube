@@ -208,6 +208,7 @@ export class VideoDetailContentComponent implements OnInit {
           age_restriction,
           visibility,
           location_video,
+          video_duration,
           status,
           premium,
           user_id,
@@ -423,6 +424,162 @@ export class VideoDetailContentComponent implements OnInit {
     }).valueChanges.subscribe(result => {
       this.view = result.data.getView
       if(localStorage.getItem("users")){
+        if(this.viewed == false){
+          this.apollo.mutate({
+            mutation: gql `
+            mutation createView($user_id : Int! , $video_id : Int!, $view_count : Int!){
+              createView(
+                input : {
+                  user_id : $user_id,
+                  video_id : $video_id,
+                  view_count : $view_count,
+                }
+              ){
+                view_id,
+              video_id,
+              view_count,
+              user_id,
+              }
+            }
+            `,
+            variables:{
+              user_id : this.currentUser.user_id,
+              video_id : this.id,
+              view_count : 1
+            },refetchQueries:[{
+              query: gql `
+            query getView($video_id : Int!){
+              getView(video_id : $video_id){
+                view_id,
+                video_id,
+                view_count,
+                user_id,
+              }
+            }
+            `,
+            variables:{
+              video_id : this.id
+            }
+
+            }]
+          }).subscribe(result => {
+            this.viewed = true
+            this.apollo.mutate({
+              mutation: gql `
+              mutation updateVideo (
+                    $id : Int!,
+                    $video_url : String!,
+                    $video_title : String!,
+                    $video_desc : String!,
+                    $video_cat : String!,
+                    $video_thumb : String!,
+                    $playlist_id : Int!,
+                    $like_count : Int!,
+                    $dislike_count : Int!,
+                    $age_restriction : String!,
+                    $visibility : String!,
+                    $location_video : String!,
+                    $status : String!,
+                    $premium : String!,
+                    $view_count : Int!,
+                    $user_id : Int!,
+                    $video_duration : Int!,
+                    $day : Int!,
+                    $month : Int!,
+                    $year : Int!,
+                    $hour : Int!,
+                    $minute : Int!,
+                    $second : Int!,
+              ) {
+                updateVideo(
+                  id : $id,
+                  input: {
+                    video_url : $video_url,
+                    video_title : $video_title,
+                    video_desc : $video_desc,
+                    video_cat : $video_cat,
+                    video_thumb : $video_thumb ,
+                    playlist_id : $playlist_id,
+                    like_count : $like_count,
+                    dislike_count : $dislike_count,
+                    age_restriction : $age_restriction,
+                    visibility : $visibility,
+                    location_video : $location_video,
+                    status : $status,
+                    premium : $premium,
+                    view_count : $view_count,
+                    user_id : $user_id,
+                    video_duration : $video_duration,
+                    day : $day,
+                    month : $month,
+                    year : $year,
+                    hour : $hour,
+                    minute : $minute,
+                    second : $second,
+                  }
+                ){
+                  video_id,
+                  video_url,
+                  video_title,
+                  video_desc,
+                  video_cat,
+                  video_thumb,
+                  playlist_id,
+                  like_count,
+                  dislike_count,
+                  age_restriction,
+                  visibility,
+                  location_video,
+                  status,
+                  premium,
+                  view_count,
+                  user_id,
+                  video_duration,
+                  day,
+                  month,
+                  year,
+                  hour,
+                  minute,
+                  second,
+                }
+              } 
+              `,
+              variables:{
+                id : this.id,
+                video_url : this.video.video_url,
+                video_title : this.video.video_title,
+                video_desc : this.video.video_desc,
+                video_cat : this.video.video_cat,
+                video_thumb : this.video.video_thumb,
+                playlist_id : this.video.playlist_id,
+                like_count : this.video.like_count,
+                dislike_count : this.video.dislike_count,
+                age_restriction : this.video.age_restriction,
+                visibility : this.video.visibility,
+                location_video : this.video.location_video,
+                status : this.video.status,
+                premium : this.video.premium,
+                view_count : this.view.length+1,
+                user_id : this.video.user_id,
+                video_duration : this.video.video_duration,
+                day : this.video.day,
+                month : this.video.month,
+                year : this.video.year,
+                hour : this.video.hour,
+                minute : this.video.minute,
+                second : this.video.second,
+                
+              }
+            }).subscribe((result) => {
+    
+            },(error) => {
+        
+              console.log('there was an error sending the query', error);
+            });
+            // window.location.reload()
+          })
+        }
+        
       // this.apollo.watchQuery<any>({
       //   query: gql `
       //   query checkView($video_id : Int! , $user_id : Int!){
@@ -441,49 +598,7 @@ export class VideoDetailContentComponent implements OnInit {
       // }).valueChanges.subscribe(result => {
       //   this.checkView = result.data.checkView
         // if(this.checkView.user_id == 0){
-          if(this.viewed == false){
-            this.apollo.mutate({
-              mutation: gql `
-              mutation createView($user_id : Int! , $video_id : Int!, $view_count : Int!){
-                createView(
-                  input : {
-                    user_id : $user_id,
-                    video_id : $video_id,
-                    view_count : $view_count,
-                  }
-                ){
-                  view_id,
-                video_id,
-                view_count,
-                user_id,
-                }
-              }
-              `,
-              variables:{
-                user_id : this.currentUser.user_id,
-                video_id : this.id,
-                view_count : 1
-              },refetchQueries:[{
-                query: gql `
-              query getView($video_id : Int!){
-                getView(video_id : $video_id){
-                  view_id,
-                  video_id,
-                  view_count,
-                  user_id,
-                }
-              }
-              `,
-              variables:{
-                video_id : this.id
-              }
-  
-              }]
-            }).subscribe(result => {
-              this.viewed = true
-              // window.location.reload()
-            })
-          }
+          
         // }
       // })
     }

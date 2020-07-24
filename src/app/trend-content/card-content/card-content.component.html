@@ -1,12 +1,17 @@
-<a routerLink="/videoPlayer" style="text-decoration: none;color:black">
+<a routerLink="/videoPlayer/{{video.video_id}}" style="text-decoration: none;color:black" *ngIf="i < 20">
     <div class="card">
         <div class="video">
-    
+            <img src="{{video.video_thumb}}" class="thumb" alt="">
         </div>
         <div class="detail">
-            <p class="title">Wannabe</p>
-            <p class="details">ITZY • 2132M views • 3 days ago</p>
-            <p class="detailss">ITZY Wannabe</p>
+            <p class="title">{{video.video_title}}</p>
+            <div style="display : flex">
+                <p class="details" style="margin-left : 100px">• {{convertMetricNumber(view.length)}} views •</p>
+                <p class="details" style="margin-left : 10px ; margin-top : -26px;font-size : 13px" [innerHtml] = "dateDetail">{{user.user_name}} • {{view.length}} views • 3 days ago</p>
+            </div>
+            <p class="details" [innerHtml] = "durr">{{user.user_name}} • {{view.length}} views • 3 days ago</p>
+            <p class="detailss">{{video.video_desc}}</p>
         </div>
     </div>
 </a>
+<a class="name" href="/channel/{{user.user_id}}" style="position: absolute;width: 100px;height: 20px;font-size: 13px;margin-top : -112px;margin-left : 345px;text-decoration: none;color : #4d4d4d">{{user.user_name}} </a>

@@ -8,8 +8,9 @@ import gql from 'graphql-tag';
   styleUrls: ['./search-play.component.sass']
 })
 export class SearchPlayComponent implements OnInit {
-@Input() play: {playlist_id : number,playlist_name : String}
+@Input() play: {playlist_id : number,playlist_name : String,user_id : number}
 playlist : any
+user: any
   constructor( private apollo : Apollo) { }
 
   ngOnInit(): void {
@@ -30,6 +31,24 @@ playlist : any
       this.playlist = result.data.getList;
       // alert(this.playlists)
       
+    });
+
+    this.apollo.watchQuery({
+      query: gql `
+        query getUser($user_id : Int!){
+          getUser(user_id : $user_id) {
+            user_id
+            user_name
+            membership
+            img_url
+          }
+        }
+      `,
+      variables:{
+        user_id: this.play.user_id
+      }
+    }).valueChanges.subscribe(result => {
+      this.user = result.data.getUser
     });
   }
 

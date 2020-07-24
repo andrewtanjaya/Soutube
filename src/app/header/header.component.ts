@@ -240,7 +240,7 @@ export class HeaderComponent implements OnInit {
         
         this.currentUser = result.data.getUserId
         console.log(this.currentUser)
-        console.log("HIHIHI")
+        window.location.reload()
         })
 
     });

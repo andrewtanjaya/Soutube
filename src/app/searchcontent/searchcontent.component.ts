@@ -81,7 +81,8 @@ export class SearchcontentComponent implements OnInit {
             query checkPlaylistLike($playlist_name : String!){
               checkPlaylistLike(playlist_name : $playlist_name){
                 playlist_name,
-                playlist_id
+                playlist_id,
+                user_id
               }
             }
             `,

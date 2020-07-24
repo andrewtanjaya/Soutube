@@ -14,7 +14,7 @@
             <button style="margin-right: 10px;background-color: #2359d9;color : white;border : none">CUSTOMIZE CHANNEL</button>
             <a routerLink="/studio/{{user.user_id}}"><button style="background-color: #2359d9;color : white;border : none">SOUTUBE STUDIO</button></a>
         </div>
-        <div class="but" [ngClass]="{butS : !message}" *ngIf="curUser != user.email" >
+        <div class="but" [ngClass]="{butS : !message}" *ngIf="curUser && curUser != user.email" >
             <button *ngIf="!doneSubbed" style="margin-right: 10px;background-color: #2359d9;color : white;border : none" (click)="addSubs()">SUBSCRIBE</button>
             <button *ngIf="doneSubbed" style="margin-right: 10px;background-color: #4d4d4d;color : white;border : none" (click)="unSubs()">SUBSCRIBE</button>
         </div>

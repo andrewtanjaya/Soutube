@@ -18,6 +18,7 @@ export class SubContentComponent implements OnInit {
   week : any;
   months : any;
   ngOnInit(): void {
+    
     this.data.currentMessage.subscribe(message =>this.message = message)
     this.check = JSON.parse(localStorage.getItem("users"))[0]
     this.apollo.watchQuery<any>({
@@ -108,7 +109,7 @@ export class SubContentComponent implements OnInit {
                 ((((a.day*86400)+(a.month*86400*30)+(a.year*86400*30*12)+(a.hour*3600)+(a.minute*60)+(a.second)) < ((b.day*86400)+(b.month*86400*30)+(b.year*86400*30*12)+(b.hour*3600)+(b.minute*60)+(b.second))) ? 1 : -1)
               )
               this.week = this.videos.filter(function(video){
-                return video.day <= now.getDate()+7 && video.month == now.getMonth()+1 && video.year == now.getFullYear();
+                return video.day >= now.getDate()-7 && video.month == now.getMonth()+1 && video.year == now.getFullYear();
               })
               this.week = this.week.sort((a,b) =>
               ((((a.day*86400)+(a.month*86400*30)+(a.year*86400*30*12)+(a.hour*3600)+(a.minute*60)+(a.second)) < ((b.day*86400)+(b.month*86400*30)+(b.year*86400*30*12)+(b.hour*3600)+(b.minute*60)+(b.second))) ? 1 : -1)

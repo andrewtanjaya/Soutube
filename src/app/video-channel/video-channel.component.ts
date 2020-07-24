@@ -39,7 +39,7 @@ subbed  : any
   ];
   ngOnInit(): void {
     this.data.currentMessage.subscribe(message =>this.message = message)
-    this.curUser = JSON.parse(localStorage.getItem("users"))[0].email
+    
     this._Activatedroute.paramMap.subscribe(params => { 
       this.id = params.get('user_id'); 
       this.apollo.watchQuery<any>({
@@ -98,25 +98,28 @@ subbed  : any
         this.subbed = result.data.getSubscriber
       })
     });
-    this.apollo.watchQuery<any>({
-    query: gql `
-    query getUserId ($email : String!) {
-      getUserId(email: $email) {
-        user_id,
-        user_name,
-        membership,
-        email,
-      }
+    if(localStorage.getItem("users")){
+      this.curUser = JSON.parse(localStorage.getItem("users"))[0].email
+      this.apollo.watchQuery<any>({
+        query: gql `
+        query getUserId ($email : String!) {
+          getUserId(email: $email) {
+            user_id,
+            user_name,
+            membership,
+            email,
+          }
+        }
+        `,
+        variables:{
+            email : this.curUser,
+        }
+        }).valueChanges.subscribe(result => {
+        // alert(this.comment.comment_id)
+        this.curUserAll = result.data.getUserId
+        this.checkSubbed()
+        });
     }
-    `,
-    variables:{
-        email : this.curUser,
-    }
-    }).valueChanges.subscribe(result => {
-    // alert(this.comment.comment_id)
-    this.curUserAll = result.data.getUserId
-    this.checkSubbed()
-    });
     
 
     this.apollo

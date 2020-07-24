@@ -9,10 +9,12 @@ import gql from 'graphql-tag';
 })
 export class SearchvideoComponent implements OnInit {
 @Input() video :{}
+showMore : Boolean
   constructor(private apollo : Apollo) { }
   user:any;
 view : any;
   ngOnInit(): void {
+    this.showMore = false
     this.apollo.watchQuery<any>({
       query: gql `
       query getView($video_id : Int!){
@@ -48,6 +50,10 @@ view : any;
     }).valueChanges.subscribe(result => {
       this.user = result.data.getUser
     });
+  }
+
+  toggleMore(){
+    this.showMore = !this.showMore
   }
 
 }

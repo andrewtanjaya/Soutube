@@ -87,7 +87,7 @@ export class PlaylistContentComponent implements OnInit {
           this.dateDetail = "<p>" + (today.getFullYear() - this.playlistIdentity.year) +" year ago</p>"
         }
         else if(today.getMonth()+1 > this.playlistIdentity.month){
-          this.dateDetail = "<p>" + (today.getMonth()+ - this.playlistIdentity.month) +" month ago</p>"
+          this.dateDetail = "<p>" + (today.getMonth()+1 - this.playlistIdentity.month) +" month ago</p>"
         }
         else if(today.getDate() > this.playlistIdentity.day){
           this.dateDetail = "<p>" + (today.getDate() - this.playlistIdentity.day) +" day ago</p>"

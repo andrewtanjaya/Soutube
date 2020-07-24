@@ -24,5 +24,5 @@
         <p class= "enterText">Entertainment</p>
     </div>
     <hr>
-    <app-card-content *ngFor="let item of [].constructor(40) ; let i = index"></app-card-content>
+    <app-card-content *ngFor="let video of videos , let i = index" [video] = "video" [i]="i"></app-card-content>
 </div>

@@ -12,9 +12,12 @@
             <button style="margin-right: 10px;background-color: #2359d9;color : white;border : none">CUSTOMIZE CHANNEL</button>
             <a routerLink="/studio/{{user.user_id}}"><button style="background-color: #2359d9;color : white;border : none">SOUTUBE STUDIO</button></a>
         </div>
-        <div class="but" [ngClass]="{butS : !message}" *ngIf="curUser != user.email" >
+        <div class="but" [ngClass]="{butS : !message}" *ngIf="curUser && curUser != user.email" >
             <button *ngIf="!doneSubbed" style="margin-right: 10px;background-color: #2359d9;color : white;border : none" (click)="addSubs()">SUBSCRIBE</button>
             <button *ngIf="doneSubbed" style="margin-right: 10px;background-color: #4d4d4d;color : white;border : none" (click)="unSubs()">SUBSCRIBE</button>
+            <div>
+                <img *ngIf="doneSubbed" src="../../assets/bell.png" style="width: 20px;margin-top: 5px;" alt="">
+            </div>
         </div>
         <div class="feature"  [ngClass]="{featureS: !message}">
             <a [routerLink]="['/channel/',user.user_id]" style="text-decoration: none;color : black;"><div class="home">HOME</div></a>
@@ -35,6 +38,21 @@
                 
                 
                 <div class="last" [ngClass]="{lastS: sortedVideos.length < 5}">
+                    <a [routerLink]="['/videoChannel/',user.user_id]" style="text-decoration : none;color : white,">
+                        <p style="text-decoration : none; color : white,">See all videos</p>
+                    </a>
+                </div>
+                
+        </div>
+        <h3>Random Video</h3>
+        <div style="display : flex;flex-direction : row">
+            <!-- <div class="uploads" *ngIf="i < 5"> -->
+                <div>
+                    <app-card-channel *ngFor="let vid of randomize ; let i = index"  [video]="vid" [i]="i"></app-card-channel>
+                </div>
+                
+                
+                <div class="last" >
                     <a [routerLink]="['/videoChannel/',user.user_id]" style="text-decoration : none;color : white,">
                         <p style="text-decoration : none; color : white,">See all videos</p>
                     </a>
