@@ -49,6 +49,9 @@
             
             <div>
                 <p>Save to playlist</p>
+                <div *ngFor="let play of playlists">
+                    <p (click)="addToPlaylist(play)">{{play.playlist_name}}</p>
+                </div>
             </div>
         </div>
         <div class="addPlay" style="display : flex;flex-direction : row">

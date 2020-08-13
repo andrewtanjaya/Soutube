@@ -13,7 +13,10 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
+  i = 1;
   modal : Boolean;
+  notifs :any;
+  subbed : any;
   message : Boolean;
   userState : Boolean;
   showAc : Boolean
@@ -221,6 +224,82 @@ document.addEventListener("click", (evt) => {
         }).valueChanges.subscribe(result => {
         
         this.currentUser = result.data.getUserId
+        this.apollo.watchQuery<any>({
+          query: gql `
+            query getMySubs($subscriber_id : Int!){
+              getMySubs(subscriber_id : $subscriber_id) {
+                subscriber_id,
+                user_id,
+                subs_id
+              }
+            }
+          `,
+          variables:{
+            subscriber_id: this.currentUser.user_id
+          }
+        }).valueChanges.subscribe(result => {
+          this.subbed = result.data.getMySubs
+          console.log(this.subbed)
+          if(this.subbed[0]){
+            this.apollo.watchQuery<any>({
+              query: gql `
+                query getNotif($user_id : Int!){
+                  getNotif(user_id : $user_id) {
+                    user_id,
+                    types,
+                    date,
+                    user_name,
+                    img_url
+                  }
+                }
+              `,
+              variables:{
+                user_id: this.subbed[0].user_id
+              }
+            }).valueChanges.subscribe(result => {
+              // this.notifs = new Array()
+              this.notifs = result.data.getNotif
+              
+              
+              console.log(this.notifs)
+            });
+
+          }
+          if(this.subbed[1]){
+            this.apollo.watchQuery<any>({
+              query: gql `
+                query getNotif($user_id : Int!){
+                  getNotif(user_id : $user_id) {
+                    user_id,
+                    types,
+                    date,
+                    user_name,
+                    img_url
+                  }
+                }
+              `,
+              variables:{
+                user_id: this.subbed[1].user_id
+              }
+            }).valueChanges.subscribe(result => {
+              // this.notifs = new Array()
+              // this.notifs.unshift(result.data.getNotif)
+              if(this.notifs)
+              this.notifs.push(result.data.getNotif)
+              else{
+                this.notifs = result.data.getNotif
+              }
+              // this.notifs[this.notifs.length].date = result.data.getNotif.date
+              // this.notifs[this.notifs.length].img_url = result.data.getNotif.img_url
+              // this.notifs[this.notifs.length].types = result.data.getNotif.types
+              // this.notifs[this.notifs.length].user_id = result.data.getNotif.user_id
+              console.log(this.notifs)
+              
+            });
+
+          }
+          
+        })
         console.log(this.currentUser)
         console.log("HIHIHI")
         })
@@ -516,4 +595,6 @@ document.addEventListener("click", (evt) => {
   toggleModal(){
     this.modal = !this.modal
   }
+
+  
 }

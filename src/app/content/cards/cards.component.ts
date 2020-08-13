@@ -12,10 +12,12 @@ import { SocialUser } from 'angularx-social-login';
 export class CardsComponent implements OnInit {
   @Input() video : {};
   showMore : Boolean
+  playlists: any
   message : Boolean;
   constructor(private data : DataServiceService ,private apollo : Apollo) { }
   user : SocialUser;
   view : any;
+  curUserAll : any;
 
   ranges = [
     { divider: 1e18 , suffix: 'E' },
@@ -37,6 +39,26 @@ export class CardsComponent implements OnInit {
   } 
 
   ngOnInit(): void {
+    if(JSON.parse(localStorage.getItem("users"))){
+      this.apollo.watchQuery<any>({
+        query: gql `
+        query getUserId ($email : String!) {
+          getUserId(email: $email) {
+            user_id,
+            user_name,
+            membership,
+            email,
+          }
+        }
+        `,
+        variables:{
+            email : JSON.parse(localStorage.getItem("users"))[0].email,
+        }
+      }).valueChanges.subscribe(result => {
+        // alert(this.comment.comment_id)
+        this.curUserAll = result.data.getUserId
+      });
+    }
     document.addEventListener("click", (evt) => {
       const flyoutElement = document.getElementById("bang"+this.video.video_id);
       let targetElement = evt.target; // clicked element
@@ -114,6 +136,34 @@ export class CardsComponent implements OnInit {
       }
     }).valueChanges.subscribe(result => {
       this.user = result.data.getUser
+      
+      if(JSON.parse(localStorage.getItem("users"))){
+        this.apollo.watchQuery<any>({
+          query: gql `
+          query getPlayListUser ($user_id : Int!){
+            getPlayListUser(user_id : $user_id) {
+              user_id
+              playlist_id
+              playlist_name
+              visibility
+              day,
+              month,
+              year,
+              hour,
+              minute,
+              second
+            }
+          }
+          `,
+          variables:{
+            user_id: this.curUserAll.user_id
+          }
+        }).valueChanges.subscribe(result => {
+          this.playlists = result.data.getPlayListUser;
+  
+        });
+      }
+
       console.log(this.user);
       console.log("CHECKED")
       this.apollo.watchQuery<any>({
@@ -144,7 +194,109 @@ export class CardsComponent implements OnInit {
   }
 
   
+
+  
 getUser(){
   return localStorage.getItem('users')
 }
+
+addToPlaylist(playlist){
+  this.apollo.mutate({
+    mutation: gql `
+    mutation createList($playlist_id : Int! , $video_id : Int!){
+      createList(
+        input : {
+          playlist_id : $playlist_id,
+          video_id : $video_id,
+        }
+      ){
+        playlist_id,
+        video_id,
+        list_id
+      }
+    }
+    `,
+    variables:{
+      playlist_id : playlist.playlist_id,
+      video_id : this.video.video_id
+
+    }
+    
+  }).subscribe(result => {
+    let today = new Date();
+    let des = playlist.description;
+    console.log(playlist.playlist_name)
+    console.log(playlist.playlist_id)
+    if(!playlist.description){
+      des = "no description"
+    }
+    console.log(des)
+    console.log(playlist.visibility)
+    this.apollo.mutate({
+      mutation: gql `
+      mutation updatePlaylist (
+            $id : Int!,
+            $playlist_name : String!,
+            $user_id : Int!,
+            $visibility : String!,
+            $description : String!,
+            $day : Int!,
+            $month : Int!,
+            $year : Int!,
+            $hour : Int!,
+            $minute : Int!,
+            $second : Int!,
+      ) {
+        updatePlaylist(
+          id : $id,
+          input: {
+            playlist_name : $playlist_name,
+            user_id : $user_id,
+            visibility : $visibility,
+            description : $description,
+            day : $day,
+            month : $month,
+            year : $year,
+            hour : $hour,
+            minute : $minute,
+            second : $second,
+          }
+        ){
+          playlist_name,
+          user_id
+          visibility,
+          description,
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second,
+        }
+      } 
+      `,
+      variables:{
+        id : playlist.playlist_id,
+        playlist_name : playlist.playlist_name,
+        user_id : playlist.user_id,
+        visibility : playlist.visibility,
+        description : des,
+        day : today.getDate(),
+        month : today.getMonth()+1,
+        year : today.getFullYear(),
+        hour : today.getHours(),
+        minute : today.getMinutes(),
+        second : today.getSeconds(),
+        
+      }
+    }).subscribe((result) => {
+      alert("added To Playlist")
+      window.location.reload()
+    },(error) => {
+
+      console.log('there was an error sending the query', error);
+    });
+  })
+}
+
 }

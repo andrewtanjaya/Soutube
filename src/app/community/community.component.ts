@@ -37,7 +37,7 @@ export class CommunityComponent implements OnInit {
   subbed : any;
   playlists : any;
   id : any;
-  
+
   constructor(private storage: AngularFireStorage, private db: AngularFirestore,private apollo : Apollo, private data : DataServiceService, private _Activatedroute : ActivatedRoute) { }
   convertMetricNumber(num: number): string {
     for(let i: number = 0; i < this.ranges.length; i++){
@@ -485,7 +485,39 @@ addCom(){
     }
   }).subscribe(result => {
     alert("Add Post")
-    window.location.reload()
+
+
+    this.apollo.mutate({
+      mutation: gql `
+      mutation createNotif ($user_id : Int! , $types : String!, $user_name : String!, $img_url : String!){
+        createNotif(
+          input : {
+            user_id : $user_id,
+            types : $types,
+            user_name : $user_name,
+            img_url : $img_url
+
+          }
+        ){
+          user_id,
+          types,
+          user_name,
+          img_url,
+        }
+      }
+      `,
+      variables:{
+        user_id : this.user.user_id,
+        types : "post",
+        user_name : this.user.user_name,
+        img_url : this.user.img_url,
+      },
+      
+    }).subscribe(result => {
+      alert("Add notif")
+      window.location.reload()
+    })
+
   })
 }
 

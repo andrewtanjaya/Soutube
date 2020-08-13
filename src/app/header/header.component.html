@@ -192,3 +192,18 @@
         </div>
     </div>
 </div>
+
+
+<div class="notif">
+    <div style="display: flex; flex-direction: column;">
+        <p style="margin-left : 20px"><b>Notification</b></p>
+            <div style="display: flex;" *ngFor="let notif of notifs">
+                <img *ngIf="notif" src="{{notif.img_url}}" style="width: 30px;height: 30px;margin-left: 20px;" alt="">
+                <div *ngIf="notif" style="display: flex;flex-direction: column;">
+                    <span style="font-size: 13px;margin-left : 10px">{{notif.user_name}} Posted new {{notif.types}}</span>
+                    <p style="font-size: 12px;margin-top : -2px;margin-left: 10px;">2 week ago</p>
+                </div>
+            </div>
+        
+    </div>
+</div>
