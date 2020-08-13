@@ -31,6 +31,7 @@
     "firebase": "^7.16.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.0",
+    "jw-angular-social-buttons": "^1.0.0",
     "mat-video": "^2.8.1",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

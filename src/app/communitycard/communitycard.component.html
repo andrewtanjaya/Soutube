@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="chan">
+        <img src="{{user.img_url}}" class="icon" alt="">
+        <b><p class="userName"><a href="channel/{{user.user_id}}" style="text-decoration: none; color : black">{{user.user_name}}</a></p></b>
+        <p class="userName" style="color : gray">{{getDateDiff(com.date)}}</p>
+    </div>
+    <div class="content">
+        <p class="des"><b> {{com.title}} </b> </p>
+        <p class="des">{{com.des}}</p>
+        
+        <div class="image" *ngIf="com.img_url != 'No Picture'">
+            <img class="img" src="{{com.img_url}}" alt="">
+        </div>
+    </div>
+    <div class="feature" >
+        <div (click)="like(com.id)" style="display: flex;">
+            <img src="../../assets/like.png" class="iconLike" *ngIf="!haveLiked" alt=""><span *ngIf="!haveLiked" class="likedNum">{{convertMetricNumber(liked.length)}}</span>
+            <img src="../../assets/liked.png" class="iconLike" *ngIf="haveLiked" alt=""><span *ngIf="haveLiked" class="likedNum">{{convertMetricNumber(liked.length)}}</span>
+            <!-- <i class="far fa-thumbs-up" id="likedId"  ></i> -->
+        </div>
+        <div (click)="dislike(com.id)" style="display: flex;">
+            <!-- <i class="far fa-thumbs-down" id="dislikedId"  ></i> <span class="likedNum">{{disliked.length}}</span> -->
+            <img src="../../assets/dislike.png" class="iconLike" *ngIf="!haveDisliked" alt=""><span *ngIf="!haveDisliked" class="likedNum">{{convertMetricNumber(disliked.length)}}</span>
+            <img src="../../assets/disliked.png" class="iconLike" *ngIf="haveDisliked" alt=""><span *ngIf="haveDisliked" class="likedNum">{{convertMetricNumber(disliked.length)}}</span>
+        </div>
+        
+    </div>
+</div>

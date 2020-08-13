@@ -18,6 +18,9 @@ export class DataServiceService {
   playIndex = this.playlistbs.asObservable()
   private logState = new BehaviorSubject<Boolean>(false);
   loggedIn = this.logState.asObservable();
+
+  private playQ = new BehaviorSubject<Array<any>>(null);
+  plq = this.playQ.asObservable()
   
   
   
@@ -42,19 +45,18 @@ export class DataServiceService {
     }
   }
   removeUser(){
-
     while(localStorage.getItem('users') != null){
       window.localStorage.clear();  
       console.log("Masuk clear")
     }
-    window.location.reload();
+    
     this.userSource.next(null);
+    window.location.reload();
     
   }
 
   signOut(){
     this.authService.signOut(true);
-    console.log("google sign out");
     this.removeUser();
   }
   membership : Boolean;
@@ -86,8 +88,8 @@ export class DataServiceService {
   
       this.apollo.mutate({
         mutation: gql `
-        mutation createNewUser($membership : Boolean!, $img_url : String!, $email : String!, $user_name : String!, $subscriber_count : Int!, $day : Int!, $month : Int! , $year : Int!, $hour : Int!, $minute : Int! , $second : Int!){
-          createUser(input: {membership : $membership,img_url : $img_url, email : $email , user_name : $user_name , subscriber_count : $subscriber_count, day : $day, month : $month , year : $year , hour : $hour, minute : $minute , second : $second}){
+        mutation createNewUser($membership : Boolean!, $img_url : String!, $email : String!, $user_name : String!, $subscriber_count : Int!, $day : Int!, $month : Int! , $year : Int!, $hour : Int!, $minute : Int! , $second : Int! , $back : String! , $desc : String!, $shared : String!, $premium : Time!){
+          createUser(input: {membership : $membership,img_url : $img_url, email : $email , user_name : $user_name , subscriber_count : $subscriber_count, day : $day, month : $month , year : $year , hour : $hour, minute : $minute , second : $second , back : $back , desc : $desc , shared : $shared , premium : $premium}){
             user_id,
             membership,
             img_url,
@@ -100,6 +102,10 @@ export class DataServiceService {
             hour,
             minute,
             second,
+            back,
+            desc,
+            shared,
+            premium,
           }
         }      
           `,
@@ -115,9 +121,13 @@ export class DataServiceService {
             hour : today.getHours(),
             minute : today.getMinutes(),
             second : today.getSeconds(),
+            back : "null",
+            desc : "null",
+            shared : "null",
+            premium : new Date(),
           }
       }).subscribe(result => {
-        console.log('inserted new account');
+        alert('inserted new account');
       },(error) => {
         console.log('there was an error sending the query', error);
       });
@@ -172,5 +182,9 @@ getCurrentuser(currentUser : SocialUser){
 
   changeIndex(playIndex : number){
     this.playlistbs.next(playIndex)
+  }
+
+  changePlay(plq : Array<any>){
+    this.playQ.next(plq);
   }
 }

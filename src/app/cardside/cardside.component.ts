@@ -33,6 +33,7 @@ export class CardsideComponent implements OnInit {
   ];
   
   ngOnInit(): void {
+    this.getDur(this.video.video_duration)
     this.apollo.watchQuery<any>({
       query: gql `
       query getView($video_id : Int!){
@@ -73,6 +74,29 @@ export class CardsideComponent implements OnInit {
 
   refresh(){
     window.location.reload()
+  }
+
+  getDur(video_duration){
+    if(video_duration/60 < 10){
+      if(video_duration%60 < 10){
+        this.durr = "<p>0"+Math.floor(video_duration/60)+":0"+ video_duration%60+"</p>"
+        // document.getElementById(id).innerHTML = "0"+Math.floor(this.video.video_duration/60)+":0"+ this.video.video_duration%60
+      }
+      else{
+        this.durr = "<p>0"+Math.floor(video_duration/60)+":"+ video_duration%60+"</p>"
+        // document.getElementById(id).innerHTML = "0"+Math.floor(this.video.video_duration/60)+":"+ this.video.video_duration%60
+      }
+    }
+    else{
+      if(video_duration%60 < 10){
+        this.durr = "<p>"+Math.floor(video_duration/60)+":0"+ video_duration%60+"</p>"
+        // document.getElementById(id).innerHTML = ""+Math.floor(this.video.video_duration/60)+":0"+ this.video.video_duration%60
+      }
+      else{
+        this.durr = "<p>"+Math.floor(video_duration/60)+":"+ video_duration%60+"</p>"
+        // document.getElementById(id).innerHTML = ""+Math.floor(this.video.video_duration/60)+":"+ this.video.video_duration%60
+      }
+    }
   }
 
 }

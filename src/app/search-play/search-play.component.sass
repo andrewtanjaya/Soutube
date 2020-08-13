@@ -13,9 +13,14 @@
     @media screen and (max-width : 600px)
         margin-left : 15px
         height : 130px
+    @media screen and (max-width : 375px)
+        width : 350px
+        height : 90px
+        margin-left : 15px
 
 .card:hover
     background-color : #c2c2c2
+    transition : background 2s
 
 .video 
     float : left
@@ -24,6 +29,10 @@
     @media screen and (max-width : 600px)
         width : 200px
         height : 130px
+    @media screen and (max-width : 375px)
+        max-width : 150px
+        height : 90px
+
 
 .thumb  
     display : flex
@@ -33,6 +42,25 @@
     @media screen and (max-width : 600px)
         max-width : 200px
         height : 130px
+    @media screen and (max-width : 375px)
+        max-width : 150px
+        height : 90px
+        margin-left : -10px
+
+
+.thumbS
+    display : flex
+    height : 100px
+    margin : 0 auto
+    margin-top : 30px
+    @media screen and (max-width : 600px)
+        max-width : 200px
+        height : 130px
+    @media screen and (max-width : 375px)
+        max-width : 150px
+        height : 90px
+
+        margin-top : 0px
 
 .thumbuser
     display : flex
@@ -44,26 +72,39 @@
         height : 130px
 
 .detail
-    padding-top : 1px
+    padding-top : 30px
     margin-left : 265px
     @media screen and (max-width : 600px)
         margin-left : 215px
+    @media screen and (max-width : 375px)
+        padding-top : 0px
 
 .title
     font-family : arial
     overflow : hidden
     white-space : nowrap
     text-overflow : ellipsis
+    margin-top : 10px
+    @media screen and (max-width : 375px)
+        margin-left : -10px
 
 .details
     font-family : arial
     color : #4d4d4d
-    margin-top : -14px
+    margin-top : 0px
     font-size : 13px
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    @media screen and (max-width : 768px)
+        margin-top : 30px
+    @media screen and (max-width : 375px)
+        margin-top : 10px
+        margin-left : -10px
 
 .detailss
     position : absolute
-    margin-top : -85px
+    margin-top : -92px
     margin-left : 345px
     font-family : arial
     color : #4d4d4d
@@ -74,7 +115,19 @@
     @media screen and (max-width : 991px)
         margin-left : 292px
         margin-top : -80px  
-
     @media screen and (max-width : 600px)
         margin-left : 230px
         margin-top : -75px
+    @media screen and (max-width : 375px)
+        margin-top : -70px
+        margin-left : 220px
+
+
+.save
+    position : absolute
+    margin-left : 750px
+    margin-top : -85px
+    @media screen and (max-width : 768px)
+        margin-left : 460px
+    @media screen and (max-width : 375px)
+        display : none

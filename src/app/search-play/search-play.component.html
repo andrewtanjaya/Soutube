@@ -1,13 +1,18 @@
 <a routerLink="/playlist/{{play.playlist_id}}" style="text-decoration: none;color:black">
-    <div class="card">
+    <div class="card" >
         <div class="video">
-            <img src="../../assets/playlist.png" class="thumb" alt="">
+            <img *ngIf="video" src="{{video.video_thumb}}" class="thumb" alt="">
+            <img *ngIf="!video" src="../../assets/playlist.png" class="thumbS" alt="">
         </div>
         <div class="detail">
             <p class="title">{{play.playlist_name}}</p>
             <p class="details">{{playlist.length}} videos</p>
+            <p class="details">{{play.description}}</p>
             
         </div>
+
     </div>
 </a>
+
 <a href="/channel/{{user.user_id}}"><p class="detailss">{{user.user_name}}</p></a>
+<button *ngIf="curUser.user_id != user.user_id && !haveSaved" class="save" (click)="savePlay(play.playlist_id)">Save Playlist</button>

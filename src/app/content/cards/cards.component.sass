@@ -9,7 +9,9 @@
     @media screen and (max-width : 600px)
         width : 435px
         height : 330px
-        
+    @media screen and (max-width : 375px)
+        width : 300px
+        height : 230px
 
 .besar
     width : 280px
@@ -20,14 +22,26 @@
     @media screen and (max-width : 600px)
         width : 435px
         height : 330px
-        margin-left : 30px
+        margin-left : 20px
+    @media screen and (max-width : 375px)
+        width : 300px
+        height : 200px
+        margin-left : 0px
+        margin-top : 0px
+        margin-bottom : 40px
 
 .card:hover
     background-color : #e6e6e6
+    
+    box-shadow : 0px 0px 12px 2px #4d4d4d
+    transition: background 2s
     .durate
         opacity : 1
+    
 
 .besar:hover
+    animation : shake 1s
+    animation-iteration-count : infinite
     .moree
         display : block
     .moreIcon
@@ -38,6 +52,10 @@
     background-color : #e6e6e6
     .durate
         opacity : 1
+    .more
+        display : block
+    .moreIcon
+        display : block
 
 .cardS
     float : left
@@ -51,6 +69,9 @@
         width : 435px
         height : 330px
         margin-left : 30px
+    @media screen and (max-width : 375px)
+        width : 300px
+        height : 230px
 
 
 
@@ -62,8 +83,11 @@
     background-color : #f2f2f2
     object-fit : scale-down
     @media screen and (max-width : 600px)
-        width : 435px
-        height : 230px
+        width : 300px
+        height : 130px
+    @media screen and (max-width : 375px)
+        width : 300px
+        height : 160px
 
 .detail
     float : left
@@ -71,6 +95,8 @@
     margin-left : 10px
     font-family : arial
     font-size : 13px
+    @media screen and (max-width : 375px)
+        margin-top : -20px
 
 .details
     height : 20px
@@ -101,14 +127,16 @@
     border-radius : 20px
 
 .thumb
-    display : flex
-    justify-content : center
+    object-fit : cover
     margin : 0 auto
     height : 160px
-    max-width : 280px 
-    @media screen and (max-width : 600px)
-        max-width : 435px
-        height : 230px  
+    width : 280px 
+    @media screen and (max-width : 375px)
+        height : 130px
+        width : 300px 
+        object-fit : cover
+    
+    
     
 .durate
     position : absolute
@@ -171,3 +199,27 @@
     margin-left : 200px
     margin-top : -20px
 
+
+@keyframes shake
+  0% 
+    transform: translate(1px, 1px) rotate(0deg)
+  10%
+    transform: translate(-1px, -2px) rotate(-1deg)
+  20%
+    transform: translate(-3px, 0px) rotate(1deg)
+  30% 
+    transform: translate(3px, 2px) rotate(0deg)
+  40% 
+    transform: translate(1px, -1px) rotate(1deg)
+  50% 
+    transform: translate(-1px, 2px) rotate(-1deg)
+  60% 
+    transform: translate(-3px, 1px) rotate(0deg)
+  70% 
+    transform: translate(3px, 1px) rotate(-1deg)
+  80% 
+    transform: translate(-1px, -1px) rotate(1deg)
+  90% 
+    transform: translate(1px, 2px) rotate(0deg)
+  100% 
+    transform: translate(1px, -2px) rotate(-1deg)

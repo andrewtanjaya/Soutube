@@ -13,6 +13,7 @@ import { Route, Router } from '@angular/router';
   styleUrls: ['./header.component.sass']
 })
 export class HeaderComponent implements OnInit {
+  modal : Boolean;
   message : Boolean;
   userState : Boolean;
   showAc : Boolean
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit {
   constructor(private data : DataServiceService, private authService : SocialAuthService,private apollo : Apollo, private router : Router) { }
 
   ngOnInit(): void {
+    this.modal = false
     this.data.currentMessage.subscribe(message =>this.message = message)
     this.data.loggedIn.subscribe(userState => this.userState = userState)
 
@@ -44,6 +46,38 @@ export class HeaderComponent implements OnInit {
       // Do something useful here.
       this.showAc = false
   });
+  document.addEventListener("click", (evt) => {
+    const flyoutElement = document.getElementById("backg");
+    let targetElement = evt.target; // clicked element
+
+    do {
+        if (targetElement == flyoutElement) {
+            // Do nothing, just return.
+            this.modal = false
+            return;
+        }
+        // Go up the DOM.
+        targetElement = targetElement.parentNode;
+    } while (targetElement);
+
+
+});
+document.addEventListener("click", (evt) => {
+  const flyoutElement = document.getElementById("modKey");
+  let targetElement = evt.target; // clicked element
+
+  do {
+      if (targetElement == flyoutElement) {
+          // Do nothing, just return.
+          this.showKey = false
+          return;
+      }
+      // Go up the DOM.
+      targetElement = targetElement.parentNode;
+  } while (targetElement);
+
+
+});
   document.addEventListener("click", (evt) => {
     const flyoutElement = document.getElementById("signDived");
     let targetElement = evt.target; // clicked element
@@ -206,7 +240,7 @@ export class HeaderComponent implements OnInit {
   currentUser : any // user yg logged in skrg
 
   signInWithGoogle(): void {
-
+    this.modal = false;
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
     this.authService.authState.subscribe((user) => {
       this.user = user;
@@ -240,7 +274,7 @@ export class HeaderComponent implements OnInit {
         
         this.currentUser = result.data.getUserId
         console.log(this.currentUser)
-        window.location.reload()
+        // window.location.reload()
         })
 
     });
@@ -250,11 +284,10 @@ export class HeaderComponent implements OnInit {
   
 
   signOut(): void {
-    console.log("sign Out dong")
     this.data.signOut();
     // this.user = null;
     this.data.currentUser.subscribe(user => this.user = user)
-    
+    // this.signInWithGoogle()
   }
 
   //hamburger
@@ -480,4 +513,7 @@ export class HeaderComponent implements OnInit {
   }
 
 
+  toggleModal(){
+    this.modal = !this.modal
+  }
 }

@@ -7,6 +7,8 @@ $phone : 600
     width : 18px
     margin-top : 5px
     margin-left : 6px
+    @media screen and (max-width : 375px)
+        margin-left : 6px
     
 
 .rip
@@ -19,6 +21,8 @@ $phone : 600
     border-radius : 50%
     background-position: center
     transition: background 0.8s
+    @media screen and (max-width : 375px)
+        margin-left : 10px
 
   
 
@@ -44,7 +48,8 @@ $phone : 600
 
     @media screen and (max-width : $tablet +px)
 
-    @media screen and (max-width : $phone +px)
+    @media screen and (max-width : 375px)
+        width : 375px
 
 
 .logo
@@ -52,6 +57,9 @@ $phone : 600
     margin-top : 15px
     height : 25px
     margin-left : 26px
+    @media screen and (max-width : 375px)
+        margin-left : 5px
+        margin-top : 13px
 
 .title
     margin-top : 15px
@@ -60,6 +68,8 @@ $phone : 600
     font-family : Oswald
     font-size : 17px
     color : black
+    @media screen and (max-width :  375px)
+        font-size : 15px
 
 .searchDiv
     border : 1px solid #bdbdbd 
@@ -75,8 +85,8 @@ $phone : 600
         margin-left : 10vw
         width : 235px
     @media screen and (max-width : $phone +px)
-        margin-left : 20px
-        width : 165px
+        margin-left : 10px
+        width : 145px
 
 
 @media screen and (max-width : $tablet +px)
@@ -103,17 +113,23 @@ $phone : 600
     background-color : #f2f2f2
     width : 60px
     height : 33px
+    @media screen and (max-width :  375px)
+        width : 40px
 
 
 .searchIcon
     margin-left : 22px
     margin-top : 8px
     height : 15px
+    @media screen and (max-width : $phone +px)
+        height : 10px
+        margin-left : 15px
+        margin-top : 12px
 
 .signDiv
     float : right
     margin-top : 8px
-    margin-right : 15px
+    margin-right : 0px
     min-width : 42px
     height : 38px
 
@@ -121,7 +137,6 @@ $phone : 600
     float : left
     height : 23px
     margin-top : 8px
-
     border-radius : 12px
 
 .signInText
@@ -150,6 +165,9 @@ $phone : 600
     height : 19px
     margin-right : 20px
     margin-top : 18px
+    @media screen and (max-width : 375px)
+        margin-right : 5px
+        height : 17px
 
 .autoComplete
     margin-top : 33px
@@ -375,6 +393,13 @@ $phone : 600
     height : 350px
     background-color : white
     z-index : 2000
+    @media screen and (max-width : 768px)
+        left : 150px
+        top : 200px
+    @media screen and (max-width : 375px)
+        left : 20px
+        width : 300px
+        top : 200px
 
 .overlay
     width : 100vw
@@ -396,17 +421,23 @@ $phone : 600
     width : 500px
     height : 50px
     background-color : white
+    @media screen and (max-width : 375px)
+        width : 300px
 
 .isinya
     width : 530px
     height : 250px
     background-color : white
     overflow-y : auto
+    @media screen and (max-width : 375px)
+        width : 330px
 
 .footer
     width : 530px
     height : 50px
     background-color : white
+    @media screen and (max-width : 375px)
+        width : 330px
 
 
 .playT
@@ -450,3 +481,21 @@ $phone : 600
     width : 450px
     border : 0.1 px solid #cecece
     
+.modalSign
+    position : absolute
+    top : 600%
+    right : 40%
+    background-color : white
+    display : flex
+    flex-direction : column
+    justify-content : center
+    text-align : center
+    padding : 20px
+    border-radius : 10px
+
+.blackback
+    background-color  : black
+    opacity : 0.5
+    width : 100vw
+    height : 100vh
+

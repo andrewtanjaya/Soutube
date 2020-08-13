@@ -38,7 +38,7 @@ h2
     float : left
     margin-top : 40px
     margin-left : 67px
-    width : 93.2vw
+    width : 90.2vw
     min-height : 93.5vh
 
     @media screen and (max-width : 600px)
@@ -201,7 +201,7 @@ hr
     position : absolute
     margin-left : 498px
     margin-top : 103px
-    width : 5px
+    width : 0px
     height : 5px
     border-bottom : 2px solid black
 
@@ -238,3 +238,36 @@ hr
 
 .popPlay div:hover
     background-color : #c2c2c2
+
+.overlays
+    position : fixed
+    z-index : 100
+    width : 100vw
+    height : 100vh
+    background-color : black
+    opacity : 0.5
+
+.shr
+    display : flex
+    flex-direction : column
+    position : fixed
+    z-index : 101
+    left : 550px
+    top : 375px
+    width : 400px
+    height : 200px
+    border-radius : 20px
+    background-color : white
+    justify-content : center
+    flex-direction : column
+
+.shr div
+    margin-left : 80px
+    margin-top : -10px
+
+
+.rightClick
+    position : absolute
+    background-color : white
+    display : none
+

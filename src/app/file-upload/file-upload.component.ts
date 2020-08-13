@@ -15,6 +15,7 @@ import { DataServiceService } from '../data-service.service';
   styleUrls: ['./file-upload.component.sass']
 })
 export class FileUploadComponent implements OnInit {
+  playlistIdentity : any;
   isHovering: boolean;
   images:File[] = [];
   imageName : string;
@@ -44,6 +45,7 @@ export class FileUploadComponent implements OnInit {
     this.images.push(images.item(0));
     this.startUploadImg(images.item(0));
   }
+  playlists :  any;
   user : SocialUser
   task: AngularFireUploadTask;
   task2: AngularFireUploadTask;
@@ -64,6 +66,7 @@ export class FileUploadComponent implements OnInit {
     this.checkUserInDb();
     this.data.currentMessage.subscribe(message =>this.message = message)
     // alert(localStorage.getItem("users"))
+   
   }
   startUpload(file : File) {
     
@@ -381,7 +384,128 @@ export class FileUploadComponent implements OnInit {
         `
         }]
       }).subscribe((result) => {
-  
+        let last = result.data.createVideo
+        if(this.playlist_id != 1){
+          this.apollo.mutate({
+            mutation: gql `
+            mutation createList($playlist_id : Int! , $video_id : Int!){
+              createList(
+                input : {
+                  playlist_id : $playlist_id,
+                  video_id : $video_id,
+                }
+              ){
+                playlist_id,
+                video_id,
+                list_id
+              }
+            }
+            `,
+            variables:{
+              playlist_id : this.playlist_id,
+              video_id : last.video_id
+        
+            }
+            
+          }).subscribe(result => {
+            this.apollo.watchQuery<any>({
+              query: gql `
+              query getPlaylist ($playlist_id : Int!){
+                getPlaylist (playlist_id : $playlist_id) {
+                  playlist_id,
+                  playlist_name,
+                  user_id,
+                  description,
+                  visibility,
+                  day,
+                  month,
+                  year,
+                  hour,
+                  minute,
+                  second
+                }
+              }
+              `,
+              variables:{
+                playlist_id : this.playlist_id
+              }
+            }).valueChanges.subscribe(result => {
+              this.playlistIdentity = result.data.getPlaylist;
+              let des;
+              if(this.playlistIdentity.description == ""){
+                des = "No Description"
+              }
+              else{
+                des.playlistIdentity.description
+              }
+              let today = new Date();
+            this.apollo.mutate({
+              mutation: gql `
+              mutation updatePlaylist (
+                    $id : Int!,
+                    $playlist_name : String!,
+                    $user_id : Int!,
+                    $visibility : String!,
+                    $description : String!,
+                    $day : Int!,
+                    $month : Int!,
+                    $year : Int!,
+                    $hour : Int!,
+                    $minute : Int!,
+                    $second : Int!,
+              ) {
+                updatePlaylist(
+                  id : $id,
+                  input: {
+                    playlist_name : $playlist_name,
+                    user_id : $user_id,
+                    visibility : $visibility,
+                    description : $description,
+                    day : $day,
+                    month : $month,
+                    year : $year,
+                    hour : $hour,
+                    minute : $minute,
+                    second : $second,
+                  }
+                ){
+                  playlist_name,
+                  user_id
+                  visibility,
+                  description,
+                  day,
+                  month,
+                  year,
+                  hour,
+                  minute,
+                  second,
+                }
+              } 
+              `,
+              variables:{
+                id : this.playlist_id,
+                playlist_name : this.playlistIdentity.playlist_name,
+                user_id : this.playlistIdentity.user_id,
+                visibility : this.playlistIdentity.visibility,
+                description : des,
+                day : today.getDate(),
+                month : today.getMonth()+1,
+                year : today.getFullYear(),
+                hour : today.getHours(),
+                minute : today.getMinutes(),
+                second : today.getSeconds(),
+                
+              }
+            }).subscribe((result) => {
+              alert("added To Playlist")
+              window.location.reload()
+            },(error) => {
+              console.log('there was an error sending the query', error);
+            });
+            });
+            
+          })
+        }
         alert("Video Uploaded")
         this.router.navigate(["/home"])
       },(error) => {
@@ -413,6 +537,31 @@ export class FileUploadComponent implements OnInit {
     console.log("CHECKED")
     this.currentUser = result.data.getUserId
     console.log(this.currentUser)
+    this.apollo.watchQuery<any>({
+      query: gql `
+      query getPlayListUser ($user_id : Int!){
+        getPlayListUser(user_id : $user_id) {
+          user_id
+          playlist_id
+          playlist_name
+          visibility
+          day,
+          month,
+          year,
+          hour,
+          minute,
+          second
+        }
+      }
+      `,
+      variables:{
+        user_id: this.currentUser.user_id
+      }
+    }).valueChanges.subscribe(result => {
+      console.log("DADADAD")
+      this.playlists = result.data.getPlayListUser;
+      console.log(this.playlists)
+    });
     })
 }
 

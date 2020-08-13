@@ -13,6 +13,7 @@ export class VideoChannelComponent implements OnInit {
 user : any
 id : any;
 videos : any;
+oriVideos : any;
 curUser : any;
 subbedChannel : any
 doneSubbed : boolean
@@ -38,6 +39,8 @@ subbed  : any
     { divider: 1e3 , suffix: 'k' }
   ];
   ngOnInit(): void {
+    this.sortedDate =  false
+    this.sortedPop = false
     this.data.currentMessage.subscribe(message =>this.message = message)
     
     this._Activatedroute.paramMap.subscribe(params => { 
@@ -51,7 +54,8 @@ subbed  : any
               membership,
               email,
               img_url,
-              subscriber_count
+              subscriber_count,
+              back,
             }
           }
         `,
@@ -71,7 +75,8 @@ subbed  : any
             membership,
             email,
             img_url,
-            subscriber_count
+            subscriber_count,
+            back
           }
         }
       `,
@@ -159,6 +164,7 @@ subbed  : any
       })
       .valueChanges.subscribe(result => {
         this.videos = result.data.getVideoUser;
+        this.oriVideos = this.videos.slice();
       });
   }
 
@@ -261,6 +267,38 @@ subbed  : any
         })
     }
     
+  }
+
+  sortedPop : Boolean;
+  sortPop(){
+    if(this.sortedPop){
+      this.videos = this.oriVideos.slice().sort((a,b) =>
+      a.view_count > b.view_count ? -1 : 1
+      )
+      this.sortedPop = false
+    }
+    else{
+      this.videos = this.oriVideos.slice().sort((a,b) =>
+      a.view_count < b.view_count ? -1 : 1
+      )
+      this.sortedPop = true
+    }
+    
+  }
+  sortedDate : Boolean;
+  sortDate(){
+    if(this.sortedDate){
+      this.videos = this.oriVideos.slice().sort((a,b) =>
+      ((((a.day*86400)+(a.month*86400*30)+(a.year*86400*30*12)+(a.hour*3600)+(a.minute*60)+(a.second)) < ((b.day*86400)+(b.month*86400*30)+(b.year*86400*30*12)+(b.hour*3600)+(b.minute*60)+(b.second))) ? 1 : -1)
+    )
+    this.sortedDate = false
+    }
+    else{
+      this.videos = this.oriVideos.slice().sort((a,b) =>
+      ((((a.day*86400)+(a.month*86400*30)+(a.year*86400*30*12)+(a.hour*3600)+(a.minute*60)+(a.second)) > ((b.day*86400)+(b.month*86400*30)+(b.year*86400*30*12)+(b.hour*3600)+(b.minute*60)+(b.second))) ? 1 : -1)
+    )
+    this.sortedDate = true
+    }
   }
 
 

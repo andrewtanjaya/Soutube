@@ -7,15 +7,42 @@
             </div>
             
             <div class="head1">
-                <p >SouTube and SouTube Music ad-free, offline, and in the background</p>
+                <p >View Premium Video, View not yet published and scheduled video, download videos</p>
+                <table style="font-size : 13px; border: 1px solid black; border-collapse : collapse ; margin-left : 100px;margin-bottom: 20px;"  *ngIf="!user.membership">
+                    <tr style="font-size : 13px; border: 1px solid black;">
+                        <th style="font-size : 13px; border: 1px solid black;">Duration</th>
+                        <th style="font-size : 13px; border: 1px solid black;">Price</th>
+                        <th style="font-size : 13px; border: 1px solid black;">Choose</th>
+                    </tr>
+                    <tr style="font-size : 13px; border: 1px solid black;">
+                        <td style="font-size : 13px; border: 1px solid black;">Annualy</td>
+                        <td style="font-size : 13px; border: 1px solid black;">IDR 100.000</td>
+                        <td style="font-size : 13px; border: 1px solid black;"><input type="radio" name="choice" id="year" ></td>
+                    </tr>
+                    <tr style="font-size : 13px; border: 1px solid black;"> 
+                        <td style="font-size : 13px; border: 1px solid black;">Monthly</td>
+                        <td style="font-size : 13px; border: 1px solid black;">IDR 50.000</td>
+                        <td style="font-size : 13px; border: 1px solid black;"><input type="radio" name="choice" id="mon"></td>
+                    </tr>
+
+                </table>
+                <table *ngIf="user.membership" style="font-size : 13px; border: 1px solid black;border-collapse: collapse;margin-left : 100px;margin-bottom : 20px">
+                    <tr style="font-size : 13px; border: 1px solid black;">
+                        <th style="font-size : 13px; border: 1px solid black;">Start Date</th>
+                        <th style="font-size : 13px; border: 1px solid black;">End Date</th>
+                        <th style="font-size : 13px; border: 1px solid black;">Types</th>
+                    </tr>
+                    <tr style="font-size : 13px; border: 1px solid black;" *ngFor="let item of histories">
+                        <td style="font-size : 13px; border: 1px solid black;">{{makeDate(item.startDate).getDate()}}-{{makeDate(item.startDate).getMonth()+1}}-{{makeDate(item.startDate).getFullYear()}}</td>
+                        <td style="font-size : 13px; border: 1px solid black;">{{makeDate(item.endDate).getDate()}}-{{makeDate(item.endDate).getMonth()+1}}-{{makeDate(item.endDate).getFullYear()}}</td>
+                        <td style="font-size : 13px; border: 1px solid black;">{{item.types}}</td>
+                    </tr>
+                </table>
             </div>
-            <div class="try" (click)="premium()">
-                <p>TRY IT FREE</p>
+            <div class="try" (click)="premium()" *ngIf="!user.membership">
+                <p>TRY IT</p>
             </div>
             
-            <div class="trial">
-                <p>1-month free trial • Then IDR 59,000.00/month</p>
-            </div>
             
             <div class="foot">
                 <p>Recurring billing • Cancel anytime</p>

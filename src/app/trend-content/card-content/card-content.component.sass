@@ -8,36 +8,43 @@
         width : 630px
     @media screen and (max-width : 991px)
         margin-left : 25px
-        width : 450px
+        width : 600px
     @media screen and (max-width : 600px)
+        display : flex
+        flex-direction : column
         margin-left : 15px
-        height : 130px
+        height : 300px
+        width : 320px
 
 
 .card:hover
     background-color : #c2c2c2
+    transition : background 2s
 .video 
     float : left
     width : 250px
     height : 150px
     @media screen and (max-width : 600px)
-        width : 200px
-        height : 130px
+        width : 320px
+        height : 200px
 
 .thumb  
-    display : flex
-    margin : 0 auto
-    max-width : 250px   
+    object-fit : cover
+    width : 250px   
     height : 150px
     @media screen and (max-width : 600px)
-        max-width : 200px
-        height : 130px
+        width : 320px
+        height : 200px
+        object-fit : cover
 
 .detail
     padding-top : 1px
     margin-left : 265px
+
     @media screen and (max-width : 600px)
-        margin-left : 215px
+        flex-direction : column
+        margin-left : 0px
+        height : 130px
 
 .title
     font-family : arial
@@ -46,10 +53,28 @@
     text-overflow : ellipsis
 
 .details
+    margin-left : 100px
     font-family : arial
     color : #4d4d4d
     margin-top : -14px
     font-size : 13px
+    @media screen and (max-width : 600px)
+        margin-top : 5px
+        margin-left : 0px
+
+.bom   
+    @media screen and (max-width : 600px)
+        height : 20px
+
+.detailsd
+    margin-left : 10px
+    font-family : arial
+    color : #4d4d4d
+    font-size : 13px
+    margin-top : -26px
+    @media screen and (max-width : 600px)
+        margin-top : -8px
+        margin-left : 10px
 
 .detailss
     font-family : arial
@@ -59,6 +84,9 @@
     overflow : hidden
     white-space : nowrap
     text-overflow : ellipsis
+    @media screen and (max-width : 600px)
+        height : 30px
+
 
 .name
     position: absolute
@@ -69,9 +97,11 @@
     margin-left : 345px
     text-decoration: none
     color : #4d4d4d
+    @media screen and (max-width : 768px)
+        margin-left : 290px
     @media screen and (max-width : 600px)
-        margin-left : 230px
-        margin-top : -93px
+        margin-left : 18px
+        margin-top : -60px
 
 .name:hover
     color : black
@@ -82,9 +112,13 @@
     justify-content : center
     margin-top : -130px
     margin-left : 850px
-    width : 15px
+    width : 15px    
     height : 15px
-
+    @media screen and (max-width : 768px)
+        margin-left : 550px
+    @media screen and (max-width : 600px)
+        margin-left : 300px
+        margin-top : -80px
 
 .moree
     position : absolute

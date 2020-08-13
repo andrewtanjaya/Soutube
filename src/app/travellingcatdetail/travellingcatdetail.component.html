@@ -3,13 +3,35 @@
         <img src="../../assets/travel.png" alt="" class="icon">
         <div class="divTit">
             <p class="tit">Travelling</p>
-            <p class="subsText">123M subscribers</p>
         </div>
-        <div class="buttSubs" *ngIf="getUser()">
-            <p class="subsTextRed">SUBSCRIBE</p>
-        </div>
-        
     </div>
-    <h3 style="font-family: arial;margin-left : 25px"><b>Top Travelling Video</b></h3>
-    <app-cards *ngFor="let video of videoFiltered" [video]="video"></app-cards>
+    <div style="display: flex;flex-direction:  column;">
+        <div>
+            <h3 style="font-family: arial;margin-left : 25px;margin-top : 10px;margin-bottom : -20px"><b>All Time Popular</b></h3>
+            <h3 style="font-family: arial;margin-left : 25px" *ngIf="!videoFiltered">None</h3>
+            <div *ngFor="let video of videoFiltered, let i = index">
+                <app-cards *ngIf="i < 20"  [video]="video"></app-cards>
+            </div>
+            
+        </div>
+        <div>
+            <h3 style="font-family: arial;margin-left : 25px;margin-top : 30px;margin-bottom : -20px"><b>Popular this week</b></h3>
+            <h3 style="font-family: arial;margin-left : 25px" *ngIf="!week">None</h3>
+            <div *ngFor="let video of week, let i = index">
+                <app-cards *ngIf="i < 20"  [video]="video"></app-cards>
+            </div>
+        </div>
+        <div>
+            <h3 style="font-family: arial;margin-left : 25px;margin-top : 30px;margin-bottom : -20px"><b>Popular this month</b></h3>
+            <div *ngFor="let video of months, let i = index">
+                <app-cards *ngIf="i < 20"  [video]="video"></app-cards>
+            </div>
+        </div>
+        <div>
+            <h3 style="font-family: arial;margin-left : 25px;margin-top : 30px;margin-bottom : -20px"><b>Recently Uploaded</b></h3>
+            <div *ngFor="let video of recently, let i = index">
+                <app-cards *ngIf="i < 20"  [video]="video"></app-cards>
+            </div>
+        </div>
+        </div>
 </div>

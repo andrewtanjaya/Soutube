@@ -22,6 +22,9 @@ h2
     height : auto
     overflow-x : auto
     background-color : #f2f2f2
+    @media screen and (max-width : 768px)
+        margin-left : 60px
+        width : 708px
     @media screen and (max-width : 600px)
         margin-left : 0px
         width : 100vw
@@ -36,13 +39,19 @@ h2
 
 .leftSmall
     margin-left : 0px
+    @media screen and (max-width : 375px)
+        margin-left : 0px
+        width : 375px
+        height : 500px
 
 .video
     margin-top : 35px
-    background-color : blue
     width : 350px
     margin-left : 35px
     height : 200px
+    @media screen and (max-width : 375px)
+        margin-left : 35px
+        width : 300px
 
 .title
     font-size : 17px
@@ -82,8 +91,10 @@ textarea
     font-family : arial
     font-size : 13px
     float : left
-    width : 200px
+    width : 180px
     height : 30px
+    @media screen and (max-width : 375px)
+        width : 150px
 
 .right
     margin-left : 10px
@@ -97,28 +108,66 @@ textarea
     @media screen and (max-width : 1200px)
         width : 42vw
     @media screen and (max-width : 1100px)
-        width : 280px
-    @media screen and (max-width : 930px)
-        width : 420px
+        width : 300px
+    @media screen and (max-width : 768px)
+        width : 265px
+        margin-top : 20px
+    @media screen and (max-width : 375px)
+        margin-left : 0px
+        width : 350px
         margin-top : 20px
 
+.cdk-drag-preview 
+  box-sizing: border-box
+  border-radius: 4px
+  
+
+
+.cdk-drag-placeholder 
+  opacity: 0
+
+
+.cdk-drag-animating 
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
+
+.example-box:last-child 
+  border: none
+
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) 
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
 .sort
+    display : flex
     width : 750px
     height : 60px
+    cursor : pointer
+    @media screen and (max-width : 768px)
+        margin-top : 10px
+        margin-left : -10px
     
 
 .sortIcon
     margin-left : 35px
     margin-right : 20px
     width : 20px
+    height : 20px
     margin-top : 28px
-    float : left
+    @media screen and (max-width : 375px)
+        width : 15px
+        height : 15px
 
 .sortTxt
     font-family : arial
     float : left
     font-size : 14px
     margin-top  : 30px
+    @media screen and (max-width : 768px)
+        margin-top : 25px
+    @media screen and (max-width : 375px)
+        font-size : 12px
+
 
 .queue
     margin-top : 10px
@@ -182,3 +231,56 @@ textarea
     color : #8e8e8e
     @media screen and (max-width : 1100px)
         margin-left : 10px
+
+.thumb
+    object-fit : cover
+    width : 350px
+    height : 200px
+    @media screen and (max-width : 375px)
+        object-fit : cover
+        margin-left : 0px
+        width : 300px
+        height : 200px
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) 
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1)
+
+.rmBut
+    margin-left : 300px
+    height : 40px
+    margin-top : 20px
+    margin-bottom : 20px
+    @media screen and (max-width : 375px)
+        margin-left : 120px
+
+.leftm
+    margin-left : 35px
+
+.edi
+    width : 300px
+    margin-bottom : 10px
+
+.overlays
+    position : fixed
+    z-index : 100
+    width : 100vw
+    height : 100vh
+    background-color : black
+    opacity : 0.5
+
+.shr
+    display : flex
+    position : fixed
+    z-index : 101
+    left : 550px
+    top : 350px
+    width : 400px
+    height : 150px
+    border-radius : 20px
+    background-color : white
+    justify-content : center
+    flex-direction : column
+
+.shr div
+    margin-left : 80px
+    margin-top : -10px

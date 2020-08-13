@@ -5,11 +5,11 @@
         </div>
         <div class="detail">
             <p class="title">{{video.video_title}}</p>
-            <div style="display : flex">
-                <p class="details" style="margin-left : 100px">• {{convertMetricNumber(view.length)}} views •</p>
-                <p class="details" style="margin-left : 10px ; margin-top : -26px;font-size : 13px" [innerHtml] = "dateDetail">{{user.user_name}} • {{view.length}} views • 3 days ago</p>
+            <div class="bom" style="display : flex">
+                <p class="details" >• {{convertMetricNumber(view.length)}} views •</p>
+                <p class="detailsd" style="font-size : 13px" [innerHtml] = "dateDetail">{{user.user_name}} • {{view.length}} views • 3 days ago</p>
             </div>
-            <p class="details" [innerHtml] = "durr">{{user.user_name}} • {{view.length}} views • 3 days ago</p>
+            <p class="detailss" [innerHtml] = "durr">{{user.user_name}} • {{view.length}} views • 3 days ago</p>
             <p class="detailss">{{video.video_desc}}</p>
         </div>
     </div>

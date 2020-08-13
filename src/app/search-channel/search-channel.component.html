@@ -1,0 +1,22 @@
+<a routerLink="/channel/{{channel.user_id}}" style="text-decoration: none;color:black">
+    <div class="card">
+        <div class="video">
+            <img src="{{channel.img_url}}" class="thumbuser" alt="">
+        </div>
+        <div class="detail">
+            <p class="title">{{channel.user_name}}</p>
+            <p class="details">{{channel.subscriber_count}} subscriber</p>
+            
+            <p class="detailss">{{videos.length}} videos</p>
+        </div>
+        
+    </div>
+</a>
+
+<div class="but" *ngIf="curUserAll.email != channel.email" >
+    <button *ngIf="!doneSubbed" style="margin-right: 10px;background-color: #2359d9;color : white;border : none" (click)="addSubs()">SUBSCRIBE</button>
+    <button *ngIf="doneSubbed" style="margin-right: 10px;background-color: #4d4d4d;color : white;border : none" (click)="unSubs()">SUBSCRIBED</button>
+    <div>
+        <img *ngIf="doneSubbed" src="../../assets/bell.png" style="width: 18px;margin-top: 6px;" alt="">
+    </div>
+</div>

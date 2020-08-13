@@ -33,6 +33,8 @@
             <p class="ket">Add your video to one or more playlists. Playlists can help viewers discover your content faster. Learn more.</p>
             <select name="" id="inPlay">
                 <option value="1">none</option>
+                <option *ngFor="let play of playlists" value="{{play.playlist_id}}">{{play.playlist_name}}</option>
+                
             </select>
             <h4>Age restriction</h4>
             <p class="ket"><b>Do you want to restrict your video to an adult audience?</b></p>

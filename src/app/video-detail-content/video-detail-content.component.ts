@@ -14,7 +14,15 @@ import { SocialUser } from 'angularx-social-login';
   styleUrls: ['./video-detail-content.component.sass']
 })
 export class VideoDetailContentComponent implements OnInit {
+  email : String;
+  showRight : boolean
+  link : String
+  linkCurr : String;
+  plq  :any;
   q : number
+  subbedChannel : any;
+  curUserAll : any;
+  doneSubbed : Boolean
   related : any;
   id : any;
   video : Video;
@@ -33,6 +41,8 @@ export class VideoDetailContentComponent implements OnInit {
   lastIndex  = 4
   showPlay = false
   playlists : any
+  showShare : boolean;
+  looped : boolean;
   constructor(private data : DataServiceService, private _Activatedroute:ActivatedRoute, private apollo : Apollo,private router : Router) { }
   
   convertMetricNumber(num: number): string {
@@ -107,35 +117,40 @@ export class VideoDetailContentComponent implements OnInit {
   }
 
   addPlaylist(){
+    let des = "No Description"
     let playname = document.getElementById("namep").value
     let visi = document.getElementById("vs").value
     let today = new Date()
     this.apollo.mutate({
       mutation: gql `
-      mutation createPlaylist($playlist_name : String! , $user_id : Int!, $visibility : String!, $day : Int! , $month : Int!, $year : Int! , $hour : Int!, $minute : Int!, $second : Int!){
+      mutation createPlaylist($playlist_name : String! , $user_id : Int!, $visibility : String!, $description : String! , $day : Int! , $month : Int!, $year : Int! , $hour : Int!, $minute : Int!, $second : Int! , $sortby : Int!){
         createPlaylist(
           input : {
             playlist_name : $playlist_name,
             user_id : $user_id,
             visibility : $visibility,
+            description : $description,
             day : $day,
             month : $month,
             year : $year,
             hour : $hour,
             minute : $minute,
-            second : $second
+            second : $second,
+            sortby : $sortby
           }
         ){
           playlist_id,
           playlist_name,
           user_id,
           visibility,
+          description,
           day,
           month,
           year,
           hour,
           minute,
           second
+          sortby
         }
       }
       `,
@@ -143,12 +158,14 @@ export class VideoDetailContentComponent implements OnInit {
         playlist_name : playname,
         user_id : this.currentUser.user_id,
         visibility : visi,
+        description : des,
         day : today.getDate(),
         month : today.getMonth() + 1,
         year : today.getFullYear(),
         hour : today.getHours(),
         minute : today.getMinutes(),
-        second : today.getSeconds()
+        second : today.getSeconds(),
+        sortby : 1,
 
       },refetchQueries:[{
         query: gql `
@@ -157,12 +174,14 @@ export class VideoDetailContentComponent implements OnInit {
           playlist_name,
           user_id,
           visibility,
+          description,
           day,
           month,
           year,
           hour,
           minute,
-          second
+          second,
+          sortby,
         }
       }
       `,
@@ -176,13 +195,52 @@ export class VideoDetailContentComponent implements OnInit {
     })
 
   }
+  currtime : number;
+
+  rightC(ev){
+      document.getElementById("ilang").style.top = ev.clientY + "px";
+      // alert(ev.clientY);
+      document.getElementById("ilang").style.left = ev.clientX + "px";
+      document.getElementById("ilang").style.display = "block";
+      ev.preventDefault();
+      // alert('success!');
+      this.link = window.location.href
+      this.linkCurr = this.link + "?" + "curr=" +document.getElementById("vi").querySelector("video").currentTime
+
+      // alert(this.linkCurr)
+      document.getElementById("cu").value = this.linkCurr;
+      // alert(document.getElementById("cu").value)
+      document.getElementById("lis").value = this.link;
+      return false;
   
+  }
   ngOnInit(): void {
+    this.looped = false
+    this.showRight = false
+    document.getElementById("vi").addEventListener('contextmenu', this.rightC, false);
+    if(JSON.parse(localStorage.getItem("users"))) this.email = JSON.parse(localStorage.getItem("users"))[0].email
+    this.link = window.location.href;
+    this.showShare = false
     this.key = true
     this.viewed = false
+    this._Activatedroute.queryParams
+      .subscribe(params => {
+        console.log(params); // { order: "popular" }
+
+        this.currtime = params.curr;
+        // alert(this.currtime); // popular
+      }
+    );
+    if(this.currtime){
+      document.getElementById("vi").querySelector("video").currentTime = this.currtime
+    }
+
     let mat = document.getElementById("vi");
     mat.querySelector("video").addEventListener("ended",
       ()=>{
+        if(localStorage.getItem("queue") && JSON.parse(localStorage.getItem("queue"))[(parseInt(localStorage.getItem("currIndex"))+1)].video_id){
+          window.location.href ="/videoPlayer/"+ JSON.parse(localStorage.getItem("queue"))[(parseInt(localStorage.getItem("currIndex"))+1)].video_id
+        }
         if(this.q != -1){
           window.location.href = "/videoPlayer/"+this.q
         }
@@ -221,7 +279,23 @@ export class VideoDetailContentComponent implements OnInit {
       this.key = false
       document.removeEventListener("keyup",this.short)
   });
+  document.addEventListener("click", (evt) => {
+    const flyoutElement = document.getElementById("sho");
+    let targetElement = evt.target; // clicked element
 
+    do {
+        if (targetElement == flyoutElement) {
+            // Do nothing, just return.
+            this.showShare = true
+            this.linkCurr = this.link + "?" + "curr=" + document.getElementById("vi").querySelector("video").currentTime
+            return;
+        }
+        // Go up the DOM.
+        targetElement = targetElement.parentNode;
+    } while (targetElement);
+
+    this.showShare = false;
+});
   
 
 
@@ -286,6 +360,13 @@ export class VideoDetailContentComponent implements OnInit {
       
       this.video = result.data.getVideo;
 
+      if(JSON.parse(localStorage.getItem("queue"))){
+        for(let i=0;i<JSON.parse(localStorage.getItem("queue")).length;i++){
+          if(this.video.video_id == JSON.parse(localStorage.getItem("queue"))[i].video_id){
+            localStorage.setItem("currIndex",i.toString());
+          }
+        }
+      }
       
 
       if(today.getFullYear() > this.video.year){
@@ -318,6 +399,7 @@ export class VideoDetailContentComponent implements OnInit {
               user_name,
               membership,
               img_url,
+              email,
               subscriber_count
             }
           }
@@ -327,6 +409,28 @@ export class VideoDetailContentComponent implements OnInit {
         }
       }).valueChanges.subscribe(result => {
         this.user = result.data.getUser
+        if(localStorage.getItem("users")){
+          this.apollo.watchQuery<any>({
+            query: gql `
+            query getUserId ($email : String!) {
+              getUserId(email: $email) {
+                user_id,
+                user_name,
+                membership,
+                email,
+                
+              }
+            }
+            `,
+            variables:{
+                email : JSON.parse(localStorage.getItem("users"))[0].email,
+            }
+          }).valueChanges.subscribe(result => {
+            // alert(this.comment.comment_id)
+            this.curUserAll = result.data.getUserId
+            this.checkSubbed()
+          });
+        }
         console.log(this.user)
         this.apollo.watchQuery<any>({
           query: gql `
@@ -1049,8 +1153,8 @@ keyChecker(e : any){
 }
 
 
-addToPlaylist(playlist_id){
-  if(document.getElementById("ch"+playlist_id).checked){
+addToPlaylist(playlist){
+  if(document.getElementById("ch"+playlist.playlist_id).checked){
     this.apollo.mutate({
       mutation: gql `
       mutation createList($playlist_id : Int! , $video_id : Int!){
@@ -1067,17 +1171,251 @@ addToPlaylist(playlist_id){
       }
       `,
       variables:{
-        playlist_id : playlist_id,
+        playlist_id : playlist.playlist_id,
         video_id : this.id
   
       }
       
     }).subscribe(result => {
-      alert("added To Playlist")
+      let today = new Date();
+      let des = playlist.description;
+      console.log(playlist.playlist_name)
+      console.log(playlist.playlist_id)
+      if(!playlist.description){
+        des = "no description"
+      }
+      console.log(des)
+      console.log(playlist.visibility)
+      this.apollo.mutate({
+        mutation: gql `
+        mutation updatePlaylist (
+              $id : Int!,
+              $playlist_name : String!,
+              $user_id : Int!,
+              $visibility : String!,
+              $description : String!,
+              $day : Int!,
+              $month : Int!,
+              $year : Int!,
+              $hour : Int!,
+              $minute : Int!,
+              $second : Int!,
+        ) {
+          updatePlaylist(
+            id : $id,
+            input: {
+              playlist_name : $playlist_name,
+              user_id : $user_id,
+              visibility : $visibility,
+              description : $description,
+              day : $day,
+              month : $month,
+              year : $year,
+              hour : $hour,
+              minute : $minute,
+              second : $second,
+            }
+          ){
+            playlist_name,
+            user_id
+            visibility,
+            description,
+            day,
+            month,
+            year,
+            hour,
+            minute,
+            second,
+          }
+        } 
+        `,
+        variables:{
+          id : playlist.playlist_id,
+          playlist_name : playlist.playlist_name,
+          user_id : playlist.user_id,
+          visibility : playlist.visibility,
+          description : des,
+          day : today.getDate(),
+          month : today.getMonth()+1,
+          year : today.getFullYear(),
+          hour : today.getHours(),
+          minute : today.getMinutes(),
+          second : today.getSeconds(),
+          
+        }
+      }).subscribe((result) => {
+        alert("added To Playlist")
+        window.location.reload()
+      },(error) => {
+  
+        console.log('there was an error sending the query', error);
+      });
     })
   }
 }
 
+unSubs(){
+  this.apollo.mutate({
+    mutation: gql `
+    mutation deleteSubs($user_id : Int! , $subscriber_id : Int!){
+      deleteSubs(user_id : $user_id , subscriber_id : $subscriber_id)
+    }
+    `,
+    variables:{
+      user_id : this.video.user_id,
+      subscriber_id : this.curUserAll.user_id
+    },
+    refetchQueries:[{
+      query: gql `
+          query getSubscriber($user_id : Int!){
+            getSubscriber(user_id : $user_id) {
+              subscriber_id,
+              user_id,
+              subs_id
+            }
+          }
+        `,
+        variables:{
+          user_id: this.video.user_id
+        }
+    }]
+  }).subscribe(result => {
+    alert("Unsubscribed")
+    window.location.reload()
+  })
+}
+
+addSubs(){
+  if(this.doneSubbed != true){
+      this.apollo.mutate({
+        mutation: gql `
+        mutation createSubs ($user_id : Int! , $subs_id : Int!){
+          createSubs(
+            input : {
+              user_id : $user_id,
+              subscriber_id : $subs_id
+            }
+          ){
+            subscriber_id,
+            user_id,
+            subs_id
+          }
+        }
+        `,
+        variables:{
+          user_id : this.video.user_id,
+          subs_id : this.curUserAll.user_id,
+        },
+        refetchQueries:[{
+          query: gql `
+              query getSubscriber($user_id : Int!){
+                getSubscriber(user_id : $user_id) {
+                  subscriber_id,
+                  user_id,
+                  subs_id
+                }
+              }
+            `,
+            variables:{
+              user_id: this.video.user_id
+            }
+        }]
+      }).subscribe(result => {
+        alert("Subscribed")
+        window.location.reload()
+      })
+  }
+  
+}
+checkSubbed(){
+  // alert(this.user.user_id)
+  console.log("BBABABBAB")
+  this.apollo.watchQuery<any>({
+    query: gql `
+    query checkSubs($user_id : Int! , $subscriber_id : Int!) {
+      checkSubs(user_id : $user_id , subscriber_id : $subscriber_id) {
+        user_id,
+        subs_id,
+        subscriber_id,
+      }
+    }
+    `,
+    variables:{
+        user_id : this.user.user_id,
+        subscriber_id : this.curUserAll.user_id,
+    }
+  }).valueChanges.subscribe(result => {
+    this.subbedChannel = result.data.checkSubs
+    // alert(this.subbedChannel.subs_id)
+    if(this.subbedChannel.subs_id != 0){
+      this.doneSubbed = true
+      // alert("asda")
+    }
+    else{
+      // alert("qweqewq")
+      this.doneSubbed = false
+    }
+  });
+}
+
+copyRight(){
+  var copyText = document.getElementById("lis");
+
+  /* Select the text field */
+  copyText.select(); 
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+  alert("Copied Url")
+}
+
+copyCurrRight(){
+  var copyText = document.getElementById("cu");
+  // alert("masuk")
+  /* Select the text field */
+  copyText.select(); 
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+  alert("Copied Url")
+}
+
+copy(){
+  var copyText = document.getElementById("urls");
+
+  /* Select the text field */
+  copyText.select(); 
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+  alert("Copied Url")
+}
+
+copyCurr(){
+  var copyText = document.getElementById("urlss");
+
+  /* Select the text field */
+  copyText.select(); 
+  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+  alert("Copied Url")
+
+}
+
+ref(){
+  document.getElementById("ilang").style.display = "none"
+}
+
+loopp(){
+  
+  this.looped = !this.looped
+  alert(this.looped)
+}
 
 }
 

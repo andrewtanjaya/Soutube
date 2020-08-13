@@ -1,9 +1,18 @@
 <div class="queue" >
-    <div class="imgVid">
-        <img src="{{video.video_thumb}}" class="thumb" alt="">
-    </div>
+    <a [routerLink]="['/videoPlayer/',video.video_id]">
+        <div class="imgVid">
+            <img src="{{video.video_thumb}}" class="thumb" alt="">
+        </div>
+    </a>
     <div class="vidTitle">
         <p class="tit">{{video.video_title}}</p>
         <a [routerLink]="['/channel/',user.user_id]" style="text-decoration: none;" ><p class="chan">{{user.user_name}}</p></a>
+        <p class="chan">{{video.view_count}} views</p>
+        <p class="chan" [innerHtml]="durr">{{video.video_duration}} views</p>
+        <p class="chan" [innerHtml]="dateDetail">{{video.video_duration}} views</p>
+        <div class="damn">
+            <img src="../../assets/delete.png" class="del" (click)="delVideo(video.video_id)" alt="">
+        </div>
+        
     </div>
 </div>

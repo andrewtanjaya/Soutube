@@ -33,6 +33,8 @@ import {AngularFireModule} from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule, AngularFireStorage } from 'angularfire2/storage';
 import { environment } from '../environments/environment'
+// import { JwSocialButtonsModule } from 'jw-angular-social-buttons';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 //matvideo
 
@@ -75,6 +77,13 @@ import { SearchcontentComponent } from './searchcontent/searchcontent.component'
 import { SearchPlayComponent } from './search-play/search-play.component';
 import { SearchvideoComponent } from './searchvideo/searchvideo.component';
 import { SubspageComponent } from './subspage/subspage.component';
+import { SearchChannelComponent } from './search-channel/search-channel.component';
+import { PlayQComponent } from './play-q/play-q.component';
+import { PlayQContentComponent } from './play-qcontent/play-qcontent.component';
+import { CommunityComponent } from './community/community.component';
+import { CommunitycardComponent } from './communitycard/communitycard.component';
+import { FbLikeComponent } from './fb-like/fb-like.component';
+import { AboutchanComponent } from './aboutchan/aboutchan.component';
 //untilHere
 
 @NgModule({
@@ -134,7 +143,14 @@ import { SubspageComponent } from './subspage/subspage.component';
     SearchcontentComponent,
     SearchPlayComponent,
     SearchvideoComponent,
-    SubspageComponent
+    SubspageComponent,
+    SearchChannelComponent,
+    PlayQComponent,
+    PlayQContentComponent,
+    CommunityComponent,
+    CommunitycardComponent,
+    FbLikeComponent,
+    AboutchanComponent
   ],
   imports: [
     MatVideoModule,
@@ -146,7 +162,9 @@ import { SubspageComponent } from './subspage/subspage.component';
     HttpClientModule,
     AngularFireStorageModule,
     AngularFirestoreModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DragDropModule,
+    // JwSocialButtonsModule,
   ],
   providers: [
     {

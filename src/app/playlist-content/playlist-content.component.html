@@ -1,43 +1,103 @@
 <div class="container" [ngClass]="{containerSmall: !message}">
     <div class="left" [ngClass]="{leftSmall: !message}"> 
         <div class="video">
-            <mat-video id="vi" src="{{video.video_url}}" autoplay = "true"></mat-video>
+            <img *ngIf="video" src="{{video.video_thumb}}" class="thumb" alt="" >
+            
         </div>
-        <div class="details">
-            <p class="title">{{video.video_title}}</p>
-            <p class="title">{{playlistIdentity.playlist_name}}</p>
+        <div class="details" >
+            <div style="display: flex;flex-direction: row;">
+                <p class="title" id="tot" *ngIf="!edit" (click)="toggleEdit()">{{playlistIdentity.playlist_name}}</p>
+                <textarea *ngIf="edit" class="edi" name="" id="plname" cols="15" rows="1" value="{{playlistIdentity.playlist_name}}"></textarea>
+                <button style="height: 30px;margin-top : 10px" id="sho" *ngIf="playlistIdentity.visibility == 'Public'">Share</button>
+            </div>
             <div style="display: flex;">
-                <p class="vidDetail">{{convertMetricNumber(playlist.length)}} videos • created</p>
+                <p class="vidDetail">{{convertMetricNumber(playlist.length)}} videos • Updated</p>
                 <p class="vidDetail" style="margin-top : -18px;margin-left: 4px" [innerHtml]="dateDetail">{{playlist.length}} videos • created</p>
             </div>
            
-            <!-- <select name="" id="">
-                <option value="1">Private</option>
-                <option value="1">Public</option>
-                <option value="1">Unlisted</option>
-            </select> -->
+            <select name="" id="visi">
+                <option value="Private">Private</option>
+                <option value="Public">Public</option>
+            </select>
         </div>
-        <!-- <div class="description">
-            <textarea name="" id="" cols="130" rows="5" placeholder="No Description"></textarea>
-        </div> -->
+        <div class="description">
+            <textarea name="" id="des" cols="130" rows="5" placeholder="No Description"></textarea>
+            <button style="margin-left : 35px" (click)="addDesc()" *ngIf="curUserAll.user_id == user.user_id">Update</button>
+            <button style="margin-left : 35px"  (click)="rmSaved()" *ngIf="curUserAll.user_id != user.user_id && haveSaved">Remove Saved</button> 
+            <button (click)="rmPlay()" *ngIf="curUserAll.user_id == user.user_id">Remove This Playlist</button>
+            <button (click)="plAll()" [ngClass]="{leftm: !haveSaved && curUserAll.user_id != user.user_id}">Play All</button>
+            <button (click)="shuf()">Shuffle Play</button>
+        </div>
         <a [routerLink]="['/channel/',user.user_id]"  style="text-decoration: none;color : black">
             <div class="user" >
                 <div class="userDiv">
                     <img src="{{user.img_url}}" alt="" class="userIcon">
                 </div>
-                <div class="name">
-                    <p><b>{{user.user_name}}</b></p>
+                <div class="name" style="display: flex;">
+                    <div style="width: 80px;height: 20px;">
+                        <p style="width: 120px;height: 20px;"><b>{{user.user_name}}</b></p>
+                    </div>
+                    
+                    
                 </div>
             </div>
         </a>
+        <div class="but" style="display: flex;margin-left : -10px;margin-top : 30px" *ngIf="curUserAll.user_id != user.user_id">
+            <button *ngIf="!doneSubbed"  style="background-color: #2359d9;color : white;border : none ; height: 20px;" (click)="addSubs()">SUBSCRIBE</button>
+            <button *ngIf="doneSubbed"  style="background-color: #4d4d4d;color : white;border : none; height: 20px;" (click)="unSubs()">SUBSCRIBED</button>
+            <div>
+                <img *ngIf="doneSubbed" src="../../assets/bell.png" style="width: 17px;margin-top: 2px;margin-left : 5px" alt="">
+            </div>
+        </div>
         
     </div>
-    <div class="right">
-        <div class="sort">
-            <img src="../../assets/sort.png" alt="" class="sortIcon">
-            <p class="sortTxt">SORT BY</p>
+    <div class="right" >
+        <div style="display: flex;" *ngIf="curUserAll.user_id == user.user_id">
+            <div class="sort" (click)="sortAdded()">
+                <img src="../../assets/sort.png" alt="" class="sortIcon">
+                <p class="sortTxt">Date Added</p>
+            </div>
+            <div class="sort" (click)="sortPublish()">
+                <img src="../../assets/sort.png" alt="" class="sortIcon">
+                <p class="sortTxt">Date Published</p>
+            </div>
+            <div class="sort" (click)="sortPop()">
+                <img src="../../assets/sort.png" alt="" class="sortIcon">
+                <p class="sortTxt">Popularity</p>
+            </div>
         </div>
+        <div style="margin-top : 40px" *ngIf="curUserAll.user_id != user.user_id">
 
-        <app-playcard *ngFor="let play of playlist" [play] = "play"></app-playcard>
+        </div>
+        
+        <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)"> -->
+            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)" *ngIf="curUserAll.user_id == user.user_id">
+            <!-- <div class="example-box" *ngFor="let movie of movies" cdkDrag>{{movie}}</div> -->
+            <app-playcard class="example-box" *ngFor="let play of sortedPl" [play] = "play" cdkDrag cdkDragBoundary=".right"></app-playcard>
+            <div *ngIf="curUserAll.user_id == user.user_id">
+                <button *ngIf="playlist" class="rmBut" (click)="rmVideos()" >Remove All Videos</button>
+            </div>
+            
+            </div>
+            <div *ngIf="curUserAll.user_id != user.user_id">
+                <app-playcard class="example-box" *ngFor="let play of sortedPl" [play] = "play" ></app-playcard>
+            </div>
+        
     </div>
+</div>
+
+<div class="overlays" *ngIf="showShare">
+</div>
+<div class="shr" *ngIf="showShare" >
+    <div>
+        <p>Share this to your social media</p>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"><img src="../../assets/tweet.png" style="height: 40px ; margin-top: -5px;" alt=""></a>
+        <div class="line-it-button" data-lang="en" data-type="share-a" data-ver="3" data-url="{{link}}" data-color="default" data-size="large" data-count="true" style="height: 30px;"></div>
+    </div>
+    
+    <div>
+        <input type="text" name="" id="urls" value="{{link}}">
+        <button (click)="copy()">Copy URL</button>
+    </div>
+    
 </div>

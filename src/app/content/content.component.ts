@@ -9,6 +9,7 @@ import gql from 'graphql-tag';
   styleUrls: ['./content.component.sass']
 })
 export class ContentComponent implements OnInit {
+  randomize : any;
   message : Boolean;
   videos : any;
   seconds : any;
@@ -17,6 +18,10 @@ export class ContentComponent implements OnInit {
   constructor(private data : DataServiceService,private apollo : Apollo ) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem("queue")){
+      localStorage.removeItem("queue")
+    }
+    // this.data.changePlay(null)
     this.observer = new IntersectionObserver((entry)=>{
       if(entry[0].isIntersecting){
         let card = document.querySelector(".container");
@@ -69,10 +74,33 @@ export class ContentComponent implements OnInit {
       })
       .valueChanges.subscribe(result => {
         this.videos = result.data.videos;
-        console.log(this.videos)
+        this.getRandom();
       });
   }
 
+  getRandom(){
+    this.randomize = this.videos.slice(0);
+    this.shuffle(this.randomize)
+    
+  }
 
+  shuffle(array) {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // While there remain elements to shuffle...
+    while (0 !== currentIndex) {
+  
+      // Pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // And swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
+  }
 
 }

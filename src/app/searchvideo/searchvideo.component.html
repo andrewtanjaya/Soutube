@@ -5,8 +5,11 @@
         </div>
         <div class="detail">
             <p class="title">{{video.video_title}}</p>
-            <p class="details">{{view.length}} Views</p>
-            <p class="detailed">{{video.video_desc}} Views</p>
+            <p class="details">{{convertMetricNumber(view.length)}} Views</p>
+            <p class="detailed">{{video.video_desc}}</p>
+            <p></p>
+            <p class="details" [innerHtml]="durr">{{video.video_desc}}</p>
+            <p class="details" [innerHtml] = "dateDetail">{{video.video_desc}}</p>
         </div>
         
     </div>

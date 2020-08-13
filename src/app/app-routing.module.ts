@@ -18,7 +18,10 @@ import { NewscatComponent } from './newscat/newscat.component';
 import { TravellingcatComponent } from './travellingcat/travellingcat.component';
 import { EntertainmentcatComponent } from './entertainmentcat/entertainmentcat.component';
 import { SearchComponent } from './search/search.component';
-
+import { PlayQComponent} from './play-q/play-q.component';
+import { CommunityComponent} from './community/community.component'
+import { AboutchanComponent} from './aboutchan/aboutchan.component'
+ 
 const routes: Routes = [
   {path:"", redirectTo:"/home", pathMatch: 'full'},
   {path:"home",component : HomeComponent},
@@ -37,9 +40,13 @@ const routes: Routes = [
   {path:"playlist/:playlist_id",component:PlaylistComponent},
   {path:"channel/:user_id",component:ChannelComponent},
   {path:"videoChannel/:user_id",component:VideoChannelComponent},
+  {path:"playChannel/:user_id",component:PlayQComponent},
   {path:"studio/:user_id",component:StudioComponent},
   {path:"edit/:video_id",component:EditVideoComponent},
   {path:"search/:value",component:SearchComponent},
+  {path:"play",component:PlayQComponent},
+  {path:"comChannel/:user_id",component:CommunityComponent},
+  {path:"aboutChannel/:user_id",component:AboutchanComponent},
 ];
 
 @NgModule({

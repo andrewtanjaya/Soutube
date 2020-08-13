@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DataServiceService } from '../data-service.service';
 import { SocialUser, SocialAuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { Apollo } from 'apollo-angular';
@@ -11,12 +11,17 @@ import gql from 'graphql-tag';
 })
 export class SideBarComponent implements OnInit {
   playlists : any
+  privatePlay : any;
+  publicPlay : any;
   activeTab = 0
   message : Boolean;
+  a:any;
+  b:any;
   curUser : any
   subbed : any
   index : number;
   indox : number
+  saved : any;
   constructor(private data : DataServiceService, private apollo : Apollo, private authService : SocialAuthService) { }
 
   ngOnInit(): void {
@@ -84,6 +89,7 @@ export class SideBarComponent implements OnInit {
         console.log(this.curUser)
         console.log("HIHIHI")
         window.location.reload()
+
         })
 
     });
@@ -110,6 +116,7 @@ subbedChannel : any
       }
     }).valueChanges.subscribe(result => {
       this.subbedChannel = result.data.getUser
+      
       return this.subbedChannel
     });
   }
@@ -169,16 +176,112 @@ subbedChannel : any
         }
       }).valueChanges.subscribe(result => {
         this.playlists = result.data.getPlayListUser;
+        console.log(this.playlists)
+            this.privatePlay = this.playlists.filter(function(playlist){
+              return playlist.visibility == "Private"
+            })
+            if(this.privatePlay.length < 5){
+              
+              this.publicPlay = this.playlists.filter(function(playlist){
+                return playlist.visibility == "Public"
+              })
+              // this.publicPlay.push(this.saved)
+              this.publicPlay = this.publicPlay.slice(0,5-this.privatePlay.length)
+          
+              }
+        // this.publicPlay.push(result.data.getSavedPlaylist)
+        
+        
         // alert(this.playlists)
       })
+      this.apollo.watchQuery<any>({
+        query: gql `
+        query getSavedPlaylist($user_id: Int!){
+          getSavedPlaylist(user_id : $user_id) {
+            user_id,
+            playlist_id,
+            }
+          }
+        `,
+        variables:{
+        user_id: this.curUser.user_id
+        }
+        }).valueChanges.subscribe(result => {
+          this.a = result.data.getSavedPlaylist
+          console.log(this.curUser.user_id)
+          console.log(this.a[1])
+          for(let c = 0;this.a[c];c++){
+            console.log("HOHOHO")
+            console.log(c)
+            this.apollo.watchQuery<any>({
+              query: gql `
+              query getPlaylist($playlist_id: Int!){
+                getPlaylist(playlist_id : $playlist_id) {
+                  playlist_id,
+                  playlist_name,
+                  visibility,
+                  }
+                }
+              `,
+              variables:{
+              playlist_id: this.a[c].playlist_id
+              }
+              }).valueChanges.subscribe(result => {
+              this.b = result.data.getPlaylist
+              console.log(this.b )
+              console.log(this.a);
+              console.log(this.playlists)
+              this.playlists.push(this.b)
+              // if(!this.saved){
+              //   this.saved = this.b
+              // }
+              // else{
+              //   this.saved[this.saved.length] = this.b 
+              // }
+              // this.playlists.splice(this.playlists.length,0,this.b);
+              console.log(this.saved)
+              console.log(this.playlists)
+              })
+
+          }
+          
+        
+        })
     })
   }
 
   playMore : Boolean
   togglePlaymore(){
-    if(!this.playMore) this.index = 1000000
+    if(!this.playMore) 
+    {
+
+      // this.playlists.push(this.saved)
+      this.privatePlay = this.playlists.filter(function(playlist){
+      return playlist.visibility == "Private"
+      })
+      
+      this.publicPlay = this.playlists.filter(function(playlist){
+        return playlist.visibility == "Public"
+      })
+      // console.log(this.saved)
+      // this.playlists = this.playlists.splice(this.playlists.length,2)
+      console.log(this.playlists)
+      console.log(this.publicPlay)
+      
+
+      this.index = 1000000
+    }
     else{
       this.index = 5
+      this.privatePlay = this.playlists.filter(function(playlist){
+        return playlist.visibility == "Private"
+      })
+      if(this.privatePlay.length < 5){
+        this.publicPlay = this.playlists.filter(function(playlist){
+          return playlist.visibility == "Public"
+        })
+        this.publicPlay = this.publicPlay.slice(0,5-this.privatePlay.length)
+      }
     }
     this.playMore = !this.playMore
     

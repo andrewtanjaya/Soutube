@@ -1,34 +1,43 @@
 <div class="side">
     
     <div class="queue">
-        
         <div style="display : flex;">
             <p><b>Up Next</b></p><input type="checkbox" name="" id="next" style="margin-top : 20px;margin-left : 20px" (click)="toggle()">
         </div>
+        <div id="kanan">
             
-            
-        <a href="/videoPlayer/{{related[rand].video_id}}" style="text-decoration: none; color : black">
-        <div class="firstQueue">
-            <div class="video">
-                <img src="{{related[rand].video_thumb}}" class="thumbnail" alt="">
-            </div>
-            <div class="detail">
-                <p style="margin-left : 10px;margin-top: 17px;"><b>{{related[rand].video_title}}</b></p>
-                <p style="margin-left : 10px;margin-top: -10px;font-size : 11px">{{user.user_name}}</p>
-                <div style="display: flex;flex-direction: column;">
-                    <div style="display: flex;">
-                        <p style="margin-left : 10px;margin-top: 0px;font-size : 11px;float : left" >{{view.length}} views • </p>
-                        <p style="margin-left : 10px;margin-top: -10px;font-size : 11px ; float : left" [innerHtml]="dateDetail">{{view.length}} views • </p>
-                    </div>
-                    <p style="margin-left : 10px;margin-top: 0px;font-size : 11px ;" [innerHtml]="durr">{{view.length}} views • </p>
+                
+                
+            <a href="/videoPlayer/{{related[rand].video_id}}" style="text-decoration: none; color : black">
+            <div class="firstQueue">
+                <div class="video">
+                    <img src="{{related[rand].video_thumb}}" class="thumbnail" alt="">
                 </div>
-                
-                
+                <div class="detail">
+                    <p style="margin-left : 10px;margin-top: 17px;"><b>{{related[rand].video_title}}</b></p>
+                    <p style="margin-left : 10px;margin-top: -10px;font-size : 11px">{{user.user_name}}</p>
+                    <div style="display: flex;flex-direction: column;">
+                        <div style="display: flex;">
+                            <p style="margin-left : 10px;margin-top: 0px;font-size : 11px;float : left" >{{view.length}} views • </p>
+                            <p style="margin-left : 10px;margin-top: -10px;font-size : 11px ; float : left" [innerHtml]="dateDetail">{{view.length}} views • </p>
+                            
+                        </div>
+                        <p style="margin-left : 10px;margin-top: 0px;font-size : 11px ;" [innerHtml]="durr">{{view.length}} views • </p>
+                        
+                    </div>
+                    
+                    
+                </div>
             </div>
+        </a>
         </div>
-    </a>
+        
+        <div class="q" id="qr">        
+            <app-play-qcontent *ngFor="let q of queue" [q]="q"></app-play-qcontent>
+        </div>
         <hr>
         <div *ngFor="let video of related, let i = index">
+            
             <app-cardside *ngIf="i < lastIndex" [video]="video"></app-cardside>
         </div>
         <div class="footere">

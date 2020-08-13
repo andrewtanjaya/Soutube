@@ -10,6 +10,8 @@ import { DataServiceService } from '../data-service.service';
   styleUrls: ['./side-queue.component.sass']
 })
 export class SideQueueComponent implements OnInit {
+  queue : any;
+  plq : any;
   user : any
   view : any
   id : any
@@ -22,6 +24,20 @@ export class SideQueueComponent implements OnInit {
   constructor(private apollo : Apollo, private _Activatedroute : ActivatedRoute, private data : DataServiceService) { }
 
   ngOnInit(): void {
+    // this.data.plq.subscribe(plq => this.plq = plq)
+    // // alert(this.plq)
+    // if(this.plq){
+    //   
+    //   // alert("aww");
+    // }
+    if(localStorage.getItem("queue")){
+      document.getElementById("kanan").style.display = "none"
+      this.queue = JSON.parse(localStorage.getItem("queue"))
+    }
+    else{
+      document.getElementById("qr").style.display = "none"
+    }
+    console.log(this.plq);
     this.rand = -1
     this.observer = new IntersectionObserver((entry)=>{
       if(entry[0].isIntersecting){
@@ -54,6 +70,7 @@ export class SideQueueComponent implements OnInit {
           video_desc,
           video_cat,
           video_thumb,
+          video_duration,
           playlist_id,
           like_count,
           dislike_count,
@@ -88,6 +105,7 @@ export class SideQueueComponent implements OnInit {
             video_desc,
             video_cat,
             video_thumb,
+            video_duration,
             playlist_id,
             like_count,
             dislike_count,
@@ -124,6 +142,7 @@ export class SideQueueComponent implements OnInit {
                 video_desc,
                 video_cat,
                 video_thumb,
+                video_duration,
                 playlist_id,
                 like_count,
                 dislike_count,
@@ -164,6 +183,7 @@ export class SideQueueComponent implements OnInit {
                       like_count
                       dislike_count
                       view_count
+                      video_duration,
                       age_restriction
                       visibility
                       location_video
@@ -250,6 +270,7 @@ export class SideQueueComponent implements OnInit {
                       video_thumb
                       playlist_id
                       like_count
+                      video_duration
                       dislike_count
                       view_count
                       age_restriction

@@ -181,20 +181,19 @@ button
 .video
     width : 200px
     height : 120px
-    object-fit : scale-down
+    object-fit : cover
     @media screen and (max-width : 600px)
         width : 435px
         height : 230px
 
   
 .thumb
-    margin : 0 auto
-    display : flex
-    justify-content : center
+  
+    object-fit : cover
     height : 120px
-    max-width : 200px
+    width : 200px
     @media screen and (max-width : 600px)
-        max-width : 435px
+        width : 435px
         height : 230px
 
 
@@ -264,3 +263,69 @@ button
 
 .lastS:hover
     opacity : 0.2
+
+.gambarnya
+    width : 82vw
+    height : 300px
+    @media screen and (max-width : 991px)
+        width : 60vw
+    @media screen and (max-width : 600px)
+        margin-left : 15px
+        height : 130px
+
+.gambarnyaS
+    width : 94vw
+    height : 300px
+
+.backggS
+    object-fit : cover
+    width : 94vw
+    height : 300px
+
+.backgg
+    object-fit : cover
+    width : 82vw
+    height : 300px
+    @media screen and (max-width : 991px)
+        width : 60vw
+    @media screen and (max-width : 600px)
+        margin-left : 15px
+        height : 130px
+
+.cust
+    position : fixed
+    z-index : 9999
+    padding : 30px 0px 30px 30px
+    background-color : white
+    border-radius : 10px
+    left : 470px
+    top : 300px
+    display : flex
+    flex-direction : column
+
+.cust label
+    font-size : 12px
+    margin-right : 10px
+
+.cust button
+    width : 150px
+    height : 30px
+    margin-left : 100px
+    margin-top : 10px
+    margin-bottom : 10px
+.cust div
+    display : flex
+    margin-left : 30px
+
+.overlays
+    position : fixed
+    margin-top : -10px
+    margin-left : -10px
+    z-index : 999
+    width : 100vw
+    height : 100vh
+    background-color : black
+    opacity : 0.5
+
+.progressnya
+    margin-left : -20px

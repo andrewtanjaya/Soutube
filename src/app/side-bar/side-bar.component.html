@@ -81,9 +81,9 @@
     <div *ngIf="getUserFromStorage()" class="listPlaylist">
         
             <div >
-                <div *ngFor="let playlist of playlists , let i = index" >
+                <div *ngFor="let playlist of privatePlay , let i = index">
                     <div class="trending"  *ngIf=" i  < index ">
-                        <a routerLink="/playlist/{{playlist.playlist_id}}">
+                        <a href="/playlist/{{playlist.playlist_id}}">
                             <div>
                                 <img src="../../assets/playlist.png" alt="" class= "trendIcon">
                                 <p class="homeText">{{playlist.playlist_name}}</p>
@@ -92,6 +92,29 @@
                     </div>
                     
                 </div>
+                <div *ngFor="let playlist of publicPlay , let i = index" >
+                    <div class="trending"  *ngIf=" i  < index ">
+                        <a href="/playlist/{{playlist.playlist_id}}">
+                            <div>
+                                <img src="../../assets/playlist.png" alt="" class= "trendIcon">
+                                <p class="homeText">{{playlist.playlist_name}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div>
+                
+                    <!-- <div class="trending"  *ngIf="playMore">
+                        <div *ngFor="let playlist of saved" >
+                        <a href="/playlist/{{playlist.playlist_id}}">
+                            <div>
+                                <img src="../../assets/playlist.png" alt="" class= "trendIcon">
+                                <p class="homeText">{{playlist.playlist_name}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                </div> -->
             </div>
             
             

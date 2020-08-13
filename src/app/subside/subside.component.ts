@@ -31,6 +31,7 @@ user : any
       }
     }).valueChanges.subscribe(result => {
       this.user = result.data.getUser
+      
     })
   }
 

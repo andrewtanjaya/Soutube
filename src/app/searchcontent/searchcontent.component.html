@@ -1,23 +1,32 @@
 <div class="container" [ngClass]="{containerSmall: !message}">
-    <img src="../../assets/sort.png" class="sortIcon" alt="">
+    <div style="display: flex;">
+        <img src="../../assets/sort.png" class="sortIcon" alt="">
+        <p style="margin-top: 20px;">Filter</p>
+    </div>
+    
+    <div style="display: flex;">
+        <div style="margin-left : 25px;margin-top : -20px;font-size: 13px;">
+            <p>Upload Date</p>
+            <input type="radio" name="up" id="week" (click)="week()"><span>This Week</span><br>
+            <input type="radio" name="up" id="month" (click)="month()"><span>This Month</span><br>
+            <input type="radio" name="up" id="year" (click)="year()"><span>This Year</span><br>
+            <input type="radio" name="up" id="none" (click)="none()"><span>None</span><br>
+        </div>
+    
+        <div style="margin-left : 25px;margin-top : -20px;font-size: 13px;">
+            <p>Type</p>
+            <input type="checkbox" name="type" id="vid" (click)="typeVid()"><span>Video</span><br>
+            <input type="checkbox" name="type" id="play" (click)="typePlay()"><span>Playlist</span><br>
+            <input type="checkbox" name="type" id="chan" (click)="typeChan()"><span>Channel</span><br>
+        </div>
+    </div>
     <div *ngFor="let channel of allchannel">
-        <a routerLink="/channel/{{channel.user_id}}" style="text-decoration: none;color:black">
-            <div class="card">
-                <div class="video">
-                    <img src="{{channel.img_url}}" class="thumbuser" alt="">
-                </div>
-                <div class="detail">
-                    <p class="title">{{channel.user_name}}</p>
-                    <p class="details">{{channel.subscriber_count}} subscriber</p>
-                    <!-- <p class="detailss">ITZY Wannabe</p> -->
-                </div>
-            </div>
-        </a>
+        <app-search-channel *ngIf="showChan" [channel]="channel"></app-search-channel>
     </div>
     <div *ngFor="let play of playlists">
-        <app-search-play [play] = "play"></app-search-play>
+        <app-search-play *ngIf="showPlay" [play] = "play"></app-search-play>
     </div>
     <div *ngFor="let video of videos">
-        <app-searchvideo [video]="video"></app-searchvideo>
+        <app-searchvideo *ngIf="showVid" [video]="video"></app-searchvideo>
     </div>
 </div>

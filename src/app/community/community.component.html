@@ -1,0 +1,63 @@
+<app-header></app-header>
+<app-side-bar></app-side-bar>
+<div class="container" [ngClass]="{containerSmall: !message}">
+    <div class="gambarnya" [ngClass]="{ gambarnyaS : !message}">
+        <img src="{{user.back}}" *ngIf="message" class="backgg" alt="">
+        <img src="{{user.back}}" *ngIf="!message" class="backggS" alt="">
+    </div>
+    <div class="header" [ngClass]="{headerS: !message}">
+        <div class="chan" [ngClass]="{chanS: !message}">
+            <img src="{{user.img_url}}" class="icon" alt="">
+            <div class="det">
+                <p class="name"><b>{{user.user_name}}</b></p>
+                <p class="subs">{{convertMetricNumber(subbed.length)}} subscribers</p>
+            </div>
+            
+        </div>
+        <div class="but" [ngClass]="{butS: !message}" *ngIf="curUser == user.email" > 
+            <!-- <button id="custom"  style="margin-right: 10px;background-color: #2359d9;color : white;border : none">CUSTOMIZE CHANNEL</button> -->
+            <a routerLink="/studio/{{user.user_id}}"><button style="background-color: #2359d9;color : white;border : none">SOUTUBE STUDIO</button></a>
+        </div>
+        <div class="but" [ngClass]="{butS : !message}" *ngIf="curUser && curUser != user.email" >
+            <button *ngIf="!doneSubbed" style="margin-right: 10px;background-color: #2359d9;color : white;border : none" (click)="addSubs()">SUBSCRIBE</button>
+            <button *ngIf="doneSubbed" style="margin-right: 10px;background-color: #4d4d4d;color : white;border : none" (click)="unSubs()">SUBSCRIBED</button>
+            <div>
+                <img *ngIf="doneSubbed" src="../../assets/bell.png" style="width: 20px;margin-top: 5px;" alt="">
+            </div>
+        </div>
+        <div class="feature"  [ngClass]="{featureS: !message}">
+            <a [routerLink]="['/channel/',user.user_id]" style="text-decoration: none;color : black;"><div class="home">HOME</div></a>
+            <a [routerLink]="['/videoChannel/',user.user_id]" style="text-decoration: none;color : black;"><div class="videos">VIDEOS</div></a>
+            <a [routerLink]="['/playChannel/',user.user_id]"><div  style="text-decoration: none;color : black;"><div class="playlist">PLAYLISTS</div> </div></a>
+            <a routerLink=""><div style="text-decoration: none;color : black;"><div class="com" >COMMUNITY</div></div></a>
+            <a [routerLink]="['/aboutChannel/',user.user_id]"><div class="about" style="text-decoration: none;color : black;">ABOUT</div></a>
+        </div>
+    </div>
+
+    <div class="content" [ngClass]="{contentS: !message}">
+        <div class="create" *ngIf="curr.user_id == user.user_id">
+            <p>Title :</p>
+            <input type="text" name="" id="tit">
+            <p>Description</p>
+            <textarea name="" id="desc" class="txt" cols="30" rows="10"></textarea>
+            <input type="file" name="" class="ctx" id="" (change)="onDrop($event.target.files)">
+            <button (click)="addCom()" >Upload</button>
+            <div>
+                <div  class="result" *ngFor="let file of files" >
+                    <div *ngIf="percentage | async as pct" class="progresnya" >
+                        <div style="display: flex;width: 350px;">
+                            <progress style="width:  350px;" [value]="pct" max="100"></progress>
+                            <span>{{ pct | number }}%</span>
+                        </div>
+                      
+                    </div>
+                    <div *ngIf="snapshot | async as snap" class="byte">                  
+                  </div>
+                  </div>
+            </div>
+        </div>
+        
+        <app-communitycard *ngFor="let com of coms" [com]="com"></app-communitycard>        
+    </div>
+</div>
+

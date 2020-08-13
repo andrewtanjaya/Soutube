@@ -1,9 +1,11 @@
 
 
+
+
 <div class="containerSmall" >
     <div class="video">
         <div class="player" id="pl" (keyup)="keyChecker($event)">
-            <mat-video id="vi"  quality="true" showFrameByFrame="true" playsinline="true" time="1" title="{{video.video_title}}" [autoplay]="true" [preload]="true" [fullscreen]="true" [download]="true" color="accent" spinner="split-ring" [keyboard]=key overlay="false" src="{{video.video_url}}" >
+            <mat-video (click)="ref()" id="vi" [loop]="looped" quality="true" showFrameByFrame="true" playsinline="true" time="1" title="{{video.video_title}}" [autoplay]="true" [preload]="true" [fullscreen]="true" [download]="true" color="accent" spinner="split-ring" [keyboard]=key overlay="false" src="{{video.video_url}}" >
             </mat-video>
         </div>
         <div id="dislikeLine">
@@ -13,12 +15,15 @@
 
         </div>
         <div class="popPlay" *ngIf="showPlay"  >
-            <div *ngFor="let playlist of playlists">
-                <div>
-                    <input type="checkbox" name="" id="ch{{playlist.playlist_id}}" (click)="addToPlaylist(playlist.playlist_id)">{{playlist.playlist_name}}
+            <div style="display: flex;flex-direction: column;min-height: 30px;max-height: 60px;overflow-y:auto ;">
+                <div *ngFor="let playlist of playlists">
+                    <div>
+                        <input type="checkbox" name="" id="ch{{playlist.playlist_id}}" (click)="addToPlaylist(playlist)">{{playlist.playlist_name}}
+                    </div>
+                    
                 </div>
-                
             </div>
+            
             <div style="display: flex;flex-direction: column;">
                 New Playlist
                 <div style="display: flex;flex-direction: column;   ">
@@ -48,14 +53,14 @@
             <!-- </a> -->
            
             
-            <div class="share">
+            <div class="share" id="sho" (click)="toggleShare()">
                 <img src="../../assets/share.png" alt="" class="likeIcon">
                 <p class="likeTxt">SHARE</p>
             </div>
             <div class="like" (click)="dislike(video.video_id)">
                 <i class="far fa-thumbs-down" id="dislikedId" style="float : left;margin-right : 10px;font-size : 20px;"></i>
                 
-                <p class="likeTxt">{{dislikedVideo.length}}</p>
+                <p class="likeTxt">{{convertMetricNumber(dislikedVideo.length)}}</p>
             </div>
             <!-- <div class="like" *ngIf="haveDisliked">
                 <img src="../../assets/disliked.png" (click)="undislike(video.video_id)" alt="" class="likeIcon">
@@ -64,7 +69,7 @@
             <div class="like" id="notYetLike" (click)="like(video.video_id)">
                 <i class="far fa-thumbs-up" id="likedId" style="float : left;margin-right : 10px;font-size : 20px;" ></i>
                 <!-- <img src="../../assets/like.png" alt="" > -->
-                <p class="likeTxt">{{likedVideo.length}}</p>
+                <p class="likeTxt">{{convertMetricNumber(likedVideo.length)}}</p>
             </div>
             <!-- <div class="like" id="liked" *ngIf="haveLiked">
                 <img src="../../assets/liked.png" alt="" class="likeIcon" (click)="unlike(video.video_id)">
@@ -77,22 +82,28 @@
                 <div class="user">
                     <img src="{{user.img_url}}" alt="" class="userIcon">
                     <div class="detailUser">
-                        <p class="chanName"><b>{{user.user_name}}</b></p>
-                        <p class="subsCount">{{user.subscriber_count}} subscribers</p>
+                        <a href="channel/{{user.user_id}}"><p style="color: black;text-decoration: none;" class="chanName"><b>{{user.user_name}}</b></p></a>
+                        <p class="subsCount">{{convertMetricNumber(user.subscriber_count)}} subscribers</p>
                     </div>
                 </div>
-                <div>
-                    <div class="bell">
+                <div style="display: flex;" *ngIf="currentUser && email != user.email">
+                    <!-- <div class="bell">
                         <img src="../../assets/bell.png" alt="" class="bellIcon">
-                    </div>
+                    </div> -->
                     
-                    <div class="subsBtn">
+                    <!-- <div class="subsBtn">
                         <p class="subsText">SUBSCRIBE</p>
+                    </div> -->
+                    <button *ngIf="!doneSubbed" style="margin-left : 500px;margin-right: 10px;background-color: #2359d9;color : white;border : none; height : 35px" (click)="addSubs()">{{currentUser.email}}</button>
+                    <button *ngIf="doneSubbed" style="margin-left : 500px;margin-right: 10px;background-color: #4d4d4d;color : white;border : none; height : 35px" (click)="unSubs()">SUBSCRIBED</button>
+                    <div>
+                        <img *ngIf="doneSubbed" src="../../assets/bell.png" style="width: 18px;margin-top: 6px;" alt="">
                     </div>
                 </div>
             </div>
             <div class="descDiv">
                 <p class="desTxt">{{video.video_desc}}</p>
+                <div class="line-it-button" data-lang="en" data-type="share-a" data-ver="3" data-url="{{link}}" data-color="default" data-size="small" data-count="true" style="margin-left : 100px"></div>
             </div>
             
         </div>
@@ -100,9 +111,10 @@
 
         <hr class="divider2">
         <div class="commentSection">
+            
             <div class="cmHead">
                 <div class="cmCount">
-                    <p>{{comment_count}} Comments</p>
+                    <p>{{convertMetricNumber(comment_count)}} Comments</p>
                 </div>
                 <div class="sort" (click)="sortTop()">
                     <img src="../../assets/sort.png" alt="" class="sortIcon">
@@ -115,6 +127,7 @@
             </div>
             
             <div class="newComment" *ngIf="currentUser">
+                
                 <img src="{{currentUser.img_url}}" id="ph" alt="" class="userIcon">
                 <textarea name="" id="dcomment" cols="30" rows="10" class="inComment" placeholder="Insert Comment Here.."></textarea>
                 <button style="height: 30px;margin-top: 12px;margin-left: 10px;" (click)="addComment();">Comment</button>
@@ -130,3 +143,50 @@
     <app-side-queue></app-side-queue>
     
 </div>
+
+<div class="overlays" *ngIf="showShare">
+</div>
+<div class="shr"*ngIf="showShare" >
+    <div>
+        <p>Share this to your social media</p>
+    </div>
+    <div style="height: 45px;">
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false"><img src="../../assets/tweet.png" style="height: 40px ; margin-top: -5px;" alt=""></a>
+        <div class="line-it-button" data-lang="en" data-type="share-a" data-ver="3" data-url="{{link}}" data-color="default" data-size="large" data-count="true" style="height: 30px;"></div>
+        
+        <!-- <div class="elfsight-app-c03801a8-63c9-40fe-868e-0d38e19a717b"></div> -->
+        <!-- <button>Twitter</button> -->
+    </div>
+    
+    
+    <div style="height: 35px;">
+        <input type="text" name="" id="urls" value="{{link}}">
+        <button (click)="copy()">Copy URL</button>
+    </div>
+    <div style="height: 35px;">
+        <input type="text" name="" id="urlss" value="{{linkCurr}}">
+        <button (click)="copyCurr()">Copy Current Time Url</button>
+    </div>
+    
+</div>
+
+<!-- <div id="op"></div> -->
+    <div class="rightClick" id="ilang">
+        <div (click)="copyRight()" style="padding : 2px">
+            <p  >Copy Url</p>
+        </div>
+        <div (click)="copyCurrRight()" style="padding : 2px">
+            <p >Copy Url Current Time</p>
+        </div>
+        <div style="padding : 2px" (click)="loopp()">
+            <p>Loop</p>
+        </div>
+    </div>
+<!-- </div> -->
+
+
+<div>
+    <input type="text" name="" id="lis" value="">
+    <input type="text" name="" value="" id="cu" >
+</div>
+
