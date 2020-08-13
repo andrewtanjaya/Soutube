@@ -240,6 +240,8 @@ document.addEventListener("click", (evt) => {
         }).valueChanges.subscribe(result => {
           this.subbed = result.data.getMySubs
           console.log(this.subbed)
+
+          
           if(this.subbed[0]){
             this.apollo.watchQuery<any>({
               query: gql `
@@ -596,5 +598,99 @@ document.addEventListener("click", (evt) => {
     this.modal = !this.modal
   }
 
+
+  getDateDiff(asd: string): string {
+    let dateDif = '';
+    const currentDate = new Date();
+    const publish = new Date(asd)
+    const min = Math.floor(
+      (Date.UTC(currentDate.getFullYear(),
+        currentDate.getMonth(),
+        currentDate.getDate(),
+        currentDate.getHours(),
+        currentDate.getMinutes(),
+        currentDate.getSeconds(),
+        currentDate.getMilliseconds()
+      ) -
+      Date.UTC(publish.getFullYear(),
+      publish.getMonth(),
+      publish.getDate(),
+      publish.getHours(),
+      publish.getMinutes(),
+      publish.getSeconds(),
+      publish.getMilliseconds())
+      ) / (1000));
+    let temp = 0;
+    //ini 1000 ms berarti 1 detik
+  
+    if (min <= 0){
+      temp = -1 * min;
+      console.log('temp ', temp);
+      dateDif = 'Will be released in ';
+    } else {
+      temp = min;
+    }
+  
+    const y = Math.floor(temp / 31556952);
+    // console.log('Year ', y);
+    if (y <= 0) {
+      const mon = Math.floor(temp / 2629746);
+      // console.log('month ', mon);
+  
+      if (mon <= 0) {
+        const d = Math.floor(temp / 86400);
+        // console.log('day ', d);
+        if (d <= 0) {
+          const hour = Math.floor(temp / 3600);
+          // console.log('hour ', hour);
+          if (hour <= 0) {
+            const minute = Math.floor(temp / 60);
+            // console.log('minute ', minute);
+            if (minute <= 0) {
+              const second = temp;
+              // console.log('second ', second);
+              if (min < 0) {
+                dateDif += second.toString() + ' Second(s)';
+              } else {
+                dateDif = second.toString() + ' second Ago';
+              }
+            } else {
+              if (min < 0) {
+                dateDif += minute.toString() + ' Minute(s)';
+              } else {
+                dateDif = minute.toString() + ' Minute Ago';
+              }
+            }
+          } else {
+            if (min < 0) {
+              dateDif += hour.toString() + ' Hour(s)';
+            } else {
+              dateDif = hour.toString() + ' Hour Ago';
+            }
+          }
+        } else {
+          if (min < 0) {
+            dateDif += d.toString() + ' Day(s)';
+          } else {
+            dateDif = d.toString() + ' Day(s) Ago';
+          }
+        }
+      } else {
+        if (min < 0) {
+          dateDif += mon.toString() + ' Month';
+        } else {
+          dateDif = mon.toString() + ' Month Ago';
+        }
+      }
+    } else {
+      if (min < 0) {
+        dateDif += y.toString() + ' Year';
+      } else {
+        dateDif = y.toString() + ' Year Ago';
+      }
+    }
+  
+    return dateDif;
+  }
   
 }
